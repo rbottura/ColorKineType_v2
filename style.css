@@ -1,0 +1,404 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+#nav_bar_slider {
+    display: block;
+    position: absolute;
+    z-index: 50;
+    height: 350px;
+    left: calc(50vw - 100px);
+    top: -228px;
+    border: dashed rgba(0, 0, 0, 0.05) 2px;
+    /* background-color: rgb(228, 183, 183); */
+}
+
+#nav_bar_slider:hover #nav_bar_wrapper{
+    margin-top: 238px;
+}
+
+#nav_bar_wrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    border: solid black 2px;
+    transition: margin-top .2s;
+    background-color: white;
+    /* font-family:; */
+}
+
+#matter_disp_btn {
+    background-color: rgb(255, 255, 255);
+    border: rgb(18, 83, 18) solid 1px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 2px 2px rgb(10, 198, 98) inset;
+    padding: 0px 2px;
+}
+
+.nav_bar_item {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 3px;
+}
+
+.nav_item_display {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin: 6px 3px;
+    background-color: rgb(255, 255, 255);
+    border: solid 2px rgb(0, 0, 0);
+    border-radius: 5px;
+}
+
+.activ_display {
+    box-shadow: 0px 0px 2px 3px rgb(219, 200, 26) inset;
+}
+
+.activ_parameters {
+    box-shadow: 0px 0px 2px 2px rgb(219, 113, 26) inset;
+}
+
+.toggle_parameters {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 6px 3px;
+    border: black solid 2px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+#inputs_layers_wrapper {
+    display: flex;
+    flex-direction: row;
+    z-index: 15;
+    overflow: hidden;
+    padding: 20px;
+    margin-top: 180px;
+
+    transition: width 0.5s, height 0.5s;
+}
+
+.folded {
+    display: block;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.step_layer {
+    position: relative;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    backdrop-filter: blur(5px);
+    padding: 5px;
+    margin: 40px 20px 40px 20px;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+p {
+    margin: 2px;
+}
+
+h2 {
+    margin: 5px;
+}
+
+
+.interfaces {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#input_text {
+    max-width: 80vw;
+    max-height: 94vh;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    text-align: center;
+    font-size: 30px;
+}
+
+#layerTextInput {
+    margin-left: 80px;
+    box-shadow: 0px 0px 15px 0px orangered;
+}
+
+#layerP5Grid {
+    box-shadow: 0px 0px 15px 0px blueviolet;   
+}
+
+#layerOpenCV {
+    box-shadow: 0px 0px 15px 0px rgb(27, 179, 47);  
+}
+
+.formItem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px;
+    margin: 2px;
+    border: 1px solid black;
+    text-align: center;
+    /* align-self:flex-start; */
+    /* width: 90%; */
+}
+
+#output_infos{
+    display: block;
+    position: relative;
+    z-index: 5;
+    left: 10vw;
+    width: 80vw;
+    border: 2px solid blueviolet;
+    padding: 5px;
+}
+
+.p5Canvas {
+    position: fixed;
+    z-index: 0;
+    border: green solid 1px;
+    box-shadow: 0px 0px 5px 0 black;
+}
+
+#btn_count_dots{
+    cursor: pointer;
+}
+
+#render_matter {
+    display: block;
+    position: absolute;
+    /* top: 250px; */
+    z-index: 0;
+}
+
+#render_matter_interface{
+    display: block;
+    position: absolute;
+    z-index: 1;
+}
+
+#p5_setup_wrapper {
+    display: block;
+    position: absolute;
+    z-index: 2;
+}
+
+
+
+
+input {
+    cursor: pointer;
+}
+
+.p5c-container{
+    z-index: 5000;
+}
+
+.radioSets{
+    cursor: pointer;
+}
+
+#interface_automate {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 80vw;
+    min-width: 150px;
+    z-index: 5555;
+    right: 20px;
+    border: orange solid 1px;
+    top: 185px;
+    padding: 7px;
+    
+    backdrop-filter: blur(5px);
+}
+
+#interface_automate > p{
+    margin: 0;
+}
+
+#htmlInterface{
+    display: block;
+    position: absolute;
+    z-index: 50;
+    /* max-width: 300px; */
+    width: 40vw;
+    left: 50vw;
+    top: 20px;
+    background-color: rgba(72, 0, 255, 0.01);
+    padding: 7px;
+    color: black;
+    border: rgb(72, 0, 255) 1px solid;
+    backdrop-filter: blur(5px);
+    /* border-radius: 15px; */
+    /* box-shadow: 0px 0px 8px rgb(147, 147, 147); */
+}
+
+#listeLettre {
+    margin-top: 7px;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 100%;
+    justify-content: center;
+}
+
+#zoneInterface{
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    z-index: 9;
+    margin: 25px 0 0 20px;
+    width : 270px;
+    height: 70px;
+    background-color: rgba(255, 255, 255, 0);
+    border: dashed 1px rgba(0, 0, 0, 0.1);
+}
+
+.hiddenInterface {
+    margin-top: 100vh;
+}
+
+#interface {
+    cursor: pointer;
+    display: flex;
+    position: absolute;
+    z-index: 10;
+    flex-direction: column;
+    height: fit-content;
+    margin: 20px 0 0 20px;
+    padding: 0 8px 8px 8px;
+    width: 270px;
+    border: solid black 1px;
+    transition: marginTop 2s;
+    max-height: 94vh;
+    overflow-y: scroll;
+    backdrop-filter: blur(4px);
+    min-height: 35px;
+}
+
+#btnHide{
+    width: 100%;
+}
+
+.firstItem {
+    margin-top: 8px;
+}
+
+.itemInterface {
+    display: inline-block;
+    background-color: inherit;
+    padding: 5px;
+}
+
+.subItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.titleItem {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    padding: 3px;
+    border: solid black 1px;
+}
+
+#spritesLib {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.spriteItem {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    border: solid 1px black;
+    margin: 2px 4px;
+    padding: 2px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.activeSprite {
+    border: solid 2px orangered;
+    box-sizing: border-box;
+    height: 32px;
+    width: 32px;
+    box-shadow: 0px 0px 4px 0 orangered;
+}
+
+#ballFill {
+    flex-wrap: wrap;
+}
+
+input[type="color"] {
+    /* -webkit-appearance: none; */
+    appearance: none;
+    border: none;
+    width: 16px;
+    height: 16px;
+    background-color: none;
+    border: solid black 2px;
+    padding: 0;
+    margin: 0 0 0 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+}
+
+input[type="radio" i] {
+    cursor: pointer;
+    background-color: initial;
+    cursor: default;
+    appearance: auto;
+    box-sizing: border-box;
+    margin: 3px 8px 0px 5px;
+    padding: initial;
+    border: initial;
+}
+
+
+.handle {
+    cursor: grab;
+    border: double 6px rgb(165, 165, 165);
+    height: 8px;
+    box-sizing: content-box;
+    color: rgb(164, 164, 164);
+    padding: 0;
+    /* display: flex; */
+    align-items: center;
+    /* justify-items:end; */
+    line-height: 7px;
+    font-size: 10px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: white;
+}

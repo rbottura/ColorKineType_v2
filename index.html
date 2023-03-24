@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <a href="https://github.com/you"><img decoding="async" loading="lazy" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+
+    <div id="nav_bar_slider">
+        <div id="nav_bar_wrapper">
+            <div class="nav_bar_item">
+                <div class="nav_item_display ui_overlay activ_display" id="p5_disp_btn">P5</div>
+                <div class="toggle_parameters activ_parameters" id="p5_param">+</div>
+            </div>
+            <div class="nav_bar_item">
+                <div class="nav_item_display ui_overlay" id="matter_disp_btn">Mt</div>
+                <div class="toggle_parameters" id="matter_param">+</div>
+            </div>
+            <div class="nav_bar_item">
+                <div class="nav_item_display ui_overlay" id="ry_disp_btn">Ry</div>
+                <div class="toggle_parameters" id="rythme_param">+</div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="render_matter"></canvas>
+
+    <div class="parameters" id="render_matter_interface">
+
+        <div id="htmlInterface" class="drag">
+            <div id="css-box-handle" class="handle">move</div>
+            <style id="styleHtml" contenteditable style="display: block; white-space: pre;">
+                canvas {
+                    filter: blur(0px) saturate(.4) contrast(2) hue-rotate(0deg);
+                }
+            </style>
+        </div>
+
+        <div id="interface" class="drag">
+            <div class="itemInterface firstItem">
+                <button id="btnHide" onclick="hideInterface()">Toggle Display Interface</button>
+            </div>
+            <div class="itemInterface">UTILISER LES FLECHES HAUT/BAS POUR CHANGER DE GLYPHS</div>
+            <div class="itemInterface">
+                <div id="lightModeDiv" class="subItem">
+                    Dark mode : <input type="checkbox" id="checkLight" onclick="setLightMode()">
+                    & Reload auto : <input type="checkbox" id="checkReload" checked>
+                </div>
+            </div>
+
+            <div class="itemInterface">
+                <p class="titleItem">Datasets : </p>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set1" name="sets" value="0" checked>
+                    <label for="set1">data set 1 (Alphabet)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set2" name="sets" value="1">
+                    <label for="set2">data set 2 (Raleway dots)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set3" name="sets" value="2">
+                    <label for="set3">data set 3 (default P5)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set4" name="sets" value="3">
+                    <label for="set4">data set 4 (egyptienne Large)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set5" name="sets" value="4">
+                    <label for="set5">data set 5 (Garamond Italic)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set6" name="sets" value="5">
+                    <label for="set5">data set 6 (PeaceSans)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set7" name="sets" value="6">
+                    <label for="set5">data set 7 (Pilow)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set8" name="sets" value="7">
+                    <label for="set5">data set 8 (Typefesse)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set9" name="sets" value="8">
+                    <label for="set5">data set 9 (Mainz)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set10" name="sets" value="9">
+                    <label for="set5">data set 10 (phrase)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set11" name="sets" value="10">
+                    <label for="sets">data set 11 (article)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set12" name="sets" value="11">
+                    <label for="sets">data set 12 (custom)</label>
+                </div>
+            </div>
+            <div class="itemInterface">
+                <p class="titleItem">Particules : </p>
+                <div id="showBalls" class="subItem">
+                    voir motif : <input type="checkbox" id="checkParticles" onclick="showBalls()" checked>
+                </div>
+                <div id="ballFill" class="subItem">
+                    <div id="ballTexture">
+                        <span id="textureSelection">Motif selection : </span><br>
+                        <div id="spritesLib">
+                            <img src="./sprites/sprite(1).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(2).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(3).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(4).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(5).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(6).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(7).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(8).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(9).png" alt="" class="spriteItem activeSprite">
+                            <img src="./sprites/sprite(10).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(11).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(12).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(13).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(14).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(15).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(16).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(17).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(18).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(19).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(20).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(21).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(22).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(23).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(24).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(25).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(26).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(27).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(28).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(29).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(30).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(31).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(32).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(33).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(34).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(35).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(36).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(37).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(38).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(39).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(40).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(41).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(42).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(43).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(44).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(45).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(46).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(47).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(48).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(49).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(50).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(51).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(52).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(53).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(54).png" alt="" class="spriteItem">
+                        </div>
+                    </div>
+
+                    <div id="spriteSize" class="subItem">
+                        <label for="particleSize">Taille du Motif : </label>
+                        <input type="range" id="particleSize" name="particleSize" min="0.01" max="1" step="0.01"
+                            onmouseup="scaleParticle()">
+                    </div>
+                    Use colors > <input type="checkbox" id="checkFill" onclick="particleFill()">
+                    <br>
+                    <div id="ballColor">
+                        <label for="particlesColor"> - Particle color > </label>
+                        <input type="color" id="particlesColor" name="particlesColor" value="#e66465"
+                            onclick="loadColor()">
+                    </div>
+                </div>
+                <div id="ballFriction" class="subItem">
+                    <label for="airFric">friction de l'air : </label>
+                    <input type="range" id="airFric" name="airFric" min="0.01" max="1" step="0.02"
+                        onmouseup="changeAirFriction()">
+                </div>
+                <div id="ballMasse" class="subItem">
+                    <label for="circRadius">Particle radius : </label>
+                    <input type="range" id="circRadius" name="circRadius" min="3" max="20" step="1"
+                        onmouseup="changeRadius()">
+                </div>
+                <div id="ballDensity" class="subItem">
+                    <label for="density">Densité de particule : </label>
+                    <input type="range" id="density" name="density" min="0.005" max="0.2" step="0.005"
+                        onmouseup="changeDensity()">
+                </div>
+            </div>
+            <div class="itemInterface">
+                <p class="titleItem">Liens : </p>
+                <div class="subItem" id="showConst">
+                    voir le lien : <input type="checkbox" id="checkConstrains" onclick="showConstrains()" checked>
+                </div>
+                <div class="subItem" id="strokeStyle">
+                    <label for="constrainStyle">Couleur du lien : ></label>
+                    <input type="color" id="constrainStyle" name="constrainStyle" value="#e66465"
+                        onclick="constrainStyle()">
+                </div>
+                <div class="subItem" id="strokeWidth">
+                    <label for="constStrokeWidth">Épaisseur du trait : </label>
+                    <input type="range" id="constStrokeWidth" name="constStrokeWidth" min="0.1" max="2" step="0.1"
+                        onmouseup="constrainStyle()">
+                </div>
+                <div class="subItem" id="constLengthItem">
+                    <label for="constLength">Taille du lien : </label>
+                    <input type="range" id="constLength" name="constLength" min="1" max="200" step="4"
+                        onmouseup="constrainLength()">
+                </div>
+                <div class="subItem" id="stiffness">
+                    <label for="constStifness">Élasticité : </label>
+                    <input type="range" id="constStifness" name="constStifness" min="0.005" max="1" step="0.005"
+                        onmouseup="changeStiffness()">
+                </div>
+                <!-- <div class="subItem" id="anchors">
+                    Show anchors : <input type="checkbox" id="checkAnchors" onclick="showAnchors()">
+                </div> -->
+            </div>
+
+            <div class="itemInterface">
+                <p class="titleItem">Reload settings</p>
+                <div class="subItem">
+                    Your settings made for the past letter have disappeared ? Reload them !
+                    <button id="btnReload" onclick="fullReload()">RELOAD</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="interface_automate">
+            <p>Animation mode : </p>
+            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="1"
+                    checked> <label for="anim_mod">Cercle</label></div>
+            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="2">
+                <label for="anim_mod">Sinueux</label>
+            </div>
+            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="3">
+                <label for="anim_mod">Carré</label>
+            </div>
+            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="4">
+                <label for="anim_mod">Curseur</label>
+            </div>
+        </div>
+    </div>
+
+    <div id="p5_setup_wrapper">
+        <div id="P5_container"></div>
+
+        <div class="parameters" id="inputs_layers_wrapper">
+
+            <div class="step_layer" id="layerTextInput">
+                <h2>Text parameters</h2>
+                <div id="interface_text_input" class="interfaces">
+
+                    <div id="input_text_wrapper" class="formItem">
+                        <textarea placeholder="text here" id="input_text" name="story" rows="3" cols="40"></textarea>
+                    </div>
+
+                    <div class="formItem">
+                        <label for="fs_range">Fontsize : </label>
+                        <input id="fs_range" class="text_prop" name="fs_range" type="range" min="20" max="750"
+                            value="100">
+                        <p class="output_values" id="op_val_fs">150</p>
+                    </div>
+
+                    <div class="formItem">
+                        <label for="lh_range">Lineheight : </label>
+                        <input id="lh_range" class="text_prop" name="lh_range" type="range" min="20" max="650"
+                            value="100">
+                        <p class="output_values" id="op_val_lh">150</p>
+                    </div>
+
+                    <div class="formItem">
+                        <label for="mt_range">Margin top : </label>
+                        <input id="mt_range" class="text_prop" name="mt_range" type="range" min="0" max="500"
+                            value="100">
+                        <p class="output_values" id="op_val_mt">150</p>
+                    </div>
+
+                    <div class="formItem">
+                        <fieldset>
+                            <legend>Text Styles</legend>
+
+                            <input class="ft_style_btn" type="radio" id="" name="ft_style" value="0">
+                            <label for="">Normal</label><br>
+
+                            <input class="ft_style_btn" type="radio" id="" name="ft_style" value="1">
+                            <label for="">Italic</label><br>
+
+                            <input class="ft_style_btn" type="radio" id="" name="ft_style" value="2" />
+                            <label for="">Bold</label>
+
+                            <input class="ft_style_btn" type="radio" id="" name="ft_style" value="3" />
+                            <label for="">Bold Italic</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="formItem">
+                        <label for="fontfamily">Chose font family : </label>
+                        <input list="fontFamilies" name="fontfamily" id="fontfamily_menu">
+                        <datalist id="fontFamilies">
+                            <option value="Garamond">Garamond</option>
+                            <option value="Tahoma">Tahoma</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Courier">Courier</option>
+                            <option value="Gill Sans">Gill Sans</option>
+                            <option value="Impact">Impact</option>
+                            <option value="Trebuchet MS">Trebuchet MS</option>
+                            <option value="Brush Script MT">Brush Script MT</option>
+                            <option value="Georgia">Georgia</option>
+                        </datalist>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="step_layer" id="layerP5Grid">
+                <h2>Grid parameters</h2>
+                <div id="interface_grid_input" class="interfaces">
+
+                    <div class="formItem">
+                        <label for="lineThick">Lines thickness : </label>
+                        <input id="lt_range" class="grid_prop" name="lineThick" type="range" min="2" max="20" value="4"step="1">
+                        <p class="output_values" id="op_val_lt">4</p>
+                    </div>
+
+                    <div class="formItem">
+                        <label for="spaceThick">Spaces thickness : </label>
+                        <input id="st_range" class="grid_prop" name="spaceThick" type="range" min="2" max="20" value="4" step="1">
+                        <p class="output_values" id="op_val_st">4</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="step_layer" id="layerOpenCV">
+                <h2>OpenCV parameters</h2>
+                <div id="interface_opencv_input" class="interfaces">
+                    <div id="btn_count_dots" class="formItem">
+                        Click here twice to get the nbr of dots in preview image and save it in the 12th dataset.
+                    </div>
+                    <div class="formItem">
+                        output infos : <span id="op_nbr_dots"> ? </span> dots
+                    </div>
+                    <div id="op_data" class="formItem">
+                        Now that you see a number above, you can got to the matter js layer, by cliking on the Mt button
+                        inside the menu above in the dashed grey box; select dataset 12 on the left interface and press
+                        arrowDown or Up to check your new input.
+                    </div>
+                    <div id="imagesInputs" class="form Item">
+                        Be careful, a greater number of dots means a greater power consumption, above 300 - 500, you'll need a quite powerful computer connected to the powerline.
+                        Same goes for the size of sprites. 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div id="rythme_setup_wrapper">
+        <div class="inputs_layers_wrapper_class"></div>
+        <div class="parameters">
+
+        </div>
+    </div>
+
+    <script src="./libraries/p5.min.js"></script>
+    <script src="./node_modules/matter-js/build/matter.min.js"></script>
+    <script src="./node_modules/matter-attractors/build/matter-attractors.js"></script>
+
+    <script src="./script.js"></script>
+    <script src="./render.js"></script>
+    <script src="./p5_opencv.js"></script>
+
+    <script src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady()"></script>
+
+</body>
+
+</html>
