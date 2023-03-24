@@ -191,7 +191,7 @@ function displayLayer(node) {
                 layerP5.style.display = "none";
             }
             node.classList.add("activ_display");
-            layerRy.style.display = "block"
+            layerRy.style.display = "block";
         }
     } else if (node.id == "matter_disp_btn"){
         ui_overlay.forEach((e) => {

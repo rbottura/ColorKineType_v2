@@ -15,9 +15,8 @@
 </head>
 
 <body>
-    <a href="https://github.com/rbottura/ColorKineType_v2"><img style="position: absolute;z-index: 500; top: 0; right: 0; border: 0;"
-    src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" alt="Fork me on GitHub"></a>
-            <!-- style="position: absolute; z-index: 500;" -->
+    <span id="forkongithub"><a target="_blank" href="https://github.com/rbottura/ColorKineType_v2">GitHub Repo</a></span>
+    <!-- style="position: absolute; z-index: 500;" -->
     <div id="nav_bar_slider">
         <div id="nav_bar_wrapper">
             <div class="nav_bar_item">
@@ -212,7 +211,7 @@
                     voir le lien : <input type="checkbox" id="checkConstrains" onclick="showConstrains()" checked>
                 </div>
                 <div class="subItem" id="strokeStyle">
-                    <label for="constrainStyle">Couleur du lien : ></label>
+                    <label for="constrainStyle">Couleur du lien : </label>
                     <input type="color" id="constrainStyle" name="constrainStyle" value="#e66465"
                         onclick="constrainStyle()">
                 </div>
@@ -364,7 +363,7 @@
                         output infos : <span id="op_nbr_dots"> ? </span> dots
                     </div>
                     <div id="op_data" class="formItem">
-                        Now that you see a number above, you can got to the matter js layer, by cliking on the Mt button
+                        Now that you see a number above, you can go to the matter js layer, by cliking on the Mt button
                         inside the menu above in the dashed grey box; select dataset 12 on the left interface and press
                         arrowDown or Up to check your new input.
                     </div>
@@ -383,8 +382,14 @@
 
     <div id="rythme_setup_wrapper">
         <div class="inputs_layers_wrapper_class"></div>
+        <div id="warning_ry_panel" class="">
+            <p> Rien ici pour l'instant. <br> Nothing here for now.</p> <br>
+            <p class="txt_ry_warning">Prochainement, une interface utilisant tone.js et rythme.js pour animer
+                musicalement les paramètres disponibles.</p> <br>
+            <p class="txt_ry_warning">Soon, an interface using tone.js and rhythm.js to musically animate the available
+                parameters.</p>
+        </div>
         <div class="parameters">
-
         </div>
     </div>
 
