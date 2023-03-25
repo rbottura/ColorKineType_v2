@@ -157,6 +157,24 @@ const s = p => {
 
 new p5(s, P5_container); // invoke p5
 
+let P5_container_elem = document.querySelector("#P5_container");
+let p5canvas_loadingScreen = document.querySelector("#p5canvas_loadingScreen");
+
+waitCanvas(false);
+function waitCanvas(load){
+    if(!load){
+        if(P5_container_elem.children.length != 0){
+            waitCanvas(true);
+            p5canvas_loadingScreen.style.display = "none";
+        } else {
+            console.log("not laoded")
+            setTimeout(() => {waitCanvas(false)}, 250)
+        }
+        // if(P5_container_elem.children)
+    } else {
+        console.log("canvas loaded")
+    }
+}
 
 
 let ui_overlay = document.querySelectorAll(".ui_overlay");
@@ -237,3 +255,4 @@ function displayParameters(node){
 
     }
 }
+
