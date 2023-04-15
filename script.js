@@ -2,6 +2,8 @@
 
 const WiW = window.innerWidth, WiH = window.innerHeight;
 
+const canvasWidth = WiW, canvasHeight = WiH;
+
 // passage du text en input et calcul des tailles pour p5
 
 let input_text = document.querySelector("#input_text")
@@ -77,7 +79,8 @@ const s = p => {
     let textStyle = [p.NORMAL, p.ITALIC, p.BOLD, p.BOLDITALIC]
 
     p.setup = function () {
-        p.createCanvas(WiW, WiH);
+        p.createCanvas(canvasWidth, canvasHeight);
+        p.pixelDensity(1);
 
         class dotGrid {
             constructor(sizeX, spaceX, sizeY, spaceY, colorX, colorY) {
@@ -91,8 +94,8 @@ const s = p => {
                 this.colorX = colorX;
                 this.colorY = colorY;
 
-                this.gridH = WiH;
-                this.gridW = WiW;
+                this.gridH = canvasHeight;
+                this.gridW = canvasWidth;
 
                 this.grid = WiH;
 
@@ -147,7 +150,7 @@ const s = p => {
         p.textWrap(p.CHAR)
         p.textSize(fs)
         p.textStyle(textStyle[indexTxtStyle])
-        p.text(p5text, WiW / 2, fs - (fs / 4) + mt)
+        p.text(p5text, canvasWidth / 2, fs - (fs / 4) + mt)
 
         if (showGrid) {
             myGrid.show()

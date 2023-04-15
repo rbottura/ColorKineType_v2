@@ -84,7 +84,7 @@ function processImages(method) {
                 const moments = cv.moments(contours.get(j));
                 const cx = moments.m10 / moments.m00;
                 const cy = moments.m01 / moments.m00;
-                let pair = [cx/2, cy/2];
+                let pair = [cx, cy];
                 if (cx && cy) {
                     img.push(pair);
                     centroids.push({ x: cx, y: cy });

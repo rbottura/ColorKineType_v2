@@ -238,6 +238,7 @@ h2 {
     position: absolute;
     /* top: 250px; */
     z-index: 0;
+    border: black solid 1px;
 }
 
 #render_matter_interface{
@@ -496,4 +497,17 @@ input[type="radio" i] {
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+
+#saveImgBtn {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    color: orange;
+    background-color: aqua;
+    border: green solid 3px;
+    padding: 5px ;
+    font-size: large;
+    z-index: 1500;
 }

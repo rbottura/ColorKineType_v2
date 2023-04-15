@@ -7,17 +7,17 @@ class DataSet {
     }
 }
 
-const ListNameFonts = ['Alphabet', 'Raleway Dots', 'Default P5 font', 'Egyptienne Large', 'Garamond Italic', 'PeaceSans', 'Pilow', 'Typefesse', 'Mainz', "Phrase", "article", "custom"];
-// const ListOffsetX = [300, 100, 360, 220, 325, 220, 220, 220, 220]
-const ListOffsetX = [320, 100, 380, 250, 320, 250, 230, 250, 250, -100, 0]
-const ListOffsetY = [150, -0, 130, 70, -20, 50, 80, 100, 80, 20, 0]
+const ListNameFonts = ['Alphabet', 'Raleway Dots', 'Default P5 font', 'Egyptienne Large', 'Garamond Italic', 'PeaceSans', 'Pilow', 'Typefesse', 'Mainz', "Phrase", "article", "Destra", "Minipax", "custom"];
 
-for (let i = 0; i < ListOffsetY.length; i++) {
-    // ListOffsetY[i] += 300;
-    ListOffsetX[i] += 250;
+
+const ListOffsetX = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+const ListOffsetY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+for (let i = 0; i < ListOffsetX.length; i++) {
+    ListOffsetX[i] += 370;
 }
 
-const nbrDataSets = 11;
+const nbrDataSets = 13;
 let ListDataSets = [];
 
 let currentSetValue = 1 - (1);
@@ -69,8 +69,8 @@ let render = Render.create({
     // setPixelRatio: 10,
     options: {
         // width: Math.trunc(WiH/1.414),
-        width: WiW,
-        height: WiH,
+        width: canvasWidth,
+        height: canvasHeight,
         showAngleIndicator: false,
         wireframes: false,
         background: 'rgba(0,0,0,0)',
@@ -164,17 +164,6 @@ World.add(world, mouseConstraint);
 // keep the mouse in sync with rendering
 render.mouse = mouse;
 
-Events.on(engine, 'afterUpdate', function () {
-    if (!mouse.position.x) {
-        return;
-    }
-    // smoothly move the attractor body towards the mouse
-    //Body.translate(attractiveBody, {
-    //    x: (mouse.position.x - attractiveBody.position.x) * 0.1,
-    //    y: (mouse.position.y - attractiveBody.position.y) * 0.1
-    //});
-});
-
 
 var ballsCategory = 0x0001,
     mouseCategory = 0x0002;
@@ -194,12 +183,13 @@ function showLetter(e) {
     }
     checkReload = document.getElementById("checkReload").checked;
 
-    if (e.keyCode == 38) {
+    if (e.keyCode == 38 || e == 38) {
         console.log("UP")
         if (caracterIndex == ListDataSets[currentSetValue].jsondata.length - 1) {
             caracterIndex = 0;
             creaParticules2(caracterIndex)
         } else {
+            console.log(caracterIndex)
             caracterIndex++;
             creaParticules2(caracterIndex)
         }
@@ -234,7 +224,7 @@ function creaParticules2(caracter) {
     }
     console.log(ListDataSets[currentSetValue])
     for (let point = 0; point < ListDataSets[currentSetValue].jsondata[caracter].length; point++) {
-        let body = Bodies.circle(ListDataSets[currentSetValue].jsondata[caracter][point][posX] + globalOffsetX + ListDataSets[currentSetValue].offsetX, ListDataSets[currentSetValue].jsondata[caracter][point][posY] + 50 + + ListDataSets[currentSetValue].offsetY, 1, {
+        let body = Bodies.circle(ListDataSets[currentSetValue].jsondata[caracter][point][posX] + globalOffsetX + ListDataSets[currentSetValue].offsetX, ListDataSets[currentSetValue].jsondata[caracter][point][posY] + 50 + ListDataSets[currentSetValue].offsetY, 1, {
             render: {
                 fillStyle: "rgba(0,0,0,0)",
                 sprite: {
@@ -311,12 +301,12 @@ function upadateRotation() {
 let zoomVP = 1.0;
 Render.lookAt(render, {
     min: { x: 0, y: 0 },
-    max: { x: WiW * zoomVP, y: WiH * zoomVP }
+    max: { x: canvasWidth * zoomVP, y: canvasHeight * zoomVP }
 });
 
 let backgroundWall = Bodies.rectangle(WiW * zoomVP / 2, WiH * zoomVP / 2, WiW * zoomVP, WiH * zoomVP, {
     render: {
-        fillStyle: "white",
+        fillStyle: "none",
     },
     isStatic: true,
     isSensor: true,
@@ -489,7 +479,7 @@ function hideInterface() {
 }
 
 function setLightMode() {
-    backgroundWall.render.fillStyle == "white" ? backgroundWall.render.fillStyle = "black" : backgroundWall.render.fillStyle = "white"
+    backgroundWall.render.fillStyle == "black" ? backgroundWall.render.fillStyle = "white" : backgroundWall.render.fillStyle = "black"
 
     attractiveBody.render.fillStyle == "rgba(255,255,255,0.1)" ? attractiveBody.render.fillStyle = "rgba(0,0,0,0.1)" : attractiveBody.render.fillStyle = "rgba(255,255,255,0.1)"
 
@@ -640,4 +630,45 @@ function easeIn(from, to, ease) {
 let inputs_anim_btns = document.querySelectorAll(".inputs_anim_btns")
 for (const elem of inputs_anim_btns) {
     elem.addEventListener("click", (e) => { animMode = e.target.value })
+}
+
+
+
+
+
+document.querySelector("#saveImgBtn").addEventListener("click", () => {
+    saveCurrentSet();
+})
+
+function saveCurrentSet() {
+    console.log("caracter index : " + caracterIndex);
+    console.log(ListDataSets[currentSetValue])
+
+    let i = 0;
+    const renderCanvas = document.querySelector("#render_matter");
+
+    var id = setInterval(() => {
+
+        if (i >= ListDataSets[currentSetValue].jsondata.length) {
+            clearInterval(id);
+            return;
+        }
+
+        const dataURL = renderCanvas.toDataURL();
+
+        const image = document.createElement("img");
+        image.src = dataURL;
+        var a = document.createElement('a');
+        // console.log(image)
+        a.href = image.src
+        a.download = i
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        i++;
+
+        showLetter(38);
+
+    }, 300)
+
 }

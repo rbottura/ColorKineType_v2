@@ -12,12 +12,27 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./style.css">
+
+    
+    <script src="./libraries/p5.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js"></script> -->
+    <script src="./node_modules/matter-js/build/matter.min.js"></script>
+    <script src="./node_modules/matter-attractors/build/matter-attractors.js"></script>
+
+    <script src="./script.js"></script>
+    <script src="./render.js"></script>
+    <script src="./p5_opencv.js"></script>
+
+    <script src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady()"></script>
 </head>
 
 <body>
     <div id="p5canvas_loadingScreen">Loading ...</div>
     <span id="forkongithub"><a target="_blank" href="https://github.com/rbottura/ColorKineType_v2">GitHub Repo</a></span>
     <!-- style="position: absolute; z-index: 500;" -->
+    
+    <div id="saveImgBtn">Save</div>
+    
     <div id="nav_bar_slider">
         <div id="nav_bar_wrapper">
             <div class="nav_bar_item">
@@ -43,7 +58,7 @@
             <div id="css-box-handle" class="handle">move</div>
             <style id="styleHtml" contenteditable style="display: block; white-space: pre;">
                 canvas {
-                    filter: blur(0px) saturate(.4) contrast(2) hue-rotate(0deg);
+                    filter: blur(0px) saturate(1) contrast(1) hue-rotate(0deg);
                 }
             </style>
         </div>
@@ -108,7 +123,15 @@
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set12" name="sets" value="11">
-                    <label for="sets">data set 12 (custom)</label>
+                    <label for="sets">data set 12 (destra)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set13" name="sets" value="12">
+                    <label for="sets">data set 13 (Minipax)</label>
+                </div>
+                <div class="subItem">
+                    <input class="radioSets" type="radio" id="set14" name="sets" value="13">
+                    <label for="sets">data set 14 (custom)</label>
                 </div>
             </div>
             <div class="itemInterface">
@@ -174,6 +197,12 @@
                             <img src="./sprites/sprite(52).png" alt="" class="spriteItem">
                             <img src="./sprites/sprite(53).png" alt="" class="spriteItem">
                             <img src="./sprites/sprite(54).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(55).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(56).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(57).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(58).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(59).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(60).png" alt="" class="spriteItem">
                         </div>
                     </div>
 
@@ -394,15 +423,7 @@
         </div>
     </div>
 
-    <script src="./libraries/p5.min.js"></script>
-    <script src="./node_modules/matter-js/build/matter.min.js"></script>
-    <script src="./node_modules/matter-attractors/build/matter-attractors.js"></script>
-
-    <script src="./script.js"></script>
-    <script src="./render.js"></script>
-    <script src="./p5_opencv.js"></script>
-
-    <script src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady()"></script>
+    
 
 </body>
 
