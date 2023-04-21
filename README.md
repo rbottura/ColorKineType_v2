@@ -1,7 +1,7 @@
 Projet combinatoire du répo [colokinetype (v.1)](https://github.com/rbottura/colorkinetype).
 Cobining project from [colokinetype (v.1)](https://github.com/rbottura/colorkinetype) repo.  
 
-Live [DEMO](https://esad-gv.net/designgraphique/DG5-REN5/Raphael_Bottura/ColorKineType/)
+Live [DEMO](https://colorkinetype.com)
 
 # ColorKineType (v.2.0.0) [FR.]
 - **Text Parameters** :  

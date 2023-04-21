@@ -13,8 +13,13 @@ const ListNameFonts = ['Alphabet', 'Raleway Dots', 'Default P5 font', 'Egyptienn
 const ListOffsetX = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 const ListOffsetY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+function getScreenCenter(){
+    return 0.26 * WiW;
+}
+
 for (let i = 0; i < ListOffsetX.length; i++) {
-    ListOffsetX[i] += 370;
+    ListOffsetX[i] += getScreenCenter();
+    ListOffsetY[i] += 50;
 }
 
 const nbrDataSets = 13;
@@ -39,7 +44,7 @@ function loadDataSets() {
     } else {
         // creaParticules2(19);
         showLetter('start');
-        ListDataSets.push(jsondata12)
+        ListDataSets.push(jsondata13)
     }
 }
 
@@ -306,7 +311,7 @@ Render.lookAt(render, {
 
 let backgroundWall = Bodies.rectangle(WiW * zoomVP / 2, WiH * zoomVP / 2, WiW * zoomVP, WiH * zoomVP, {
     render: {
-        fillStyle: "none",
+        fillStyle: "white",
     },
     isStatic: true,
     isSensor: true,

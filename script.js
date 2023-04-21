@@ -69,7 +69,7 @@ document.querySelector("#st_range").addEventListener("change", (e) => {
 
 
 // put grid
-
+// Use of P5 instanced mode to be abale to target a specific canvas container
 const s = p => {
 
     let myGrid;

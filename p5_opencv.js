@@ -1,7 +1,7 @@
 // Fonction p5 pour passer la grille, creer l'image, passer l'image dans opencv
 
-let data12 = [[[0,0]]]
-let jsondata12 = new DataSet("custom", data12, 0, 0);
+let data13 = [[[0,0]]]
+let jsondata13 = new DataSet("custom", data13, 0, 0);
 
 let images = [], previewImage;
 
@@ -121,9 +121,9 @@ function processImages(method) {
             images = [];
             // document.querySelector("#op_data").innerHTML = jsondata[0];
             if(jsondata.length != 0){
-                data12.push(jsondata[0]);
+                data13.push(jsondata[0]);
                 jsondata = [];
-                createNewDotCharacter(data12)
+                createNewDotCharacter(data13)
             }
 
         } else {
@@ -135,5 +135,5 @@ function processImages(method) {
 }
 
 function createNewDotCharacter(data){
-    jsondata12.jsondata = data;
+    jsondata13.jsondata = data;
 }
