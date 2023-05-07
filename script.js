@@ -97,7 +97,6 @@ const s = p => {
     let sizeX = 4, spaceX = 4, sizeY = sizeX, spaceY = spaceX, colorX = 'white', colorY = 'white';
 
     let textStyle = [p.NORMAL, p.ITALIC, p.BOLD, p.BOLDITALIC]
-    let angle = 0;
 
     p.setup = function () {
         p.createCanvas(canvasWidth, canvasHeight);
@@ -157,14 +156,13 @@ const s = p => {
 
     //PAUSE the draw loop for better performances
     document.querySelectorAll("#matter_disp_btn, #p5_disp_btn").forEach(elem => {
-        elem.addEventListener("click", () => {
-            let btn = document.querySelector("#p5_disp_btn");
-            if(!btn.classList.contains("activ_display")){
-                console.log("play")
-                p.loop()
-            } else if (btn.classList.contains("activ_display")){
-                console.log("stop")
-                p.noLoop()
+        elem.addEventListener("click", (e) => {
+            if (displayLayer(e.target, "p5")) {
+                console.log("PLAYYYYY")
+                console.log(e.target)
+            } else {
+                console.log("STOOOOP")
+                console.log(e.target)
             }
         })
     })
@@ -229,43 +227,60 @@ ui_overlay.forEach((e) => {
     })
 })
 
-function displayLayer(node) {
+function displayLayer(node, loop) {
     const layerP5 = document.querySelector("#p5_setup_wrapper");
     const layerMt = document.querySelector("#render_matter");
     const layerRy = document.querySelector("#rythme_setup_wrapper");
-    if (node.id == "p5_disp_btn") {
-        if (node.classList.contains("activ_display")) {
-            node.classList.remove("activ_display");
-            layerP5.style.display = "none";
-        } else {
-            if (ui_overlay[2].classList.contains("activ_display")) {
-                ui_overlay[2].classList.remove("activ_display");
-                layerRy.style.display = "none";
-            }
-            node.classList.add("activ_display");
-            layerP5.style.display = "block";
+    let currentDisp;
+    if (loop == "p5") {
+        if (currentDisp == "P5") {
+            cancelAnimationFrame(animReq)
+            return true
+        } else if (currentDisp == "MT" || currentDisp == "RY") {
+            animateMode()
+            return false
         }
-    } else if (node.id == "ry_disp_btn") {
-        if (node.classList.contains("activ_display")) {
-            node.classList.remove("activ_display");
-            layerRy.style.display = "none";
-        } else {
-            if (ui_overlay[0].classList.contains("activ_display")) {
-                ui_overlay[0].classList.remove("activ_display");
+    } else {
+        console.log(node.classList[2])
+        if (node.id == "p5_disp_btn") {
+            if (node.classList.contains("activ_display")) {
+                node.classList.remove("activ_display");
                 layerP5.style.display = "none";
+                currentDisp = "MT";
+            } else {
+                if (ui_overlay[2].classList.contains("activ_display")) {
+                    ui_overlay[2].classList.remove("activ_display");
+                    layerRy.style.display = "none";
+                }
+                node.classList.add("activ_display");
+                layerP5.style.display = "block";
+                currentDisp = "P5";
             }
-            node.classList.add("activ_display");
-            layerRy.style.display = "block";
-        }
-    } else if (node.id == "matter_disp_btn") {
-        ui_overlay.forEach((e) => {
-            // console.log(e)
-            if (e.classList.contains("activ_display")) {
-                e.classList.remove("activ_display")
-                layerP5.style.display = "none";
+        } else if (node.id == "ry_disp_btn") {
+            if (node.classList.contains("activ_display")) {
+                node.classList.remove("activ_display");
                 layerRy.style.display = "none";
+                currentDisp = "MT"
+            } else {
+                if (ui_overlay[0].classList.contains("activ_display")) {
+                    ui_overlay[0].classList.remove("activ_display");
+                    layerP5.style.display = "none";
+                }
+                node.classList.add("activ_display");
+                layerRy.style.display = "block";
+                currentDisp = "RY"
             }
-        })
+        } else if (node.id == "matter_disp_btn") {
+            ui_overlay.forEach((e) => {
+                // console.log(e)
+                if (e.classList.contains("activ_display")) {
+                    e.classList.remove("activ_display")
+                    layerP5.style.display = "none";
+                    layerRy.style.display = "none";
+                    currentDisp = "MT"
+                }
+            })
+        }
     }
 }
 
@@ -287,7 +302,7 @@ function showParameters(node) {
             p5Param.style.display = "none";
         } else {
             node.classList.add("activ_parameters");
-            p5Param.style.display = "flex";
+            p5Param.style.display = "block";
         }
     } else if (node.id == "matter_param") {
         if (node.classList.contains("activ_parameters")) {

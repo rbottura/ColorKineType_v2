@@ -7,11 +7,9 @@ class DataSet {
     }
 }
 
-const ListNameFonts = ['Alphabet', 'Raleway Dots', 'Default P5 font', 'Egyptienne Large', 'Garamond Italic', 'PeaceSans', 'Pilow', 'Typefesse', 'Mainz', "Phrase", "article", "Destra", "Minipax", "custom"];
-
-
-const ListOffsetX = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-const ListOffsetY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+const ListNameFonts = ['Alphabet', 'Raleway Dots', 'Egyptienne Large', 'Garamond Italic', 'PeaceSans', 'Pilow', 'Mainz', "Destra", "Minipax", "custom"];
+const ListOffsetX = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+const ListOffsetY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 function getScreenCenter(){
     return 0.26 * WiW;
@@ -22,7 +20,7 @@ for (let i = 0; i < ListOffsetX.length; i++) {
     ListOffsetY[i] += 50;
 }
 
-const nbrDataSets = 13;
+const nbrDataSets = ListNameFonts.length - 1;
 let ListDataSets = [];
 
 let currentSetValue = 1 - (1);
@@ -563,7 +561,7 @@ function gravCircle() {
         x: (((WiW * zoomVP / 2.2) + (Math.cos(rotateVal) * WiW / 2.5)) - attractiveBody.position.x) * 0.1,
         y: ((WiH * zoomVP / 2.2) + Math.sin(rotateVal) * WiH / 1.5 - attractiveBody.position.y) * 0.1
     })
-    rotateVal += 0.018;
+    rotateVal += 0.02;
 }
 
 let stepEight = 0, nbrNoeuds = 2, xval = 0;
@@ -575,7 +573,7 @@ function gravEight() {
         x: (((WiW * zoomVP / 2) + Math.cos(xval) * ampX) - attractiveBody.position.x) * 0.01,
         y: (((WiH * zoomVP / 2.5) + Math.sin(stepEight) * ampY) - attractiveBody.position.y) * 0.01
     })
-    xval += 5 / nbrNoeuds * 0.01;
+    xval += 5 / nbrNoeuds * 0.05;
     stepEight += 0.008;
 }
 
@@ -611,6 +609,7 @@ function mouseCtrl() {
     });
 }
 
+let animReq;
 animateMode()
 function animateMode() {
     if (animMode == 1) {
@@ -625,7 +624,7 @@ function animateMode() {
     if (animMode == 4) {
         mouseCtrl()
     }
-    requestAnimationFrame(animateMode)
+    animReq = requestAnimationFrame(animateMode)
 }
 
 function easeIn(from, to, ease) {

@@ -124,12 +124,6 @@ function showCstSet(){
     showLetter(38);
 }
 
-document.addEventListener("keydown", (e) => {
-    if(e.key == "m"){
-        // loadLyrics()
-    }
-})
-
 let wordCount = 0;
 function loadLyrics() {
 
