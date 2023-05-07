@@ -44,7 +44,7 @@ function loadDataSets() {
     } else {
         // creaParticules2(19);
         showLetter('start');
-        ListDataSets.push(jsondata13)
+        ListDataSets.push(jsonCstSet)
     }
 }
 
@@ -641,15 +641,18 @@ for (const elem of inputs_anim_btns) {
 
 
 
-document.querySelector("#saveImgBtn").addEventListener("click", () => {
-    saveCurrentSet();
-})
+// document.querySelector("#saveImgBtn").addEventListener("click", () => {
+    // console.log(document.querySelector("#render_matter").getContext("2d").filter)
+    // saveCurrentSet();
+// })
 
 function saveCurrentSet() {
     console.log("caracter index : " + caracterIndex);
     console.log(ListDataSets[currentSetValue])
 
     let i = 0;
+    
+    document.querySelector("#render_matter").getContext("2d").filter = "saturate(1) contrast(3) hue-rotate(0deg) grayScale(1)"
     const renderCanvas = document.querySelector("#render_matter");
 
     var id = setInterval(() => {
@@ -662,6 +665,7 @@ function saveCurrentSet() {
         const dataURL = renderCanvas.toDataURL();
 
         const image = document.createElement("img");
+        image.style.filter = "blur(0px) saturate(2) contrast(2) hue-rotate(0deg) grayScale(1);"
         image.src = dataURL;
         var a = document.createElement('a');
         // console.log(image)

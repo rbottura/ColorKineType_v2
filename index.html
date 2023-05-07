@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./style.css">
-
+    <script src="./node_modules/howler/dist/howler.js"></script>
 
 </head>
 
@@ -22,7 +22,7 @@
             Repo</a></span>
     <!-- style="position: absolute; z-index: 500;" -->
 
-    <div id="saveImgBtn">Save</div>
+    <!-- <div id="saveImgBtn">Save</div> -->
 
     <div id="nav_bar_slider">
         <div id="nav_bar_wrapper">
@@ -48,7 +48,7 @@
         <div id="htmlInterface" class="drag">
             <div id="css-box-handle" class="handle">move</div>
             <style id="styleHtml" contenteditable style="display: block; white-space: pre;">
-                canvas {
+                #render_matter {
                     filter: blur(0px) saturate(1) contrast(1) hue-rotate(0deg);
                 }
             </style>
@@ -194,6 +194,12 @@
                             <img src="./sprites/sprite(58).png" alt="" class="spriteItem">
                             <img src="./sprites/sprite(59).png" alt="" class="spriteItem">
                             <img src="./sprites/sprite(60).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(61).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(62).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(63).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(64).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(65).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(66).png" alt="" class="spriteItem">
                         </div>
                     </div>
 
@@ -284,116 +290,137 @@
     <div id="p5_setup_wrapper">
         <div id="P5_container"></div>
 
-        <div class="parameters" id="inputs_layers_wrapper">
+        <div id="p5_param_wrapper_center">
+            <div id="p5_paramWindow_wrapper">
 
-            <div class="step_layer" id="layerTextInput">
-                <h2>Text parameters</h2>
-                <div id="interface_text_input" class="interfaces">
+                <div id="tabs_selection">
+                    <div class="tab_button active_tab_p5" >text input</div>
+                    <div class="tab_button" >dataset generator (in dev)</div>
+                    <div class="tab_button" >image input (in dev)</div>
+                </div>
+                <div id="tab1_grid_input">
+                    <div class="parameters" id="inputs_layers_wrapper">
 
-                    <div id="input_text_wrapper" class="formItem">
-                        <textarea placeholder="text here" id="input_text" name="story" rows="3" cols="40"></textarea>
+                        <div class="step_layer" id="layerTextInput">
+                            <h2>Text parameters</h2>
+                            <div id="interface_text_input" class="interfaces">
+
+                                <div id="input_text_wrapper" class="formItem">
+                                    <textarea placeholder="Custom txt" id="input_text" name="story" rows="3"
+                                        cols="40"></textarea>
+                                </div>
+
+                                <div class="formItem">
+                                    <label for="fs_range">Fontsize : </label>
+                                    <input id="fs_range" class="text_prop" name="fs_range" type="range" min="20"
+                                        max="750" value="100">
+                                    <!-- <p class="output_values" >150</p> -->
+                                    <input class="input_number" id="op_val_fs" type="number">
+                                </div>
+
+                                <div class="formItem">
+                                    <label for="lh_range">Lineheight : </label>
+                                    <input id="lh_range" class="text_prop" name="lh_range" type="range" min="20"
+                                        max="650" value="100">
+                                    <!-- <p class="output_values" >150</p> -->
+                                    <input class="input_number" id="op_val_lh" type="number">
+                                </div>
+
+                                <div class="formItem">
+                                    <label for="mt_range">Margin top : </label>
+                                    <input id="mt_range" class="text_prop" name="mt_range" type="range" min="0"
+                                        max="500" value="100">
+                                    <!-- <p class="output_values" >150</p> -->
+                                    <input class="input_number" id="op_val_mt" type="number">
+                                </div>
+
+                                <div class="formItem" id="fieldset_wrapper">
+                                    <fieldset id="fieldset_elem">
+                                        <legend>Text Styles</legend>
+
+                                        <input class="ft_style_btn" type="radio" id="" name="ft_style" value="0">
+                                        <label for="">Normal</label><br>
+
+                                        <input class="ft_style_btn" type="radio" id="" name="ft_style" value="1">
+                                        <label for="">Italic</label><br>
+
+                                        <input class="ft_style_btn" type="radio" id="" name="ft_style" value="2" />
+                                        <label for="">Bold</label>
+
+                                        <input class="ft_style_btn" type="radio" id="" name="ft_style" value="3" />
+                                        <label for="">Bold Italic</label>
+                                    </fieldset>
+                                </div>
+
+                                <div class="formItem">
+                                    <label for="fontfamily">Chose font family : </label>
+                                    <input list="fontFamilies" name="fontfamily" id="fontfamily_menu">
+                                    <datalist id="fontFamilies">
+                                        <option value="Garamond">Garamond</option>
+                                        <option value="Tahoma">Tahoma</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Arial">Arial</option>
+                                        <option value="Courier">Courier</option>
+                                        <option value="Gill Sans">Gill Sans</option>
+                                        <option value="Impact">Impact</option>
+                                        <option value="Trebuchet MS">Trebuchet MS</option>
+                                        <option value="Brush Script MT">Brush Script MT</option>
+                                        <option value="Georgia">Georgia</option>
+                                    </datalist>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="step_layer" id="layerP5Grid">
+                            <h2>Grid parameters</h2>
+                            <div id="interface_grid_input" class="interfaces">
+
+                                <div class="formItem">
+                                    <label for="lineThick">Lines thickness : </label>
+                                    <input id="lt_range" class="grid_prop" name="lineThick" type="range" min="1"
+                                        max="20" value="4" step="1">
+                                    <input class="output_values input_number" id="op_val_lt" type="number">
+                                </div>
+
+                                <div class="formItem">
+                                    <label for="spaceThick">Spaces thickness : </label>
+                                    <input id="st_range" class="grid_prop" name="spaceThick" type="range" min="1"
+                                        max="20" value="4" step="1">
+                                    <input class="output_values input_number" id="op_val_st" type="number">
+                                </div>
+
+                                <div class="formItem">
+                                    <label for="rot_grid">Rotation : </label>
+                                    <input id="rot_range" class="grid_prop" name="rot_grid" type="range" min="0"
+                                        max="180" value="45" step="1">
+                                    <input class="output_values input_number" id="op_val_rot" type="number">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="step_layer" id="layerOpenCV">
+                            <h2>OpenCV parameters</h2>
+                            <div id="interface_opencv_input" class="interfaces">
+                                <div id="btn_count_dots" class="formItem" onclick="onOpenCvReady()">
+                                    ! Click here to count dots !
+                                </div>
+                                <div id="preview_dotted_image" class="formItem"></div>
+                                <div class="formItem">
+                                    output infos : <span id="op_nbr_dots"> ? </span> dots
+                                </div>
+                                <div class="formItem btn_opencv" onclick="createNewDotCharacter()">add w/out preview
+                                </div>
+                                <div class="formItem btn_opencv" onclick="showCstSet()">add w/ preview</div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="formItem">
-                        <label for="fs_range">Fontsize : </label>
-                        <input id="fs_range" class="text_prop" name="fs_range" type="range" min="20" max="750"
-                            value="100">
-                        <p class="output_values" id="op_val_fs">150</p>
-                    </div>
-
-                    <div class="formItem">
-                        <label for="lh_range">Lineheight : </label>
-                        <input id="lh_range" class="text_prop" name="lh_range" type="range" min="20" max="650"
-                            value="100">
-                        <p class="output_values" id="op_val_lh">150</p>
-                    </div>
-
-                    <div class="formItem">
-                        <label for="mt_range">Margin top : </label>
-                        <input id="mt_range" class="text_prop" name="mt_range" type="range" min="0" max="500"
-                            value="100">
-                        <p class="output_values" id="op_val_mt">150</p>
-                    </div>
-
-                    <div class="formItem">
-                        <fieldset>
-                            <legend>Text Styles</legend>
-
-                            <input class="ft_style_btn" type="radio" id="" name="ft_style" value="0">
-                            <label for="">Normal</label><br>
-
-                            <input class="ft_style_btn" type="radio" id="" name="ft_style" value="1">
-                            <label for="">Italic</label><br>
-
-                            <input class="ft_style_btn" type="radio" id="" name="ft_style" value="2" />
-                            <label for="">Bold</label>
-
-                            <input class="ft_style_btn" type="radio" id="" name="ft_style" value="3" />
-                            <label for="">Bold Italic</label>
-                        </fieldset>
-                    </div>
-
-                    <div class="formItem">
-                        <label for="fontfamily">Chose font family : </label>
-                        <input list="fontFamilies" name="fontfamily" id="fontfamily_menu">
-                        <datalist id="fontFamilies">
-                            <option value="Garamond">Garamond</option>
-                            <option value="Tahoma">Tahoma</option>
-                            <option value="Times New Roman">Times New Roman</option>
-                            <option value="Arial">Arial</option>
-                            <option value="Courier">Courier</option>
-                            <option value="Gill Sans">Gill Sans</option>
-                            <option value="Impact">Impact</option>
-                            <option value="Trebuchet MS">Trebuchet MS</option>
-                            <option value="Brush Script MT">Brush Script MT</option>
-                            <option value="Georgia">Georgia</option>
-                        </datalist>
-                    </div>
+                </div>
+                <div id="tab2_grid_input">
 
                 </div>
-            </div>
 
-            <div class="step_layer" id="layerP5Grid">
-                <h2>Grid parameters</h2>
-                <div id="interface_grid_input" class="interfaces">
-
-                    <div class="formItem">
-                        <label for="lineThick">Lines thickness : </label>
-                        <input id="lt_range" class="grid_prop" name="lineThick" type="range" min="2" max="20" value="4"
-                            step="1">
-                        <p class="output_values" id="op_val_lt">4</p>
-                    </div>
-
-                    <div class="formItem">
-                        <label for="spaceThick">Spaces thickness : </label>
-                        <input id="st_range" class="grid_prop" name="spaceThick" type="range" min="2" max="20" value="4"
-                            step="1">
-                        <p class="output_values" id="op_val_st">4</p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="step_layer" id="layerOpenCV">
-                <h2>OpenCV parameters</h2>
-                <div id="interface_opencv_input" class="interfaces">
-                    <div id="btn_count_dots" class="formItem">
-                        Click here twice to get the nbr of dots in preview image and save it in the 12th dataset.
-                    </div>
-                    <div class="formItem">
-                        output infos : <span id="op_nbr_dots"> ? </span> dots
-                    </div>
-                    <div id="op_data" class="formItem">
-                        Now that you see a number above, you can go to the matter js layer, by cliking on the Mt button
-                        inside the menu above in the dashed grey box; select dataset 12 on the left interface and press
-                        arrowDown or Up to check your new input.
-                    </div>
-                    <div id="imagesInputs" class="form Item">
-                        Be careful, a greater number of dots means a greater power consumption, above 300 - 500, you'll
-                        need a quite powerful computer connected to the powerline.
-                        Same goes for the size of sprites.
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -402,18 +429,29 @@
     </div>
 
     <div id="rythme_setup_wrapper">
-        <div class="inputs_layers_wrapper_class"></div>
+        <div class="inputs_layers_wrapper_class">
+            <div id="play_lyrics_wrapper" class="drag">
+                <div id="css-box-handle" class="handle">move</div>
+
+                <p><span id="seconds">00</span></p>
+                <button id="button-start">Start</button>
+                <button id="button-stop">Stop</button>
+                <button id="button-reset">Reset</button>
+            </div>
+        </div>
         <div id="warning_ry_panel" class="">
             <p> Rien ici pour l'instant. <br> Nothing here for now.</p> <br>
-            <p class="txt_ry_warning">Prochainement, une interface utilisant theatre.js pour animer (en musique ?) les paramètres disponibles.</p> <br>
-            <p class="txt_ry_warning">Soon, an interface using theatre.js to (musically ?) animate the available parameters.</p>
+            <p class="txt_ry_warning">Prochainement, une interface utilisant theatre.js pour animer (en musique ?) les
+                paramètres disponibles.</p> <br>
+            <p class="txt_ry_warning">Soon, an interface using theatre.js to (musically ?) animate the available
+                parameters.</p>
         </div>
         <div class="parameters">
         </div>
     </div>
 
 
-
+    <script src="https://docs.opencv.org/master/opencv.js"></script>
     <script src="./libraries/p5.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js"></script> -->
     <script src="./libraries/matter.min.js"></script>
@@ -421,7 +459,7 @@
     <script src="./script.js"></script>
     <script src="./render.js"></script>
     <script src="./p5_opencv.js"></script>
-    <script src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady()"></script>
+    <script src="./lrc-parser/script.js"></script>
 
 </body>
 

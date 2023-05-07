@@ -4,7 +4,6 @@ body {
 }
 
 #forkongithub a {
-    /* background: #00000040; */
     color: #9f9f9f;
     border: solid black 1px;
     text-decoration: none;
@@ -87,11 +86,7 @@ body {
 }
 
 #matter_disp_btn {
-    background-color: rgb(255, 255, 255);
-    border: rgb(18, 83, 18) solid 1px;
-    border-radius: 25px;
     box-shadow: 0px 0px 2px 2px rgb(10, 198, 98) inset;
-    padding: 0px 2px;
 }
 
 .nav_bar_item {
@@ -132,17 +127,6 @@ body {
     border-radius: 10px;
 }
 
-#inputs_layers_wrapper {
-    display: flex;
-    flex-direction: row;
-    z-index: 15;
-    overflow: hidden;
-    padding: 20px;
-    margin-top: 180px;
-
-    transition: width 0.5s, height 0.5s;
-}
-
 .folded {
     display: block;
     width: 50px;
@@ -150,15 +134,25 @@ body {
     overflow: hidden;
 }
 
+#p5_paramWindow_wrapper{
+    border: black solid 1px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 0px 35px -22px black;
+}
+
 .step_layer {
     position: relative;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 20px;
-    backdrop-filter: blur(5px);
-    padding: 5px;
-    margin: 40px 20px 40px 20px;
+    padding: 10px;
+    margin-top: 10px;
     max-width: 400px;
-    background-color: rgba(255, 255, 255, 0.3);
+    border: orangered solid 1px;
+}
+
+.step_layer + .step_layer {
+    margin-left: 7px;
 }
 
 p {
@@ -169,6 +163,9 @@ h2 {
     margin: 5px;
 }
 
+.preview_image {
+    width: 100%;
+}
 
 .interfaces {
     text-align: center;
@@ -187,17 +184,53 @@ h2 {
     font-size: 30px;
 }
 
-#layerTextInput {
-    margin-left: 80px;
-    box-shadow: 0px 0px 25px -10px orangered;
+#p5_setup_wrapper {
+    display: block;
+    position: absolute;
+    z-index: 2;
 }
 
-#layerP5Grid {
-    box-shadow: 0px 0px 25px -10px blueviolet;   
+#p5_param_wrapper_center{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 150;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    border: solid olivedrab 1px;
+    padding: 10px;
 }
 
-#layerOpenCV {
-    box-shadow: 0px 0px 25px -10px rgb(27, 179, 47);  
+#tabs_selection {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.tab_button {
+    border: black solid 1px;
+    font-size: 20px;
+    padding: 7px 12px;
+    background-color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.active_tab_p5 {
+    background-color: orangered;
+    color: white;
+    font-weight: bold;
+}
+
+#inputs_layers_wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+    z-index: 15;
+    overflow: hidden;
 }
 
 .formItem{
@@ -208,8 +241,27 @@ h2 {
     margin: 2px;
     border: 1px solid black;
     text-align: center;
+    background-color: #ffffff88;
     /* align-self:flex-start; */
     /* width: 90%; */
+}
+
+.input_number {
+    width: 3em;
+}
+
+#fieldset_wrapper{
+    border: none;
+}
+
+#fieldset_elem{
+    display: flex;
+    width: 100%;
+    padding: 10px 15px 10px 5px;
+}
+
+#fieldset_elem > .ft_style_btn {
+    margin: 0px 5px 0px 15px;
 }
 
 #output_infos{
@@ -247,14 +299,9 @@ h2 {
     z-index: 1;
 }
 
-#p5_setup_wrapper {
-    display: block;
-    position: absolute;
-    z-index: 2;
+.btn_opencv {
+    cursor: pointer;
 }
-
-
-
 
 input {
     cursor: pointer;
@@ -287,21 +334,22 @@ input {
     margin: 0;
 }
 
-#htmlInterface{
+.drag{
     display: block;
     position: absolute;
     z-index: 50;
-    /* max-width: 300px; */
+    border: rgb(72, 0, 255) 1px solid;
+    backdrop-filter: blur(5px);
+    min-width: 150px;
+    padding: 7px;
+}
+
+#htmlInterface{
     width: 40vw;
     left: 50vw;
     top: 20px;
     background-color: rgba(72, 0, 255, 0.01);
-    padding: 7px;
     color: black;
-    border: rgb(72, 0, 255) 1px solid;
-    backdrop-filter: blur(5px);
-    /* border-radius: 15px; */
-    /* box-shadow: 0px 0px 8px rgb(147, 147, 147); */
 }
 
 #listeLettre {

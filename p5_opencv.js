@@ -1,44 +1,34 @@
 // Fonction p5 pour passer la grille, creer l'image, passer l'image dans opencv
 
-let data13 = [[[0,0]]]
-let jsondata13 = new DataSet("custom", data13, 0, 0);
+let cstSet = [[[0]]];
+let jsonCstSet = new DataSet("custom", cstSet, 0, 0);
 
 let images = [], previewImage;
 
-function onOpenCvReady() {
+function onOpenCvReady(method) {
 
-    document.querySelector('#imagesInputs').addEventListener('change', function () {
+    const data = document.querySelector("#defaultCanvas0");
+    images.push(data)
+    let prevImage = document.createElement("img")
+    prevImage.classList.add("preview_image")
+    prevImage.src = data.toDataURL();
 
-        images = [];
+    let box_prev = document.querySelector("#preview_dotted_image");
+    console.log(box_prev) 
+    if(box_prev.children.length == 0){
+        box_prev.appendChild(prevImage)
+    } else {
+        box_prev.innerHTML = "";
+        box_prev.appendChild(prevImage)
+    }
 
-        for (let i = 0; i < this.files.length; i++) {
+    if (method == "addNoPrev") {
+        processImages("save");
+    } else if (method == "addPrev") {
+        processImages("save");
+    }
 
-            const file = this.files[i];
-            if (!file.type.match('image.*')) continue;
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                const imgElement = document.createElement('img');
-                imgElement.src = event.target.result;
-                images.push(imgElement);
-            };
-            reader.readAsDataURL(file);
-        }
-    }, false);
-
-    document.querySelector("#btn_count_dots").addEventListener("click", (e) => {
-        
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            
-            const currentImg = document.createElement("img")
-            currentImg.src = e.target.result;
-            images.push(currentImg)
-            processImages("preview");
-        }
-        document.querySelector("#defaultCanvas0").toBlob((blob) => {
-            reader.readAsDataURL(blob);
-        });
-    })
+    processImages("count");
 }
 
 let jsondata = [];
@@ -49,13 +39,13 @@ function processImages(method) {
 
     const data = {};
     const promises = [];
-    
+
     for (let i = 0; i < images.length; i++) {
         promises.push(new Promise((resolve, reject) => {
             const imgElement = images[i];
-            
+
             let img = [];
-            
+
             // Load the image and convert it to grayscale
             const src = cv.imread(imgElement);
             const gray = new cv.Mat();
@@ -96,8 +86,6 @@ function processImages(method) {
             // Store the coordinates of the centroids in the output object
             data[`image${i}`] = centroids;
 
-            console.log(data)
-
             // Clean up
             src.delete();
             gray.delete();
@@ -110,30 +98,52 @@ function processImages(method) {
         }));
     }
 
-
     // console.log(data)
     // Wait for all promises to resolve before writing the output to a file
+    const output = document.querySelector("#op_nbr_dots");
     Promise.all(promises).then(() => {
-        console.log(jsondata)
-        if (method == "preview") {
-            const output = document.querySelector("#op_nbr_dots");
-            output.innerHTML = " "+countDots;
-            images = [];
-            // document.querySelector("#op_data").innerHTML = jsondata[0];
-            if(jsondata.length != 0){
-                data13.push(jsondata[0]);
-                jsondata = [];
-                createNewDotCharacter(data13)
-            }
-
-        } else {
-            const output = document.getElementById('output');
-            // output.innerHTML = `Found ${JSON.stringify(data)} white blobs in ${images.length}`
-            output.innerHTML = `Found ${JSON.stringify(jsondata)} white blobs in ${images.length}`
+        images = [];
+        if ("count") {
+            output.innerHTML = " " + countDots;
         }
     })
 }
 
-function createNewDotCharacter(data){
-    jsondata13.jsondata = data;
+function createNewDotCharacter() {
+    if (jsondata.length != 0) {
+        cstSet.push(jsondata[0]);
+        jsondata = [];
+        jsonCstSet.jsondata = cstSet;
+    }
+}
+
+function showCstSet(){
+    createNewDotCharacter();
+    document.querySelector("#matter_disp_btn").click();
+    document.querySelector("#set14").click();
+    showLetter(38);
+}
+
+document.addEventListener("keydown", (e) => {
+    if(e.key == "m"){
+        // loadLyrics()
+    }
+})
+
+let wordCount = 0;
+function loadLyrics() {
+
+    let newWord = input_text.innerHTML = obj[wordCount].word;
+    p5text = newWord;
+
+    console.log(document.querySelector("#btn_count_dots"))
+    document.querySelector("#btn_count_dots").click()
+    document.querySelector("#btn_count_dots").click()
+
+    setTimeout(() => {
+        if (cstSet.length >= wordCount + 2) {
+            wordCount++;
+            loadLyrics()
+        }
+    }, 220);
 }
