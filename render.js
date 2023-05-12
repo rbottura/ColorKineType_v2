@@ -36,7 +36,7 @@ function loadDataSets() {
             .then(response => response.json())
             .then(jsondata => {
                 ListDataSets.push(new DataSet(ListNameFonts[dataSetIndex], jsondata, ListOffsetX[dataSetIndex], ListOffsetY[dataSetIndex]))
-                if (dataSetIndex == 2) {
+                if (dataSetIndex == 0) {
                     gen(jsondata)
                 }
                 dataSetIndex++;
@@ -49,28 +49,59 @@ function loadDataSets() {
     }
 }
 
+// i0 : { name : "A", points : { pt1 : [20, 50] }}
+
 
 const sets = {}
 function gen(dataset) {
     const obj = {};
     for (let i = 0; i < dataset.length; i++) {
-        const ltr = {};
+        let indexProp = 'i' + (i+1);
+        obj[indexProp] = {};
 
-        let nameProp = 'i' + i;
-        ltr[nameProp] = 'A';
-
+        const points = {};
         for (let j = 0; j < dataset[i].length; j++) {
-            const pointProp = {};
-            
-            let ptProp = 'pt' + j;
-            pointProp[ptProp] = dataset[i][j];
-            
-            ltr['points'] = pointProp;
+            // console.log(j)
+            let char = String.fromCharCode(65+i)
+            let nameProp = char;
+            let newindex = obj[Object.keys(obj)[i]]
+            newindex.name = nameProp;
+        
+            let ptProp = 'pt' + (j+1);
+            points[ptProp] = dataset[i][j]
+            newindex.points = points;
         }
-        obj['ltr'] = ltr;
     }
-    sets['dataset'] = obj;
+    sets['indexes'] = obj;  
     console.log(sets)
+    boundingBox(sets.indexes)
+}
+
+function boundingBox(dataset){
+    // min & max val on X
+    // min & max val on Y
+
+    const indexPts = Object.values(Object.values(dataset)[0].points)
+    let arrX = [], arrY = []; 
+    
+    for(const elem of indexPts){
+        arrX.push(elem[0])
+        arrY.push(elem[1])
+    }
+    let maxX = Math.max(...arrX)
+    let minX = Math.min(...arrX) 
+    let maxY = Math.max(...arrY)
+    let minY = Math.min(...arrY)
+
+    console.log('X(min, max) : (' +minX+', '+ maxX +') ' + ' Y(min, max) : (' + minY + ', ' + maxY+').')
+
+    let tlc = [minX, maxY]
+    let trc = [maxX, maxY]
+    let blc = [minX, minY]
+    let brc = [maxX, minY]
+
+    let centerPoint = [(tlc[0] + brc[0])/2, (tlc[1] + brc[1])/2]
+    console.log(centerPoint)
 }
 
 
