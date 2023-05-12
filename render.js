@@ -81,27 +81,35 @@ function boundingBox(dataset){
     // min & max val on X
     // min & max val on Y
 
-    const indexPts = Object.values(Object.values(dataset)[0].points)
-    let arrX = [], arrY = []; 
+    const currentDataSet = Object.values(dataset)
+    for (const elem of currentDataSet){
+        console.log(elem)
+
+        const indexPts = Object.values(elem.points)
+        let arrX = [], arrY = []; 
+        
+        for(const elem2 of indexPts){
+            arrX.push(elem2[0])
+            arrY.push(elem2[1])
+        }
+        let maxX = Math.max(...arrX)
+        let minX = Math.min(...arrX) 
+        let maxY = Math.max(...arrY)
+        let minY = Math.min(...arrY)
     
-    for(const elem of indexPts){
-        arrX.push(elem[0])
-        arrY.push(elem[1])
+        // console.log('X(min, max) : (' +minX+', '+ maxX +') ' + ' Y(min, max) : (' + minY + ', ' + maxY+').')
+    
+        let tlc = [minX, maxY]
+        let trc = [maxX, maxY]
+        let blc = [minX, minY]
+        let brc = [maxX, minY]
+    
+        let centerPoint = [(tlc[0] + brc[0])/2, (tlc[1] + brc[1])/2]
+    
+        elem.offsetX = WiW/2 - centerPoint[0]
+        elem.offsetY = WiH/2 - centerPoint[1]
     }
-    let maxX = Math.max(...arrX)
-    let minX = Math.min(...arrX) 
-    let maxY = Math.max(...arrY)
-    let minY = Math.min(...arrY)
-
-    console.log('X(min, max) : (' +minX+', '+ maxX +') ' + ' Y(min, max) : (' + minY + ', ' + maxY+').')
-
-    let tlc = [minX, maxY]
-    let trc = [maxX, maxY]
-    let blc = [minX, minY]
-    let brc = [maxX, minY]
-
-    let centerPoint = [(tlc[0] + brc[0])/2, (tlc[1] + brc[1])/2]
-    console.log(centerPoint)
+    console.log(dataset)
 }
 
 
@@ -167,6 +175,7 @@ for (let i = 0; i < radioSets.length; i++) {
             currentSetValue = parseInt(event.target.value);
             caracterIndex = 0;
             creaParticules2(caracterIndex);
+            event.target.blur()
         }
     })
 }
