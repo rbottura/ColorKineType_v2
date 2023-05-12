@@ -215,6 +215,7 @@ function waitCanvas(load) {
         // if(P5_container_elem.children)
     } else {
         console.log("canvas loaded")
+        document.querySelector("#book_btn").click()
     }
 }
 
@@ -314,5 +315,41 @@ function showParameters(node) {
         }
     } else if (node.id == "rythme_param") {
 
+    }
+}
+
+document.querySelector("#book_btn").addEventListener("click", () => {
+    let pdf_iframe = document.querySelector("#pdf_iframe")
+    console.log(pdf_iframe)
+    let bookDiv = document.querySelector("#book_access");
+    if(bookDiv.classList.contains("book_fold")){
+        console.log(bookDiv.classList.contains("book_fold"))
+        bookDiv.classList.remove('book_fold')
+    } else {
+        bookDiv.classList.add('book_fold');
+    }
+})
+
+document.querySelectorAll("#nav_bar_slider, #nav_bar_wrapper, .nav_bar_item").forEach(elem => {
+    elem.addEventListener("click", () => {
+        document.querySelector("#nav_text").style.color = "transparent";
+    })
+})
+
+
+let test_dataSet = {
+    'i1' : {
+        name :  "A", 
+        points : {
+            'pt1' : [24, 55],
+            'pt2' : [44, 85], 
+        }
+    }, 
+    'i2' : {
+        name : "B", 
+        points : {
+            'pt1' : [21, 64], 
+            'pt2' : [87, 46],
+        }
     }
 }

@@ -35,9 +35,9 @@ body {
         display: block;
         top: 0;
         right: 0;
-        width: 200px;
+        width: 150px;
         overflow: hidden;
-        height: 200px;
+        height: 150px;
         z-index: 9999;
     }
 
@@ -55,10 +55,48 @@ body {
     }
 }
 
+#book_access {
+    display: block;
+    position: absolute;
+    z-index: 2500;
+    left: 5vw;
+    top: 7.5vh;
+    transition: width .5s, height .5s;
+    background-color: #9f9f9f;
+}
 
+#book_btn{
+    cursor: pointer;
+    height: 80px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: dashed black 2px;
+    z-index: 5;
+    background-color: #ffffff;
+    color: rgb(40, 40, 40);
+}
 
+#pdf_iframe{
+    display: block;
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
 
+.book_size {
+    width: 90vw;
+    height: 90vh;
+}
 
+.book_fold {
+    width: 50px;
+    height: 80px;
+}
 
 #nav_bar_slider {
     display: block;
@@ -68,7 +106,17 @@ body {
     left: calc(50vw - 100px);
     top: -228px;
     border: dashed rgba(0, 0, 0, 0.05) 2px;
+    color: black;
     /* background-color: rgb(228, 183, 183); */
+}
+
+#nav_text {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    color: rgb(215, 215, 215);
+    top: 250px;
+    text-align: center;
 }
 
 #nav_bar_slider:hover #nav_bar_wrapper{
@@ -78,6 +126,8 @@ body {
 #nav_bar_wrapper {
     display: flex;
     flex-direction: row;
+    position: relative;
+    z-index: 3;
     padding: 5px;
     border: solid black 2px;
     transition: margin-top .2s;
@@ -200,7 +250,6 @@ h2 {
     height: 100vh;
     width: 100vw;
     border: solid olivedrab 1px;
-    padding: 10px;
 }
 
 #tabs_selection {

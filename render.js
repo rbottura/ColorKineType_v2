@@ -11,7 +11,7 @@ const ListNameFonts = ['Alphabet', 'Raleway Dots', 'Egyptienne Large', 'Garamond
 const ListOffsetX = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 const ListOffsetY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-function getScreenCenter(){
+function getScreenCenter() {
     return 0.26 * WiW;
 }
 
@@ -36,6 +36,9 @@ function loadDataSets() {
             .then(response => response.json())
             .then(jsondata => {
                 ListDataSets.push(new DataSet(ListNameFonts[dataSetIndex], jsondata, ListOffsetX[dataSetIndex], ListOffsetY[dataSetIndex]))
+                if (dataSetIndex == 2) {
+                    gen(jsondata)
+                }
                 dataSetIndex++;
                 loadDataSets();
             });
@@ -44,6 +47,30 @@ function loadDataSets() {
         showLetter('start');
         ListDataSets.push(jsonCstSet)
     }
+}
+
+
+const sets = {}
+function gen(dataset) {
+    const obj = {};
+    for (let i = 0; i < dataset.length; i++) {
+        const ltr = {};
+
+        let nameProp = 'i' + i;
+        ltr[nameProp] = 'A';
+
+        for (let j = 0; j < dataset[i].length; j++) {
+            const pointProp = {};
+            
+            let ptProp = 'pt' + j;
+            pointProp[ptProp] = dataset[i][j];
+            
+            ltr['points'] = pointProp;
+        }
+        obj['ltr'] = ltr;
+    }
+    sets['dataset'] = obj;
+    console.log(sets)
 }
 
 
@@ -641,8 +668,8 @@ for (const elem of inputs_anim_btns) {
 
 
 // document.querySelector("#saveImgBtn").addEventListener("click", () => {
-    // console.log(document.querySelector("#render_matter").getContext("2d").filter)
-    // saveCurrentSet();
+// console.log(document.querySelector("#render_matter").getContext("2d").filter)
+// saveCurrentSet();
 // })
 
 function saveCurrentSet() {
@@ -650,7 +677,7 @@ function saveCurrentSet() {
     console.log(ListDataSets[currentSetValue])
 
     let i = 0;
-    
+
     document.querySelector("#render_matter").getContext("2d").filter = "saturate(1) contrast(3) hue-rotate(0deg) grayScale(1)"
     const renderCanvas = document.querySelector("#render_matter");
 
