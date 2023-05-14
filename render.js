@@ -7,21 +7,19 @@ class DataSet {
     }
 }
 
-const ListNameFonts = ['Alphabet', 'Raleway Dots', 'Egyptienne Large', 'Garamond Italic', 'PeaceSans', 'Pilow', 'Mainz', "Destra", "Minipax", "custom"];
+class nDataSet {
+    constructor(dataset) {
+        this.name = dataset.name;
+    }
+}
+
+const ListNameFonts = ['alphabet', 'raleway', 'egypt', 'garam', 'peace', 'pilow', 'mainz', "destra", "minipax", "custom"];
 const ListOffsetX = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 const ListOffsetY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-function getScreenCenter() {
-    return 0.26 * WiW;
-}
-
-for (let i = 0; i < ListOffsetX.length; i++) {
-    ListOffsetX[i] += getScreenCenter();
-    ListOffsetY[i] += 50;
-}
-
 const nbrDataSets = ListNameFonts.length - 1;
 let ListDataSets = [];
+let globalConstLength = 150;
 
 let currentSetValue = 1 - (1);
 
@@ -36,9 +34,8 @@ function loadDataSets() {
             .then(response => response.json())
             .then(jsondata => {
                 ListDataSets.push(new DataSet(ListNameFonts[dataSetIndex], jsondata, ListOffsetX[dataSetIndex], ListOffsetY[dataSetIndex]))
-                if (dataSetIndex == 0) {
-                    gen(jsondata)
-                }
+                gen(jsondata, ListNameFonts[dataSetIndex])
+
                 dataSetIndex++;
                 loadDataSets();
             });
@@ -51,70 +48,67 @@ function loadDataSets() {
 
 // i0 : { name : "A", points : { pt1 : [20, 50] }}
 
-
 const sets = {}
-function gen(dataset) {
+function gen(dataset, name) {
     const obj = {};
     for (let i = 0; i < dataset.length; i++) {
-        let indexProp = 'i' + (i+1);
+        console.log(dataset[i].length)
+        let indexProp = 'i' + (i + 1);
         obj[indexProp] = {};
 
         const points = {};
         for (let j = 0; j < dataset[i].length; j++) {
-            // console.log(j)
-            let char = String.fromCharCode(65+i)
+            let char = String.fromCharCode(65 + i)
             let nameProp = char;
             let newindex = obj[Object.keys(obj)[i]]
             newindex.name = nameProp;
-        
-            let ptProp = 'pt' + (j+1);
+
+            let ptProp = 'pt' + (j + 1);
             points[ptProp] = dataset[i][j]
             newindex.points = points;
         }
     }
-    sets['indexes'] = obj;  
-    console.log(sets)
-    boundingBox(sets.indexes)
+    sets[name] = obj;
+    boundingBox(sets[name])
 }
 
-function boundingBox(dataset){
+function boundingBox(dataset) {
     // min & max val on X
     // min & max val on Y
 
     const currentDataSet = Object.values(dataset)
-    for (const elem of currentDataSet){
-        console.log(elem)
+    for (const elem of currentDataSet) {
+        if (elem) {
+            const indexPts = Object.values(elem.points)
+            let arrX = [], arrY = [];
 
-        const indexPts = Object.values(elem.points)
-        let arrX = [], arrY = []; 
-        
-        for(const elem2 of indexPts){
-            arrX.push(elem2[0])
-            arrY.push(elem2[1])
+            for (const elem2 of indexPts) {
+                arrX.push(elem2[0])
+                arrY.push(elem2[1])
+            }
+            let maxX = Math.max(...arrX)
+            let minX = Math.min(...arrX)
+            let maxY = Math.max(...arrY)
+            let minY = Math.min(...arrY)
+
+            // console.log('X(min, max) : (' +minX+', '+ maxX +') ' + ' Y(min, max) : (' + minY + ', ' + maxY+').')
+
+            let tlc = [minX, maxY]
+            let trc = [maxX, maxY]
+            let blc = [minX, minY]
+            let brc = [maxX, minY]
+
+            let centerPoint = [(tlc[0] + brc[0]) / 2, (tlc[1] + brc[1]) / 2]
+
+            elem.offsetX = WiW / 2 - centerPoint[0]
+            elem.offsetY = WiH / 2 - centerPoint[1]
         }
-        let maxX = Math.max(...arrX)
-        let minX = Math.min(...arrX) 
-        let maxY = Math.max(...arrY)
-        let minY = Math.min(...arrY)
-    
-        // console.log('X(min, max) : (' +minX+', '+ maxX +') ' + ' Y(min, max) : (' + minY + ', ' + maxY+').')
-    
-        let tlc = [minX, maxY]
-        let trc = [maxX, maxY]
-        let blc = [minX, minY]
-        let brc = [maxX, minY]
-    
-        let centerPoint = [(tlc[0] + brc[0])/2, (tlc[1] + brc[1])/2]
-    
-        elem.offsetX = WiW/2 - centerPoint[0]
-        elem.offsetY = WiH/2 - centerPoint[1]
+
     }
-    console.log(dataset)
+    console.log(sets)
 }
 
-
 Matter.use(MatterAttractors);
-
 let Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
@@ -180,9 +174,7 @@ for (let i = 0; i < radioSets.length; i++) {
     })
 }
 
-
 let speed1 = 0.2;
-
 engine.gravity.y = 0;
 
 var attractiveBody = Bodies.circle(
@@ -294,7 +286,18 @@ function creaParticules2(caracter) {
     }
     console.log(ListDataSets[currentSetValue])
     for (let point = 0; point < ListDataSets[currentSetValue].jsondata[caracter].length; point++) {
-        let body = Bodies.circle(ListDataSets[currentSetValue].jsondata[caracter][point][posX] + globalOffsetX + ListDataSets[currentSetValue].offsetX, ListDataSets[currentSetValue].jsondata[caracter][point][posY] + 50 + ListDataSets[currentSetValue].offsetY, 1, {
+        
+        let indexOff = sets[ListDataSets[currentSetValue].name];
+        let offsetValX = 0;
+        let offsetValY = 0;
+        if (currentSetValue < 9) {
+            offsetValX = indexOff['i' + (caracter + 1)].offsetX;
+            offsetValY = indexOff['i' + (caracter + 1)].offsetY;
+        } else {
+            offsetValX = 0
+            offsetValY = 0
+        }
+        let body = Bodies.circle( ListDataSets[currentSetValue].jsondata[caracter][point][posX] + offsetValX + globalConstLength, ListDataSets[currentSetValue].jsondata[caracter][point][posY] + offsetValY + globalConstLength, 1, {
             render: {
                 fillStyle: "rgba(0,0,0,0)",
                 sprite: {
@@ -312,10 +315,9 @@ function creaParticules2(caracter) {
 
         });
         letterSet[0].push(body);
-
         let constraint = Constraint.create({
             // pointA: { x: dataSets[currentSet][key][i][0] / posBalls + offset_sets[currentSet], y: dataSets[currentSet][key][i][1] / posBalls + (offset_sets[currentSet] / 3) },
-            pointA: { x: ListDataSets[currentSetValue].jsondata[caracter][point][posX] + globalOffsetX + ListDataSets[currentSetValue].offsetX, y: ListDataSets[currentSetValue].jsondata[caracter][point][posY] + 0 + ListDataSets[currentSetValue].offsetY },
+            pointA: { x: ListDataSets[currentSetValue].jsondata[caracter][point][posX] + offsetValX, y: ListDataSets[currentSetValue].jsondata[caracter][point][posY] + offsetValY },
             bodyB: body,
             pointB: { x: 0, y: 0 },
             stiffness: 1,
@@ -368,10 +370,10 @@ function upadateRotation() {
 }
 
 // fit the render viewport to the scene
-let zoomVP = 1.0;
+let zoomVP = 1.0, offZoom = 0;
 Render.lookAt(render, {
-    min: { x: 0, y: 0 },
-    max: { x: canvasWidth * zoomVP, y: canvasHeight * zoomVP }
+    min: { x: -offZoom, y: -offZoom },
+    max: { x: canvasWidth + offZoom, y: canvasHeight + offZoom }
 });
 
 let backgroundWall = Bodies.rectangle(WiW * zoomVP / 2, WiH * zoomVP / 2, WiW * zoomVP, WiH * zoomVP, {
@@ -518,6 +520,7 @@ function constrainLength() {
     let constLength = document.getElementById("constLength").value;
     for (let i = 0; i < letterSet[1].length; i++) {
         letterSet[1][i].length = constLength;
+        globalConstLength = parseFloat(constLength);
     }
 }
 
