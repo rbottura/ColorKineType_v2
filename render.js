@@ -1,28 +1,16 @@
 class DataSet {
-    constructor(name, jsondata, offsetX, offsetY) {
+    constructor(name, jsondata) {
         this.name = name;
         this.jsondata = jsondata;
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
-    }
-}
-
-class nDataSet {
-    constructor(dataset) {
-        this.name = dataset.name;
     }
 }
 
 const ListNameFonts = ['alphabet', 'raleway', 'egypt', 'garam', 'peace', 'pilow', 'mainz', "destra", "minipax", "custom"];
-const ListOffsetX = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-const ListOffsetY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 const nbrDataSets = ListNameFonts.length - 1;
 let ListDataSets = [];
 let globalConstLength = 150;
-
 let currentSetValue = 1 - (1);
-
 let dataSetIndex = 0;
 
 loadDataSets();
@@ -33,7 +21,7 @@ function loadDataSets() {
         fetch(url)
             .then(response => response.json())
             .then(jsondata => {
-                ListDataSets.push(new DataSet(ListNameFonts[dataSetIndex], jsondata, ListOffsetX[dataSetIndex], ListOffsetY[dataSetIndex]))
+                ListDataSets.push(new DataSet(ListNameFonts[dataSetIndex], jsondata))
                 gen(jsondata, ListNameFonts[dataSetIndex])
 
                 dataSetIndex++;
@@ -370,7 +358,7 @@ function upadateRotation() {
 }
 
 // fit the render viewport to the scene
-let zoomVP = 1.0, offZoom = 0;
+let zoomVP = 1.0, offZoom = -250;
 Render.lookAt(render, {
     min: { x: -offZoom, y: -offZoom },
     max: { x: canvasWidth + offZoom, y: canvasHeight + offZoom }
