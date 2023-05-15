@@ -335,17 +335,21 @@ function creaParticules2(caracter) {
 
 }
 
-function dropBalls() {
-    for (var i = 0; i < conz.length; i++) {
-        Matter.Composite.remove(world, conz[i]);
-        letterSet[0][i].render.fillStyle = "red";
-        letterSet[0][i].collisionFilter.group = -1;
-        letterSet[0][i].frictionAir = 0.001;
-    }
-    Matter.Composite.remove(world, attractiveBody);
-    engine.gravity.y = 1;
-    engine.gravity.x = -0.35;
-}
+document.querySelectorAll("#input_zoom_range, #op_zoom_val").forEach(elem => {
+    elem.addEventListener("change", (e) => {
+        let value = parseFloat(e.target.value);
+        document.querySelector("#op_zoom_val").value = value;
+        document.querySelector("#input_zoom_range").value = value;
+        offZoom = value;
+        
+        Render.lookAt(render, {
+            min: { x: -offZoom, y: -offZoom },
+            max: { x: canvasWidth + offZoom, y: canvasHeight + offZoom }
+        });
+        
+    })
+})
+
 
 function upadateRotation() {
     for (let i = 0; i < letterSet[0].length; i++) {
@@ -359,11 +363,6 @@ function upadateRotation() {
 
 // fit the render viewport to the scene
 let zoomVP = 1.0, offZoom = -250;
-Render.lookAt(render, {
-    min: { x: -offZoom, y: -offZoom },
-    max: { x: canvasWidth + offZoom, y: canvasHeight + offZoom }
-});
-
 let backgroundWall = Bodies.rectangle(WiW * zoomVP / 2, WiH * zoomVP / 2, WiW * zoomVP, WiH * zoomVP, {
     render: {
         fillStyle: "white",
