@@ -1,10 +1,12 @@
 @font-face {
     font-family: bpdots;
     src: url(./assets/BPdotsUnicaseLight.otf);
-    
+}
+@font-face {
     font-family: r2;
     src: url(./assets/R2-D2.otf);
-    
+}
+@font-face {
     font-family: Underodd;
     src: url(./assets/Underodd.ttf);
 }
