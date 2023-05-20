@@ -64,6 +64,15 @@ document.addEventListener("click", (e) => {
 //GRID INPUTS 
 let lt = 3, st = 3, rot_val = 45;
 
+document.querySelector('#showgrid_chkbox').addEventListener("change", (e) => {
+    console.log(e.target.checked)
+    if(e.target.checked){
+        showGrid = true;
+    } else {
+        showGrid = false;
+    }
+})
+
 document.querySelectorAll("#lt_range, #op_val_lt").forEach(elem => {
     elem.addEventListener("change", (e) => {
         lt = parseInt(e.target.value)
@@ -90,10 +99,10 @@ document.querySelectorAll("#rot_range, #op_val_rot").forEach(elem => {
 
 // put grid
 // Use of P5 instanced mode to be abale to target a specific canvas container
+let showGrid = true;
 const s = p => {
 
     let myGrid;
-    let showGrid = true;
     let sizeX = 4, spaceX = 4, sizeY = sizeX, spaceY = spaceX, colorX = 'white', colorY = 'white';
 
     let textStyle = [p.NORMAL, p.ITALIC, p.BOLD, p.BOLDITALIC]
@@ -322,7 +331,7 @@ document.querySelector("#book_btn").addEventListener("click", () => {
     let pdf_iframe = document.querySelector("#pdf_iframe")
     console.log(pdf_iframe)
     let bookDiv = document.querySelector("#book_access");
-    if(bookDiv.classList.contains("book_fold")){
+    if (bookDiv.classList.contains("book_fold")) {
         console.log(bookDiv.classList.contains("book_fold"))
         bookDiv.classList.remove('book_fold')
     } else {
@@ -338,18 +347,18 @@ document.querySelectorAll("#nav_bar_slider, #nav_bar_wrapper, .nav_bar_item").fo
 
 
 let test_dataSet = {
-    'i1' : {
-        name :  "A", 
-        points : {
-            'pt1' : [24, 55],
-            'pt2' : [44, 85], 
+    'i1': {
+        name: "A",
+        points: {
+            'pt1': [24, 55],
+            'pt2': [44, 85],
         }
-    }, 
-    'i2' : {
-        name : "B", 
-        points : {
-            'pt1' : [21, 64], 
-            'pt2' : [87, 46],
+    },
+    'i2': {
+        name: "B",
+        points: {
+            'pt1': [21, 64],
+            'pt2': [87, 46],
         }
     }
 }
