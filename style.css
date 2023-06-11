@@ -16,6 +16,19 @@ body {
     overflow: hidden;
 }
 
+#output_json {
+    display: none;
+    position: absolute;
+    z-index: 2500;
+    top: 2.5vh;
+    left: 2.5vw;
+    color: black;
+    background-color: antiquewhite;
+    width: 95vw;
+    height: 95vh;
+    overflow-y: scroll;
+}
+
 #forkongithub a {
     color: #9f9f9f;
     border: solid black 1px;
@@ -351,8 +364,17 @@ h2 {
     display: block;
     position: absolute;
     /* top: 250px; */
-    z-index: 0;
+    z-index: 1;
     border: black solid 1px;
+    /* opacity: .5; */
+    mix-blend-mode: darken;
+}
+
+#render_p5_container {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    border: #c11 solid 1px;
 }
 
 #render_matter_interface{

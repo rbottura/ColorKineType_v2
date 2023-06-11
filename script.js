@@ -14,6 +14,14 @@ let output_text = document.querySelector("#output_infos")
 let p5text = "Custom txt";
 let fs = 250, lh = 50, mt = 250, indexTxtStyle = 0, ft_families = [], ft_family = "Garamond", last_ft_family = "Garamond";
 
+let jsonbox = document.querySelector("#output_json")
+document.addEventListener("keydown", (e) => {
+    console.log(e.key)
+    if(e.key == "j"){
+        let allSets = JSON.stringify(sets.alphabet)
+        jsonbox.innerHTML = allSets     
+    }
+})
 
 input_text.addEventListener("change", (e) => {
     p5text = e.target.value;

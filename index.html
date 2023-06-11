@@ -24,6 +24,10 @@
 
     <!-- <div id="saveImgBtn">Save</div> -->
 
+
+    <div id="output_json">
+        
+    </div>
     <div id="nav_bar_slider">
         <p class="nav_txt" id="nav_text">Hover the cursor here to dislay the nav bar. Click to hide the text</p>
         <div id="nav_bar_wrapper">
@@ -43,14 +47,15 @@
     </div>
 
     <canvas id="render_matter"></canvas>
+    <div id="render_p5_container"></div>
 
     <div class="parameters" id="render_matter_interface">
 
         <div id="htmlInterface" class="drag">
             <div id="css-box-handle" class="handle">move</div>
             <style id="styleHtml" contenteditable style="display: block; white-space: pre;">
-                #render_matter {
-                    filter: blur(0px) saturate(1) contrast(1) hue-rotate(0deg);
+                #defaultCanvas1 {
+                    filter: blur(0px) saturate(1) contrast(1) hue-rotate(0deg); mix-blend-mode: darken;
                 }
             </style>
         </div>
@@ -112,7 +117,7 @@
             </div>
             <div class="itemInterface">
                 <label for="zoom_range">Zoom : + -</label>
-                <input id="input_zoom_range" type="range" min="-350" max="500" step="10">
+                <input id="input_zoom_range" type="range" min=".01" max="2" step=".01">
                 <input class="input_number" id="op_zoom_val" type="number">
             </div>
             <div class="itemInterface">
@@ -193,12 +198,14 @@
                             <img src="./sprites/sprite(67).png" alt="" class="spriteItem">
                             <img src="./sprites/sprite(68).png" alt="" class="spriteItem">
                             <img src="./sprites/sprite(69).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(70).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(71).png" alt="" class="spriteItem">
                         </div>
                     </div>
 
                     <div id="spriteSize" class="subItem">
                         <label for="particleSize">Taille du Motif : </label>
-                        <input type="range" id="particleSize" name="particleSize" min="0.01" max="1" step="0.01"
+                        <input type="range" id="particleSize" name="particleSize" min="0.01" max="2" step="0.01"
                             onmouseup="scaleParticle()">
                     </div>
                     Use colors > <input type="checkbox" id="checkFill" onclick="particleFill()">
@@ -458,7 +465,7 @@
 
     <script src="https://docs.opencv.org/master/opencv.js"></script>
     <script src="./libraries/p5.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js"></script>
     <script src="./libraries/matter.min.js"></script>
     <script src="./libraries/matter-attractors.min.js"></script>
     <script src="./script.js"></script>
