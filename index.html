@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" type="image/x-icon" href="./img/icon_ckt.png">
     <script src="./node_modules/howler/dist/howler.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Domine&family=Montserrat:wght@300&family=Raleway+Dots&family=Space+Grotesk:wght@400;500&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -24,15 +29,18 @@
 
     <!-- <div id="saveImgBtn">Save</div> -->
 
+
+    <div id="output_json">
+
+    </div>
     <div id="nav_bar_slider">
-        <p class="nav_txt" id="nav_text">Hover the cursor here to dislay the nav bar. Click to hide the text</p>
-        <div id="nav_bar_wrapper">
+        <div id="nav_bar_wrapper" class="nav_bar_displayed">
             <div class="nav_bar_item">
-                <div class="nav_item_display ui_overlay activ_display" id="p5_disp_btn">P5</div>
+                <div class="nav_item_display ui_overlay activ_display" id="p5_disp_btn">I</div>
                 <div class="toggle_parameters activ_parameters" id="p5_param">+</div>
             </div>
             <div class="nav_bar_item">
-                <div class="nav_item_display ui_overlay" id="matter_disp_btn">Mt</div>
+                <div class="nav_item_display ui_overlay" id="matter_disp_btn">II</div>
                 <div class="toggle_parameters" id="matter_param">+</div>
             </div>
             <div class="nav_bar_item">
@@ -40,19 +48,43 @@
                 <div class="toggle_parameters" id="rythme_param">+</div>
             </div>
         </div>
+        <div id="nav_bar_handle_wrapper">
+            <div id="nav_bar_handle">↑</div>
+        </div>
     </div>
 
     <canvas id="render_matter"></canvas>
+    <div id="render_p5_container"></div>
 
     <div class="parameters" id="render_matter_interface">
 
         <div id="htmlInterface" class="drag">
-            <div id="css-box-handle" class="handle">move</div>
-            <style id="styleHtml" contenteditable style="display: block; white-space: pre;">
-                #render_matter {
+            <div id="css-box-handle" class="handle"></div>
+            <h3 class="tools_window_name">Styling</h3>
+            <style id="styleHtml" contenteditable style="display: block;">
+                #defaultCanvas1 {
                     filter: blur(0px) saturate(1) contrast(1) hue-rotate(0deg);
                 }
             </style>
+        </div>
+        <div id="interface_automate" class="drag">
+            <div id="css-box-handle" class="handle"></div>
+            <h3 class="tools_window_name">Animation</h3>
+            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="1"
+                    checked> <label for="anim_mod">Cercle</label></div>
+            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="2">
+                <label for="anim_mod">Sinueux</label>
+            </div>
+            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="3">
+                <label for="anim_mod">Carré</label>
+            </div>
+            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="4">
+                <label for="anim_mod">Curseur</label>
+            </div>
+        </div>
+        <div id="capture_window" class="drag">
+            <div class="handle"></div>
+            <h3 class="tools_window_name">Capture</h3>
         </div>
 
         <div id="interface" class="drag">
@@ -61,6 +93,11 @@
             </div>
             <div class="itemInterface">UTILISER LES FLECHES HAUT/BAS POUR CHANGER DE GLYPHS</div>
             <div class="itemInterface">
+                <div class="tools_window_btn displayed_tools_window" id="capture_btn">capture</div>
+                <div class="tools_window_btn displayed_tools_window" id="styling_btn">styling</div>
+                <div class="tools_window_btn displayed_tools_window" id="animation_btn">animation</div>
+            </div>
+            <div class="itemInterface">
                 <div id="lightModeDiv" class="subItem">
                     Dark mode : <input type="checkbox" id="checkLight" onclick="setLightMode()">
                     & Reload auto : <input type="checkbox" id="checkReload" checked>
@@ -68,52 +105,52 @@
             </div>
 
             <div class="itemInterface">
+                <label for="zoom_range">Zoom : + -</label>
+                <input id="input_zoom_range" type="range" min=".01" max="2" step=".01">
+                <input class="input_number" id="op_zoom_val" type="number">
+            </div>
+            <div id="list_datasets" class="itemInterface">
                 <p class="titleItem">Datasets : </p>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set1" name="sets" value="0" checked>
-                    <label for="set1">data set 1 (Alphabet)</label>
+                    <label for="set1"> 1 (Alphabet)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set2" name="sets" value="1">
-                    <label for="set2">data set 2 (Raleway dots)</label>
+                    <label for="set2"> 2 (Raleway dots)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set4" name="sets" value="2">
-                    <label for="set4">data set 3 (egyptienne Large)</label>
+                    <label for="set4"> 3 (egyptienne Large)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set5" name="sets" value="3">
-                    <label for="set5">data set 4 (Garamond Italic)</label>
+                    <label for="set5"> 4 (Garamond Italic)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set6" name="sets" value="4">
-                    <label for="set5">data set 5 (PeaceSans)</label>
+                    <label for="set5"> 5 (PeaceSans)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set7" name="sets" value="5">
-                    <label for="set5">data set 6 (Pilow)</label>
+                    <label for="set5"> 6 (Pilow)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set9" name="sets" value="6">
-                    <label for="set5">data set 7 (Mainz)</label>
+                    <label for="set5"> 7 (Mainz)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set12" name="sets" value="7">
-                    <label for="sets">data set 8 (destra)</label>
+                    <label for="sets"> 8 (destra)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set13" name="sets" value="8">
-                    <label for="sets">data set 9 (Minipax)</label>
+                    <label for="sets"> 9 (Minipax)</label>
                 </div>
                 <div class="subItem">
                     <input class="radioSets" type="radio" id="set14" name="sets" value="9">
-                    <label for="sets">data set CUSTOM</label>
+                    <label for="sets"> CUSTOM</label>
                 </div>
-            </div>
-            <div class="itemInterface">
-                <label for="zoom_range">Zoom : + -</label>
-                <input id="input_zoom_range" type="range" min="-350" max="500" step="10">
-                <input class="input_number" id="op_zoom_val" type="number">
             </div>
             <div class="itemInterface">
                 <p class="titleItem">Particules : </p>
@@ -193,12 +230,14 @@
                             <img src="./sprites/sprite(67).png" alt="" class="spriteItem">
                             <img src="./sprites/sprite(68).png" alt="" class="spriteItem">
                             <img src="./sprites/sprite(69).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(70).png" alt="" class="spriteItem">
+                            <img src="./sprites/sprite(71).png" alt="" class="spriteItem">
                         </div>
                     </div>
 
                     <div id="spriteSize" class="subItem">
                         <label for="particleSize">Taille du Motif : </label>
-                        <input type="range" id="particleSize" name="particleSize" min="0.01" max="1" step="0.01"
+                        <input type="range" id="particleSize" name="particleSize" min="0.01" max="2" step="0.01"
                             onmouseup="scaleParticle()">
                     </div>
                     Use colors > <input type="checkbox" id="checkFill" onclick="particleFill()">
@@ -263,21 +302,6 @@
                 </div>
             </div>
         </div>
-
-        <div id="interface_automate">
-            <p>Animation mode : </p>
-            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="1"
-                    checked> <label for="anim_mod">Cercle</label></div>
-            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="2">
-                <label for="anim_mod">Sinueux</label>
-            </div>
-            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="3">
-                <label for="anim_mod">Carré</label>
-            </div>
-            <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="4">
-                <label for="anim_mod">Curseur</label>
-            </div>
-        </div>
     </div>
 
     <div id="p5_setup_wrapper">
@@ -291,15 +315,18 @@
             <div class="parameters" id="p5_paramWindow_wrapper">
 
                 <div id="tabs_selection">
-                    <div class="tab_button active_tab_p5" >text input</div>
-                    <div class="tab_button" >dataset generator (in dev)</div>
-                    <div class="tab_button" >image input (in dev)</div>
+                    <div name="tab1_grid_input" id="text_tab_btn" class="tab_button activ_tab_p5">text input</div>
+                    <div name="tab2_grid_input" id="datasetGen_tab_btn" class="tab_button">dataset generator (in dev)</div>
+                    <div name="tab3_grid_input" id="imgInput_tab_btn" class="tab_button">image input (in dev)</div>
                 </div>
-                <div id="tab1_grid_input">
-                    <div id="inputs_layers_wrapper">
-
+                <div class="tabs_input_window activ_input_window" id="tab1_grid_input">
+                    
+                    <div class="inputs_layers_wrapper">
+                        
                         <div class="step_layer" id="layerTextInput">
+                            <p class="step_index">Step 1.</p>
                             <h2>Text parameters</h2>
+                            <p class="step_infos">Type your text here, give it a size, a font family, etc</p>
                             <div id="interface_text_input" class="interfaces">
 
                                 <div id="input_text_wrapper" class="formItem">
@@ -373,7 +400,10 @@
                         </div>
 
                         <div class="step_layer" id="layerP5Grid">
+                            <p class="step_index">Step 2.</p>
                             <h2>Grid parameters</h2>
+                            <p class="step_infos">Play with the white grid, therefore change the numbers of dots, their
+                                layout, etc.</p>
                             <div id="interface_grid_input" class="interfaces">
 
                                 <div class="formItem">
@@ -382,14 +412,14 @@
                                 </div>
 
                                 <div class="formItem">
-                                    <label for="lineThick">Lines thickness : </label>
+                                    <label for="lineThick">Lines : </label>
                                     <input id="lt_range" class="grid_prop" name="lineThick" type="range" min="1"
                                         max="20" value="4" step="1">
                                     <input class="output_values input_number" id="op_val_lt" type="number">
                                 </div>
 
                                 <div class="formItem">
-                                    <label for="spaceThick">Spaces thickness : </label>
+                                    <label for="spaceThick">Spaces : </label>
                                     <input id="st_range" class="grid_prop" name="spaceThick" type="range" min="1"
                                         max="20" value="4" step="1">
                                     <input class="output_values input_number" id="op_val_st" type="number">
@@ -406,7 +436,10 @@
                         </div>
 
                         <div class="step_layer" id="layerOpenCV">
+                            <p class="step_index">Step 3.</p>
                             <h2>OpenCV parameters</h2>
+                            <p class="step_infos">Process your input to generate data, and add it to the renderer, in
+                                the custom dataset</p>
                             <div id="interface_opencv_input" class="interfaces">
                                 <div id="btn_count_dots" class="formItem" onclick="onOpenCvReady()">
                                     ! Click here to count dots !
@@ -422,7 +455,104 @@
                         </div>
                     </div>
                 </div>
-                <div id="tab2_grid_input">
+                
+                <div class="tabs_input_window" id="tab2_grid_input">
+                    
+                    <div class="inputs_layers_wrapper">
+                        
+                        <div class="step_layer">
+                            <p class="step_index">Step 1.</p>
+                            <h2>Text parameters</h2>
+                            <p class="step_infos">Select which font and glyphs will be present in this new dataset, give it a size, a font family, etc</p>
+                            <div class="interfaces">
+                                
+                                <div class="formItem">
+                                    <label for="fontfamily">Chose font family : </label>
+                                    <input list="fontFamilies" name="fontfamily" id="gen_fontfamily_menu">
+                                    <datalist id="gen_fontFamilies">
+                                        <option value="Garamond">Garamond</option>
+                                        <option value="Tahoma">Tahoma</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Arial">Arial</option>
+                                        <option value="Courier">Courier</option>
+                                        <option value="Gill Sans">Gill Sans</option>
+                                        <option value="Impact">Impact</option>
+                                        <option value="Trebuchet MS">Trebuchet MS</option>
+                                        <option value="Brush Script MT">Brush Script MT</option>
+                                        <option value="Georgia">Georgia</option>
+                                        <option value="bpdots">bpdots</option>
+                                        <option value="r2">r2</option>
+                                        <option value="Underodd">Underodd</option>
+                                    </datalist>
+                                </div>
+                                <div class="formItem">
+                                    <div class="char_select_wrapper">
+                                        <label for="">first char :</label>
+                                        <input type="number" id="first_char_code" value="50">
+                                        <span id="output_first_letter"></span>
+                                    </div>
+                                    <div class="char_select_wrapper">
+                                        <label for="">last char : </label>
+                                        <input type="number" id="last_char_code" value="60">
+                                        <span id="output_last_letter"></span>
+                                    </div>
+                                    <br>
+                                    <label for="">list of all the characters selected</label>
+                                    <p id="output_all_letters">...</p>
+                                    <label for="indexGenTextInput">Index of previewed character : </label>
+                                    <input type="number" name="indexGenTextInput" id="indexGenTextInput" value="0">
+                                </div>
+
+                                <div class="formItem">
+                                    <label for="gen_fs_range">Fontsize : </label>
+                                    <input id="gen_fs_range" class="text_prop" name="gen_fs_range" type="range" min="20"
+                                        max="750" value="100">
+                                    <input class="input_number" id="gen_op_val_fs" type="number">
+                                </div>
+                                
+                                <div class="formItem">
+                                    <label for="gen_mt_range">Margin top : </label>
+                                    <input id="gen_mt_range" class="text_prop" name="gen_mt_range" type="range" min="0"
+                                        max="500" value="100">
+                                    <input class="input_number" id="gen_op_val_mt" type="number">
+                                </div>
+
+                                <div class="formItem" id="fieldset_wrapper">
+                                    <fieldset id="fieldset_elem">
+                                        <legend>Text Styles</legend>
+
+                                        <input class="gen_ft_style_btn" type="radio" id="" name="gen_style" value="0">
+                                        <label for="">Normal</label><br>
+
+                                        <input class="gen_ft_style_btn" type="radio" id="" name="gen_style" value="1">
+                                        <label for="">Italic</label><br>
+
+                                        <input class="gen_ft_style_btn" type="radio" id="" name="gen_style" value="2" />
+                                        <label for="">Bold</label>
+
+                                        <input class="gen_ft_style_btn" type="radio" id="" name="gen_style" value="3" />
+                                        <label for="">Bold Italic</label>
+                                    </fieldset>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="step_layer">
+                            <p class="step_index">Step 3.</p>
+                            <h2>Generate dataset</h2>
+                            <p class="step_infos">Create a new data set to render with the content on step 1, automaticly or manually</p>
+                            <div class="interfaces">
+                                <div id="gen_dataset_btn" class="formItem" onclick="generateDataset()">
+                                    ! Click here to generate !
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tabs_input_window" id="tab3_grid_input">
 
                 </div>
 
@@ -458,7 +588,7 @@
 
     <script src="https://docs.opencv.org/master/opencv.js"></script>
     <script src="./libraries/p5.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js"></script> -->
+    <script id="captureScript" src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js"></script>
     <script src="./libraries/matter.min.js"></script>
     <script src="./libraries/matter-attractors.min.js"></script>
     <script src="./script.js"></script>

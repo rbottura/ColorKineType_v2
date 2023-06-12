@@ -14,6 +14,14 @@ let output_text = document.querySelector("#output_infos")
 let p5text = "Custom txt";
 let fs = 250, lh = 50, mt = 250, indexTxtStyle = 0, ft_families = [], ft_family = "Garamond", last_ft_family = "Garamond";
 
+let jsonbox = document.querySelector("#output_json")
+document.addEventListener("keydown", (e) => {
+    console.log(e.key)
+    if (e.key == "j") {
+        let allSets = JSON.stringify(sets.alphabet)
+        jsonbox.innerHTML = allSets
+    }
+})
 
 input_text.addEventListener("change", (e) => {
     p5text = e.target.value;
@@ -53,10 +61,11 @@ document.querySelectorAll(".ft_style_btn").forEach((e) => {
 
 //prevent the menu to be fill or empty on focus and unfocused
 document.addEventListener("click", (e) => {
-    if ((document.querySelector("#fontfamily_menu").value == "") && (e.target != document.querySelector("#fontfamily_menu"))) {
+    if ((document.querySelector("#fontfamily_menu").value == "") && ((e.target != document.querySelector("#fontfamily_menu")) || e.target == document.querySelector('#gen_fontfamily_menu'))) {
         document.querySelector("#fontfamily_menu").value = last_ft_family;
+        document.querySelector('#gen_fontfamily_menu').value = gen_last_ft_family
     }
-    if (e.target == document.querySelector("#fontfamily_menu")) {
+    if (e.target == document.querySelector("#fontfamily_menu") || e.target == document.querySelector('#gen_fontfamily_menu')) {
         e.target.value = "";
     }
 })
@@ -66,7 +75,7 @@ let lt = 3, st = 3, rot_val = 45;
 
 document.querySelector('#showgrid_chkbox').addEventListener("change", (e) => {
     console.log(e.target.checked)
-    if(e.target.checked){
+    if (e.target.checked) {
         showGrid = true;
     } else {
         showGrid = false;
@@ -99,7 +108,9 @@ document.querySelectorAll("#rot_range, #op_val_rot").forEach(elem => {
 
 // put grid
 // Use of P5 instanced mode to be abale to target a specific canvas container
-let showGrid = true;
+let showGrid = true, showWordText = true;
+let indexGenText = 0;
+
 const s = p => {
 
     let myGrid;
@@ -186,14 +197,24 @@ const s = p => {
 
         myGrid.update()
 
-        p.textFont(ft_family);
-        p.textAlign(p.CENTER);
         p.background(255);
-        p.textLeading(lh)
         p.textWrap(p.CHAR)
-        p.textSize(fs)
-        p.textStyle(textStyle[indexTxtStyle])
-        p.text(p5text, canvasWidth / 2, fs - (fs / 4) + mt)
+        p.textAlign(p.CENTER);
+
+        if (showGenContent) {
+            // let gen_fs = 250, gen_mt = 100, gen_style = 0, gen_ft_family = 'Garamond',  gen_last_ft_family = "Garamond";
+            
+            p.textFont(gen_ft_family)
+            p.textSize(gen_fs)
+            p.textStyle(textStyle[gen_style])
+            p.text(arrTextDataset[indexGenText], canvasWidth / 2, gen_fs - (gen_fs / 4) + gen_mt)
+        } else if (showWordText) {
+            p.textFont(ft_family);
+            p.textLeading(lh)
+            p.textSize(fs)
+            p.textStyle(textStyle[indexTxtStyle])
+            p.text(p5text, canvasWidth / 2, fs - (fs / 4) + mt)
+        }
 
         if (showGrid) {
             p.translate(canvasWidth / 2, canvasHeight / 2)
@@ -203,6 +224,7 @@ const s = p => {
             myGrid.show()
             p.pop()
         }
+
     };
 };
 
@@ -339,13 +361,6 @@ document.querySelector("#book_btn").addEventListener("click", () => {
     }
 })
 
-document.querySelectorAll("#nav_bar_slider, #nav_bar_wrapper, .nav_bar_item").forEach(elem => {
-    elem.addEventListener("click", () => {
-        document.querySelector("#nav_text").style.color = "transparent";
-    })
-})
-
-
 let test_dataSet = {
     'i1': {
         name: "A",
@@ -361,4 +376,126 @@ let test_dataSet = {
             'pt2': [87, 46],
         }
     }
+}
+
+let first_val, last_val, dataset_string = '', arrTextDataset = []
+document.querySelector('#first_char_code').addEventListener('change', (e) => {
+    let val = e.target.value;
+    first_val = parseInt(val);
+    let stgVal = String.fromCharCode(val)
+    document.querySelector('#output_first_letter').innerHTML = stgVal;
+    console.log(dataset_string)
+
+    genText(first_val, last_val)
+})
+
+document.querySelector('#last_char_code').addEventListener('change', (e) => {
+    let val = e.target.value;
+    last_val = parseInt(val);
+    let stgVal = String.fromCharCode(val)
+    document.querySelector('#output_last_letter').innerHTML = stgVal;
+    console.log(dataset_string)
+
+    genText(first_val, last_val)
+})
+
+let displayGenText = true;
+
+function genText(f_val, l_val) {
+    let op = document.querySelector('#output_all_letters')
+    op.innerHTML = ''
+    dataset_string = ''
+    arrTextDataset = []
+    for (let i = f_val; i < l_val; i++) {
+        op.innerHTML += String.fromCodePoint(i)
+        dataset_string += String.fromCodePoint(i)
+        // console.log(i)
+        arrTextDataset = dataset_string.split('')
+    }
+}
+
+document.querySelectorAll('.tab_button').forEach(elem => {
+    elem.addEventListener('click', (e) => {
+        changeInputTab(e)
+    })
+})
+
+let showGenContent = false;
+function changeInputTab(e) {
+    let btn = e.target
+    let p5GridNode = document.querySelector('#layerP5Grid')
+    let currentWindow = document.querySelector('#' + btn.getAttribute('name'))
+    console.log(currentWindow.children[0])
+    if (!btn.classList.contains('activ_tab_p5')) {
+        document.querySelectorAll('.tab_button').forEach(elem => {
+            if (elem.classList.contains('activ_tab_p5')) {
+                elem.classList.remove('activ_tab_p5')
+            }
+        })
+        btn.classList.add('activ_tab_p5')
+        document.querySelectorAll('.tabs_input_window').forEach(elem => {
+            elem.style.display = 'none'
+        })
+        currentWindow.style.display = 'block';
+        // move p5 grid window to the interface
+        currentWindow.children[0].children[0].after(p5GridNode)
+        if (btn.id == 'datasetGen_tab_btn') {
+            showGenContent = true
+            showWordText = false
+        } else {
+            showGenContent = false
+            showWordText = true
+        }
+    }
+}
+
+
+
+document.querySelector('#nav_bar_handle').addEventListener('click', (e) => {
+    let dir = e.target.innerHTML
+    let handle = e.target
+    let nav_bar = document.querySelector('#nav_bar_wrapper')
+    if (dir == '↓') {
+        nav_bar.classList.add('nav_bar_displayed')
+        handle.innerHTML = '↑'
+    } else if (dir == '↑') {
+        nav_bar.classList.remove('nav_bar_displayed')
+        handle.innerHTML = '↓'
+    }
+})
+
+
+let gen_fs = 250, gen_mt = 100, gen_style = 0, gen_ft_family = 'Garamond',  gen_last_ft_family = "Garamond";
+
+document.querySelectorAll('#gen_fs_range, #gen_op_val_fs').forEach(elem => {
+    elem.addEventListener('change', (e) => {
+        gen_fs = parseInt(e.target.value) ;
+        document.querySelector('#gen_op_val_fs').value = gen_fs
+    })
+})
+
+document.querySelectorAll('#gen_mt_range, #gen_op_val_mt').forEach(elem => {
+    elem.addEventListener('change', (e) => {
+        gen_mt = parseInt(e.target.value);
+        document.querySelector('#gen_op_val_mt').value = gen_mt
+    })
+})
+
+document.querySelectorAll('.gen_ft_style_btn').forEach(elem => {
+    elem.addEventListener('change', (e) => {
+        gen_style = e.target.value;
+    })
+})
+
+document.querySelector("#gen_fontfamily_menu").addEventListener("change", (e) => {
+    gen_ft_family = e.target.value;
+    gen_last_ft_family = gen_ft_family;
+})
+
+document.querySelector('#indexGenTextInput').addEventListener('change', (e) => {
+    indexGenText = parseInt(e.target.value)
+})
+
+function generateDataset(){
+    onOpenCvReady('', true)
 }
