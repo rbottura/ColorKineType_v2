@@ -228,6 +228,10 @@ const s = p => {
     };
 };
 
+document.addEventListener('click', e => {
+    console.log('x : '+e.clientX + ' & y : '+e.clientY)
+})
+
 new p5(s, P5_container); // invoke p5
 
 let P5_container_elem = document.querySelector("#P5_container");
@@ -498,4 +502,21 @@ document.querySelector('#indexGenTextInput').addEventListener('change', (e) => {
 
 function generateDataset(){
     onOpenCvReady('', true)
+}
+
+document.querySelectorAll('.tools_window_btn').forEach(elem => {
+    elem.addEventListener('click', e => {
+        showToolWindows(e.target, e.target.id)
+    })
+})
+
+function showToolWindows(btn, id){
+    let wd = document.querySelector('#'+id+'_window')
+    if(btn.classList.contains('displayed_tools_window')){
+        btn.classList.remove('displayed_tools_window')
+        wd.style.display = 'none'
+    } else {
+        btn.classList.add('displayed_tools_window')
+        wd.style.display = 'flex'
+    }
 }

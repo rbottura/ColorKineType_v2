@@ -41,7 +41,7 @@
             </div>
             <div class="nav_bar_item">
                 <div class="nav_item_display ui_overlay" id="matter_disp_btn">II</div>
-                <div class="toggle_parameters" id="matter_param">+</div>
+                <div class="toggle_parameters activ_parameters" id="matter_param">+</div>
             </div>
             <div class="nav_bar_item">
                 <div class="nav_item_display ui_overlay" id="ry_disp_btn">Ry</div>
@@ -58,7 +58,7 @@
 
     <div class="parameters" id="render_matter_interface">
 
-        <div id="htmlInterface" class="drag">
+        <div id="styling_window" class="drag tool_windows">
             <div id="css-box-handle" class="handle"></div>
             <h3 class="tools_window_name">Styling</h3>
             <style id="styleHtml" contenteditable style="display: block;">
@@ -67,7 +67,7 @@
                 }
             </style>
         </div>
-        <div id="interface_automate" class="drag">
+        <div id="animation_window" class="drag tool_windows">
             <div id="css-box-handle" class="handle"></div>
             <h3 class="tools_window_name">Animation</h3>
             <div class="input_anim_select"><input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="1"
@@ -82,7 +82,7 @@
                 <label for="anim_mod">Curseur</label>
             </div>
         </div>
-        <div id="capture_window" class="drag">
+        <div id="capture_window" class="drag tool_windows">
             <div class="handle"></div>
             <h3 class="tools_window_name">Capture</h3>
         </div>
@@ -93,9 +93,9 @@
             </div>
             <div class="itemInterface">UTILISER LES FLECHES HAUT/BAS POUR CHANGER DE GLYPHS</div>
             <div class="itemInterface">
-                <div class="tools_window_btn displayed_tools_window" id="capture_btn">capture</div>
-                <div class="tools_window_btn displayed_tools_window" id="styling_btn">styling</div>
-                <div class="tools_window_btn displayed_tools_window" id="animation_btn">animation</div>
+                <div class="tools_window_btn" id="capture">capture</div>
+                <div class="tools_window_btn" id="styling">styling</div>
+                <div class="tools_window_btn" id="animation">animation</div>
             </div>
             <div class="itemInterface">
                 <div id="lightModeDiv" class="subItem">
@@ -240,24 +240,27 @@
                         <input type="range" id="particleSize" name="particleSize" min="0.01" max="2" step="0.01"
                             onmouseup="scaleParticle()">
                     </div>
-                    Use colors > <input type="checkbox" id="checkFill" onclick="particleFill()">
+                    <!-- Use colors > <input type="checkbox" id="checkFill" onclick="particleFill()">
                     <br>
                     <div id="ballColor">
                         <label for="particlesColor"> - Particle color > </label>
                         <input type="color" id="particlesColor" name="particlesColor" value="#e66465"
                             onclick="loadColor()">
-                    </div>
+                    </div> -->
                 </div>
+
                 <div id="ballFriction" class="subItem">
                     <label for="airFric">friction de l'air : </label>
                     <input type="range" id="airFric" name="airFric" min="0.01" max="1" step="0.02"
                         onmouseup="changeAirFriction()">
                 </div>
-                <div id="ballMasse" class="subItem">
+                
+                <!-- <div id="ballMasse" class="subItem">
                     <label for="circRadius">Particle radius : </label>
                     <input type="range" id="circRadius" name="circRadius" min="1" max="30" step="0.1"
                         onmouseup="changeRadius()">
-                </div>
+                </div> -->
+
                 <div id="ballDensity" class="subItem">
                     <label for="density">Densité de particule : </label>
                     <input type="range" id="density" name="density" min="0.005" max="0.2" step="0.005"
@@ -266,14 +269,17 @@
             </div>
             <div class="itemInterface">
                 <p class="titleItem">Liens : </p>
-                <div class="subItem" id="showConst">
+
+                <!-- <div class="subItem" id="showConst">
                     voir le lien : <input type="checkbox" id="checkConstrains" onclick="showConstrains()" checked>
-                </div>
-                <div class="subItem" id="strokeStyle">
+                </div> -->
+                
+                <!-- <div class="subItem" id="strokeStyle">
                     <label for="constrainStyle">Couleur du lien : </label>
                     <input type="color" id="constrainStyle" name="constrainStyle" value="#e66465"
                         onclick="constrainStyle()">
-                </div>
+                </div> -->
+
                 <div class="subItem" id="strokeWidth">
                     <label for="constStrokeWidth">Épaisseur du trait : </label>
                     <input type="range" id="constStrokeWidth" name="constStrokeWidth" min="0.1" max="5" step="0.1"
@@ -294,13 +300,14 @@
                 </div> -->
             </div>
 
-            <div class="itemInterface">
+            <!-- <div class="itemInterface">
                 <p class="titleItem">Reload settings</p>
                 <div class="subItem">
                     Your settings made for the past letter have disappeared ? Reload them !
                     <button id="btnReload" onclick="fullReload()">RELOAD</button>
                 </div>
-            </div>
+            </div> -->
+            
         </div>
     </div>
 

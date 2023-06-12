@@ -161,6 +161,7 @@ const dotProfil = {
 
 function addP5render() {
     const canvasP5 = p => {
+        let gScale;
         class Dot {
             constructor(x, y, img, scale) {
                 this.x = x;
@@ -183,6 +184,9 @@ function addP5render() {
             update(x, y) {
                 this.x = x;
                 this.y = y;
+            }
+            upscale(){ 
+                this.scale = gScale
             }
             rot(r) {
                 this.rotation = r
@@ -216,15 +220,8 @@ function addP5render() {
 
         let x = 0;
         p.draw = function () {
-            p.clear()
-
-            // p.fill(255, 0, 0)
-            // p.rect(x, 50, 50, 50)
-            // x += 5
-            // if (x >= WiW) {
-            //     x = 0;
-            // }
-
+            gScale = Math.cos(p.millis()/4500) * .85
+            // p.clear()
             p.push()
             p.translate(WiW / 2, WiH / 2)
             p.scale(document.querySelector('#input_zoom_range').value)
@@ -236,6 +233,7 @@ function addP5render() {
                 // console.log(offsetValX)
                 for (let i = 0; i < dots.length; i++) {
                     dots[i].update(letterSet[0][i].position.x, letterSet[0][i].position.y)
+                    // dots[i].upscale()
                 }
             } else {
                 genDots()
@@ -513,7 +511,7 @@ function showBalls() {
             letterSet[0][i].render.sprite.texture = "";
         }
     } else {
-        particleFill();
+        // particleFill();
     }
 }
 
@@ -652,17 +650,17 @@ function fullReload() {
     showBalls();
     scaleParticle()
     changeAirFriction()
-    changeRadius()
+    // changeRadius()
     changeDensity()
-    showConstrains()
+    // showConstrains()
     // showAnchors()
     changeStiffness()
     constrainLength()
 }
 
 let itemInterfaces = document.getElementsByClassName("itemInterface");
-let interface_automate = document.querySelector("#interface_automate")
-let htmlInterface = document.querySelector("#htmlInterface")
+let animation_window = document.querySelector("#animation_window")
+let styling_window = document.querySelector("#styling_window")
 
 let interface = document.getElementById("interface");
 function hideInterface() {
@@ -671,8 +669,8 @@ function hideInterface() {
         itemInterfaces[i].style.display == "none" ? itemInterfaces[i].style.display = "inline-block" : itemInterfaces[i].style.display = "none";
     }
 
-    htmlInterface.style.display == "none" ? htmlInterface.style.display = "block" : htmlInterface.style.display = "none"
-    interface_automate.style.display == "none" ? interface_automate.style.display = "block" : interface_automate.style.display = "none"
+    styling_window.style.display == "none" ? styling_window.style.display = "block" : styling_window.style.display = "none"
+    animation_window.style.display == "none" ? animation_window.style.display = "block" : animation_window.style.display = "none"
 }
 
 function setLightMode() {
@@ -684,8 +682,8 @@ function setLightMode() {
 
     interface.style.color == "white" ? interface.style.color = "black" : interface.style.color = "white";
     interface.style.backgroundColor == "black" ? interface.style.backgroundColor = "white" : interface.style.backgroundColor = "black";
-    // htmlInterface.style.color == "white" ? htmlInterface.style.color = "black" : htmlInterface.style.color = "white";
-    // interface_automate.style.color == "white" ? interface_automate.style.color = "black" : interface_automate.style.color = "white";
+    // styling_window.style.color == "white" ? styling_window.style.color = "black" : styling_window.style.color = "white";
+    // animation_window.style.color == "white" ? animation_window.style.color = "black" : animation_window.style.color = "white";
 }
 
 let displayStatus = true;
