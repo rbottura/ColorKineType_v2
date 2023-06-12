@@ -5,30 +5,47 @@ let jsonCstSet = new DataSet("custom", cstSet, 0, 0);
 
 let images = [], previewImage;
 
-function onOpenCvReady(method) {
-
-    const data = document.querySelector("#defaultCanvas0");
-    images.push(data)
-    let prevImage = document.createElement("img")
-    prevImage.classList.add("preview_image")
-    prevImage.src = data.toDataURL();
-
-    let box_prev = document.querySelector("#preview_dotted_image");
-    console.log(box_prev) 
-    if(box_prev.children.length == 0){
-        box_prev.appendChild(prevImage)
+function onOpenCvReady(method, gen) {
+    if (gen) {
+        let i = 0
+        let intr = setInterval(() => {
+            images = []
+            i++
+            let data = document.querySelector('#defaultCanvas0')
+            images.push(data)
+            console.log(indexGenText)
+            processImages('gen')
+            indexGenText = i;
+            if (i == arrTextDataset.length) {
+                clearInterval(intr)
+                newDataset()
+                // console.log(images)
+            }
+        }, 300)
     } else {
-        box_prev.innerHTML = "";
-        box_prev.appendChild(prevImage)
-    }
+        const data = document.querySelector("#defaultCanvas0");
+        images.push(data)
+        let prevImage = document.createElement("img")
+        prevImage.classList.add("preview_image")
+        prevImage.src = data.toDataURL();
 
-    if (method == "addNoPrev") {
-        processImages("save");
-    } else if (method == "addPrev") {
-        processImages("save");
-    }
+        let box_prev = document.querySelector("#preview_dotted_image");
+        console.log(box_prev)
+        if (box_prev.children.length == 0) {
+            box_prev.appendChild(prevImage)
+        } else {
+            box_prev.innerHTML = "";
+            box_prev.appendChild(prevImage)
+        }
 
-    processImages("count");
+        if (method == "addNoPrev") {
+            processImages("save");
+        } else if (method == "addPrev") {
+            processImages("save");
+        }
+
+        processImages("count");
+    }
 }
 
 let jsondata = [];
@@ -100,13 +117,40 @@ function processImages(method) {
 
     // console.log(data)
     // Wait for all promises to resolve before writing the output to a file
-    const output = document.querySelector("#op_nbr_dots");
-    Promise.all(promises).then(() => {
-        images = [];
-        if ("count") {
-            output.innerHTML = " " + countDots;
-        }
-    })
+    if (method == 'gen') {
+        console.log('hey')
+        // Promise.all(promises).then(() => {
+        // images = [];
+        // newDataset()
+        // })
+    } else {
+        const output = document.querySelector("#op_nbr_dots");
+        Promise.all(promises).then(() => {
+            images = [];
+            if ("count") {
+                output.innerHTML = " " + countDots;
+            }
+        })
+    }
+}
+
+let nbrSets = 15, setsVal = 10
+function newDataset() {
+    let list_datasets = document.querySelector('#list_datasets')
+    console.log(list_datasets.children)
+    let custom = list_datasets.children[list_datasets.children.length - 1]
+    let newSet = custom.cloneNode(true)
+    console.log(newSet.childNodes[3])
+    newSet.childNodes[1].id = 'set' + nbrSets
+    newSet.childNodes[1].value = setsVal
+    newSet.childNodes[3].innerHTML = setsVal + ' (custom)'
+    list_datasets.appendChild(newSet)
+    let jsonCstSet = new DataSet("custom" + setsVal, jsondata, 0, 0);
+    ListDataSets.push(jsonCstSet)
+    nbrSets++
+    setsVal++
+    jsondata = []
+    radioInputEvent()
 }
 
 function createNewDotCharacter() {
@@ -117,7 +161,7 @@ function createNewDotCharacter() {
     }
 }
 
-function showCstSet(){
+function showCstSet() {
     createNewDotCharacter();
     document.querySelector("#matter_disp_btn").click();
     document.querySelector("#set14").click();

@@ -33,7 +33,6 @@ let spriteItems = document.getElementsByClassName("spriteItem");
 let arrSprites = [].slice.call(spriteItems);
 arrSprites.forEach(element => { element.addEventListener("click", (event) => changeSprite(event)) });
 
-let radioSets = document.getElementsByClassName("radioSets");
 let caracterIndex;
 let checkReload;
 
@@ -208,7 +207,7 @@ function addP5render() {
             p.pixelDensity(1)
             p.rectMode(p.CENTER)
 
-            globalSprite = sprites[9];
+            globalSprite = sprites[8];
             for (let i = 0; i < letterSet[0].length; i++) {
                 let dot = new Dot(letterSet[0][i].position.x, letterSet[0][i].position.y, globalSprite, globalSize)
                 dots.push(dot)
@@ -219,12 +218,12 @@ function addP5render() {
         p.draw = function () {
             p.clear()
 
-            p.fill(255, 0, 0)
-            p.rect(x, 50, 50, 50)
-            x += 5
-            if (x >= WiW) {
-                x = 0;
-            }
+            // p.fill(255, 0, 0)
+            // p.rect(x, 50, 50, 50)
+            // x += 5
+            // if (x >= WiW) {
+            //     x = 0;
+            // }
 
             p.push()
             p.translate(WiW / 2, WiH / 2)
@@ -253,7 +252,7 @@ function addP5render() {
 
         p.mousePressed = function (e) {
             let trg = e.target
-            console.log(trg)
+            // console.log(trg)
             if (trg.classList.contains('radioSets')) {
                 genDots()
             }
@@ -278,17 +277,17 @@ function addP5render() {
 
 }
 
-// const globalOffsetX = WiW / 3;
-const globalOffsetX = 0;
-
-for (let i = 0; i < radioSets.length; i++) {
-    radioSets[i].addEventListener("change", (event) => {
-        if (event.target.checked) {
-            currentSetValue = parseInt(event.target.value);
-            caracterIndex = 0;
-            creaParticules2(caracterIndex);
-            event.target.blur()
-        }
+radioInputEvent()
+function radioInputEvent() {
+    document.querySelectorAll('.radioSets').forEach(elem => {
+        elem.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                currentSetValue = parseInt(event.target.value);
+                caracterIndex = 0;
+                creaParticules2(caracterIndex);
+                e.target.blur()
+            }
+        })
     })
 }
 
@@ -684,11 +683,9 @@ function setLightMode() {
     document.body.style.backgroundColor == "black" ? document.body.style.backgroundColor = "white" : document.body.style.backgroundColor = "black";
 
     interface.style.color == "white" ? interface.style.color = "black" : interface.style.color = "white";
-    interface.style.border == "solid white 1px" ? interface.style.border = "solid black 1px" : interface.style.border = "solid white 1px";
-
-    htmlInterface.style.color == "white" ? htmlInterface.style.color = "black" : htmlInterface.style.color = "white";
-
-    interface_automate.style.color == "white" ? interface_automate.style.color = "black" : interface_automate.style.color = "white";
+    interface.style.backgroundColor == "black" ? interface.style.backgroundColor = "white" : interface.style.backgroundColor = "black";
+    // htmlInterface.style.color == "white" ? htmlInterface.style.color = "black" : htmlInterface.style.color = "white";
+    // interface_automate.style.color == "white" ? interface_automate.style.color = "black" : interface_automate.style.color = "white";
 }
 
 let displayStatus = true;
@@ -739,8 +736,8 @@ document.onmousemove = (event) => {
     // console.log(globalDragTarget.parentNode) ;
     if (!globalGrabStat) {
         let rectHandle = globalDragTarget.getBoundingClientRect();
-        let offX = rectHandle.width / 2 + 16
-        let offY = rectHandle.height / 2 + 16
+        let offX = rectHandle.width / 2 + 8
+        let offY = rectHandle.height / 2 + 8
         globalDragTarget.parentNode.style.left = event.clientX - offX + "px";
         globalDragTarget.parentNode.style.top = event.pageY - offY + "px";
     }
@@ -832,7 +829,37 @@ for (const elem of inputs_anim_btns) {
 }
 
 deleteOneCapture()
-function deleteOneCapture(){
+function deleteOneCapture() {
     let capture = document.querySelectorAll('.p5c-container')[0]
+    console.log(capture)
     capture.remove();
+    reshapeCapture()
+}
+
+function reshapeCapture() {
+    let lc = document.body.lastChild
+    console.log(lc.tagName)
+    let sibNode = document.querySelector('#capture_window').lastChild
+    let capWindow = document.querySelector('#capture_window')
+    if (lc.tagName == "DIV") {
+        console.log(lc.classList)
+        if (lc.classList.contains('p5c-container')) {
+            lc.classList.remove('p5c-container')
+            sibNode.after(lc)
+            let recBtn = document.querySelectorAll(".p5c-btn")[0]
+            recBtn.style.display = 'none'
+
+            let newRecBtn = document.createElement('div')
+            newRecBtn.id = 'recBtn'
+            newRecBtn.innerHTML = 'start/stop rec'
+            newRecBtn.addEventListener('click', () => {
+                recBtn.click()
+            })
+            capWindow.appendChild(newRecBtn)
+        }
+    } else {
+        setTimeout(() => {
+            reshapeCapture()
+        }, 300)
+    }
 }
