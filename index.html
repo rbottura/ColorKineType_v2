@@ -67,33 +67,47 @@
 
         <div id="animation_window" class="drag tool_windows">
             <div id="css-box-handle" class="handle"></div>
-            <h3 class="tools_window_name">Animation Rotation</h3>
+            <h3 class="tools_window_name">Animation Attractor</h3>
             <div class="input_anim_select">
                 <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="1" checked>
-                <label for="anim_mod">Cercle</label>
+                <label for="anim_mod">Circle</label>
             </div>
             <div class="input_anim_select">
                 <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="2">
-                <label for="anim_mod">Sinueux</label>
+                <label for="anim_mod">Sin wave</label>
             </div>
             <div class="input_anim_select">
                 <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="3">
-                <label for="anim_mod">Carré</label>
+                <label for="anim_mod">Rectangle</label>
             </div>
             <div class="input_anim_select">
                 <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="4">
-                <label for="anim_mod">Curseur</label>
+                <label for="anim_mod">Cursor</label>
             </div>
             <div class="input_anim_select">
                 <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="5">
                 <label for="anim_mod">Stop</label>
             </div>
             <h3 class="tools_window_name">Animation Sprite</h3>
-            <div style="display: none;" class="sprite_anim_select">
+            <div class="sprite_anim_select">
                 <input type="radio" class="sprites_anim_btns" id="" name="anim_mod_sprite" value="0">
-                <label for="anim_mod">Wave size</label>
+                <label for="anim_mod">Wave scale /w speed</label>
+                <input type="number" class="sprites_anim_btns_num" id="sprite_anim_btns_num" name="anim_mod_rot" value="2" step="0.1">
+                
                 <input type="radio" class="sprites_anim_btns" id="" name="anim_mod_sprite" value="1">
-                <label for="anim_mod">random scale</label>
+                <label for="anim_mod">Stop scale</label>
+            </div>
+            <h3 class="tools_window_name">Animation Rotation</h3>
+            <div class="rot_anim_select">
+                <input type="radio" class="rot_anim_btns" id="" name="anim_mod_rot" value="0">
+                <label for="anim_mod">Rotate w/ speed</label>
+                <input type="number" class="rot_anim_btns_num" id="rot_anim_btns_num" name="anim_mod_rot" value="2" step="0.1">
+
+                <input type="radio" class="rot_anim_btns" id="" name="anim_mod_rot" value="1">
+                <label for="anim_mod">Rotate w/ attractor</label>
+                
+                <input type="radio" class="rot_anim_btns" id="" name="anim_mod_rot" value="2">
+                <label for="anim_mod">Stop rotate</label>
             </div>
         </div>
 

@@ -213,6 +213,7 @@ function addP5render() {
         let canvas;
         p.setup = function () {
             canvas = p.createCanvas(WiW, WiH)
+            p.angleMode(p.DEGREES)
             // p.background(p.color('brown'))
             p.imageMode(p.CENTER)
             p.pixelDensity(1)
@@ -227,7 +228,7 @@ function addP5render() {
 
         let x = 0;
         p.draw = function () {
-            gScale = Math.cos(p.millis()/4500) * .85
+            gScale = Math.cos(p.millis()/(scaleSpeed * 1000)) * .85
             if(clearBck){
                 p.clear()
             }
@@ -242,7 +243,9 @@ function addP5render() {
                 // console.log(offsetValX)
                 for (let i = 0; i < dots.length; i++) {
                     dots[i].update(letterSet[0][i].position.x, letterSet[0][i].position.y)
-                    // dots[i].upscale()
+                    if(isScaling){
+                        dots[i].upscale()
+                    }
                 }
             } else {
                 genDots()
@@ -270,7 +273,7 @@ function addP5render() {
             p.clear()
             dots = []
             for (let i = 0; i < letterSet[0].length; i++) {
-                let dot = new Dot(letterSet[0][i].position.x, letterSet[0][i].position.y, globalSprite, globalSize)
+                let dot = new Dot(letterSet[0][i].position.x, letterSet[0][i].position.y, globalSprite, gScale)
                 dots.push(dot)
             }
         }
@@ -279,9 +282,7 @@ function addP5render() {
     if (letterSet.length != 0) {
         new p5(canvasP5, 'render_p5_container')
     }
-
-    upadateRotation();
-
+    updateRotation();
 }
 
 radioInputEvent()
@@ -289,7 +290,7 @@ function radioInputEvent() {
     document.querySelectorAll('.radioSets').forEach(elem => {
         elem.addEventListener('change', (e) => {
             if (e.target.checked) {
-                currentSetValue = parseInt(event.target.value);
+                currentSetValue = parseInt(e.target.value);
                 caracterIndex = 0;
                 creaParticules2(caracterIndex);
                 e.target.blur()
@@ -482,19 +483,6 @@ document.querySelectorAll("#input_zoom_range, #op_zoom_val").forEach(elem => {
 
     })
 })
-
-function upadateRotation() {
-    for (let i = 0; i < letterSet[0].length; i++) {
-        let AX = (letterSet[0][i].position.x / posBalls + 0);
-        let AY = (letterSet[0][i].position.y / posBalls + 0);
-        let angleRadian = Math.atan2(attractiveBody.position.y - AY, attractiveBody.position.x - AX);
-        letterSet[0][i].angle = angleRadian + Math.PI * 0.9;
-        if (dots.length != 0 && i <= dots.length - 1) {
-            dots[i].rot(angleRadian + Math.PI * 0.9)
-        }
-    }
-    requestAnimationFrame(upadateRotation);
-}
 
 // fit the render viewport to the scene
 let zoomVP = 1.0, offZoom = 0;
@@ -762,7 +750,7 @@ function gravCircle() {
         x: (((WiW * zoomVP / 2.2) + (Math.cos(rotateVal) * WiW / 2.5)) - attractiveBody.position.x) * 0.1,
         y: ((WiH * zoomVP / 2.2) + Math.sin(rotateVal) * WiH / 1.5 - attractiveBody.position.y) * 0.1
     })
-    rotateVal += 0.03;
+    rotateVal += 0.02;
 }
 
 let stepEight = 0, nbrNoeuds = 2, xval = 0;
@@ -836,6 +824,60 @@ function animateMode() {
 function stopRotAnim(){
     cancelAnimationFrame(animReq)
 }
+
+document.querySelectorAll('.rot_anim_btns').forEach(elem => {
+    elem.addEventListener('change', (e) => {
+        if(!isRotating){
+            updateRotation()
+        }
+        rotateMod = e.target.value
+    })
+})
+
+let gRot = 0, rotateMod = 0, isRotating = true;
+function updateRotation() {
+    let rotSpeed = parseFloat(document.querySelector('#rot_anim_btns_num').value)
+    gRot += rotSpeed
+    
+    for (let i = 0; i < letterSet[0].length; i++) {
+        let AX = (letterSet[0][i].position.x / posBalls + 0);
+        let AY = (letterSet[0][i].position.y / posBalls + 0);
+        let angleRadian = Math.atan2(attractiveBody.position.y - AY, attractiveBody.position.x - AX);
+        letterSet[0][i].angle = angleRadian + Math.PI * 0.9;
+
+        if (dots.length != 0 && i <= dots.length - 1) {
+            if(rotateMod == 0){
+                dots[i].rot(gRot)
+            }
+            if(rotateMod == 1){
+                dots[i].rot((angleRadian + Math.PI * 0.9)*180/Math.PI)
+            }
+        }
+    }
+    if(rotateMod == 2){
+        cancelAnimationFrame(updateRotation)
+        isRotating = false
+    }
+    requestAnimationFrame(updateRotation);
+}
+
+let isScaling = false, scaleSpeed = parseFloat(document.querySelector('#sprite_anim_btns_num').value), scaleMod = 0;
+
+document.querySelector('#sprite_anim_btns_num').addEventListener('change', (e) => {
+    scaleSpeed = e.target.value
+})
+
+document.querySelectorAll('.sprites_anim_btns').forEach(elem => {
+    elem.addEventListener('change', e => {
+        scaleMod = e.target.value
+        if(scaleMod == 0){
+            isScaling = true;
+        }
+        if(scaleMod == 1){
+            isScaling = false;
+        }
+    })
+})
 
 function easeIn(from, to, ease) {
     return from + (to - from) * ease;
