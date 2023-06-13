@@ -827,7 +827,7 @@ input[type=range] {
     background-color: transparent;
     height: 29px;
     -webkit-appearance: none;
-    margin: 10px 0;
+    margin: 4px 0;
     width: 100%;
 }
 
@@ -934,4 +934,9 @@ input[type=range]:focus::-ms-fill-upper {
 
 #gen_dataset_btn {
     cursor: pointer;
+}
+
+.labels_render {
+    white-space: nowrap;
+    margin-right: 6px;
 }

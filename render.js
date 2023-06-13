@@ -36,7 +36,7 @@ arrSprites.forEach(element => { element.addEventListener("click", (event) => cha
 let caracterIndex;
 let checkReload;
 
-let clearBck = false;
+let clearBck = true;
 
 loadDataSets();
 function loadDataSets() {
