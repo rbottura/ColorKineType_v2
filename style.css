@@ -429,7 +429,7 @@ h2 {
 }
 
 #render_matter {
-    display: none;
+    display: block;
     position: absolute;
     /* top: 250px; */
     z-index: 1;
@@ -753,7 +753,7 @@ input[type="radio" i] {
     margin: 3px;
     padding-bottom: 5px;
     /* padding: 3px; */
-    border-bottom: solid black 1px;
+    border-top: solid black 1px;
 }
 
 #capture_window {

@@ -36,6 +36,8 @@ arrSprites.forEach(element => { element.addEventListener("click", (event) => cha
 let caracterIndex;
 let checkReload;
 
+let clearBck = false;
+
 loadDataSets();
 function loadDataSets() {
     // for (let i = 0; i < nbrDataSets; i++) {
@@ -159,6 +161,8 @@ const dotProfil = {
     'scale': 1,
 }
 
+let showSprite = true
+
 function addP5render() {
     const canvasP5 = p => {
         let gScale;
@@ -178,7 +182,9 @@ function addP5render() {
                 p.translate(this.x - WiW / 2, this.y - WiH / 2)
                 p.rotate(this.rotation)
                 p.scale(this.scale)
-                p.image(this.img, 0, 0)
+                if(showSprite){
+                    p.image(this.img, 0, 0)
+                }
                 p.pop()
             }
             update(x, y) {
@@ -221,7 +227,9 @@ function addP5render() {
         let x = 0;
         p.draw = function () {
             gScale = Math.cos(p.millis()/4500) * .85
-            // p.clear()
+            if(clearBck){
+                p.clear()
+            }
             p.push()
             p.translate(WiW / 2, WiH / 2)
             p.scale(document.querySelector('#input_zoom_range').value)
@@ -503,6 +511,7 @@ function showBalls() {
     let checkParticles = document.getElementById("checkParticles").checked;
     //console.log(e.target.checked);
     if (!checkParticles) {
+        showSprite = false
         for (let i = 0; i < letterSet[0].length; i++) {
             // letterSet[0][i].render.fillStyle = "rgba(0,0,0,0)";
             // letterSet[0][i].render.sprite.texture = "";
@@ -511,6 +520,7 @@ function showBalls() {
             letterSet[0][i].render.sprite.texture = "";
         }
     } else {
+        showSprite = true
         // particleFill();
     }
 }
@@ -800,6 +810,7 @@ function mouseCtrl() {
 }
 
 let animReq;
+let animRotStat = true;
 animateMode()
 function animateMode() {
     if (animMode == 1) {
@@ -814,7 +825,15 @@ function animateMode() {
     if (animMode == 4) {
         mouseCtrl()
     }
+    if (animMode == 5) {
+        stopRotAnim()
+        animRotStat = false
+    }
     animReq = requestAnimationFrame(animateMode)
+}
+
+function stopRotAnim(){
+    cancelAnimationFrame(animReq)
 }
 
 function easeIn(from, to, ease) {
@@ -823,7 +842,13 @@ function easeIn(from, to, ease) {
 
 let inputs_anim_btns = document.querySelectorAll(".inputs_anim_btns")
 for (const elem of inputs_anim_btns) {
-    elem.addEventListener("click", (e) => { animMode = e.target.value })
+    elem.addEventListener("click", (e) => {
+        if(!animRotStat){
+            animateMode()
+            animRotStat = true
+        } 
+        animMode = e.target.value 
+    })
 }
 
 deleteOneCapture()
@@ -861,3 +886,11 @@ function reshapeCapture() {
         }, 300)
     }
 }
+
+document.querySelector('#bck_clear_btn').addEventListener('change', e => {
+    if(e.target.checked){
+        clearBck = true;
+    } else {
+        clearBck = false;
+    }
+})
