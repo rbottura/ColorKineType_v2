@@ -54,6 +54,7 @@ function loadDataSets() {
             });
     } else {
         // creaParticules2(19);
+        console.log('HEYYYYYYYYYYYY')
         showLetter('start');
         ListDataSets.push(jsonCstSet)
     }
