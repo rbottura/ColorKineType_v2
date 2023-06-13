@@ -64,6 +64,7 @@
                 }
             </style>
         </div>
+
         <div id="animation_window" class="drag tool_windows">
             <div id="css-box-handle" class="handle"></div>
             <h3 class="tools_window_name">Animation Rotation</h3>
@@ -111,13 +112,18 @@
                 <div class="tools_window_btn" id="styling">styling</div>
                 <div class="tools_window_btn" id="animation">animation</div>
             </div>
-            <div class="itemInterface">
+            <!-- <div class="itemInterface">
                 <div id="lightModeDiv" class="subItem">
-                    Dark mode : <input type="checkbox" id="checkLight" onclick="setLightMode()">
                     & Reload auto : <input type="checkbox" id="checkReload" checked>
                 </div>
+            </div> -->
+            <div class="itemInterface">
+                <label for="">Dark mode  </label>
+                <input type="checkbox" id="checkLight" onclick="setLightMode()">
+            </div>
+            <div class="itemInterface">
                 <div class="subItem">
-                    <label for="">Background clearing</label>
+                    <label for="">Background clearing  </label>
                     <input type="checkbox" id="bck_clear_btn">
                 </div>
             </div>
@@ -341,9 +347,9 @@
 
                 <div id="tabs_selection">
                     <div name="tab1_grid_input" id="text_tab_btn" class="tab_button activ_tab_p5">text input</div>
-                    <div name="tab2_grid_input" id="datasetGen_tab_btn" class="tab_button">dataset generator (in dev)
+                    <div name="tab2_grid_input" id="datasetGen_tab_btn" class="tab_button">dataset generator
                     </div>
-                    <div name="tab3_grid_input" id="imgInput_tab_btn" class="tab_button">image input (in dev)</div>
+                    <div name="tab3_grid_input" id="imgInput_tab_btn" class="tab_button">image input (not available)</div>
                 </div>
                 <div class="tabs_input_window activ_input_window" id="tab1_grid_input">
 
