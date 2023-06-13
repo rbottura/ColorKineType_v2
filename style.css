@@ -133,15 +133,15 @@ body {
     align-items: center;
     position: absolute;
     z-index: 50;
-    height: 400px;
-    left: calc(50vw - 70px);
-    top: -212px;
+    height: 32vw;
+    left: calc(50vw - 6vw);
+    top: -17.8vw;
     color: black;
     /* background-color: rgb(228, 183, 183); */
 }
 
 .nav_bar_displayed {
-    margin-top: 232px;
+    margin-top: 15vw;
 }
 
 #nav_bar_wrapper {
@@ -179,12 +179,13 @@ body {
     color: black;
     padding: 2px 5px;
     width: 20%;
+    padding: 6px;
     text-align: center;
     justify-content: center;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 1.3vw;
     background-color: white;
     opacity: 1;
 }
@@ -208,8 +209,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 3vw;
+    height: 3vw;
+    font-size: 1.2vw;
     margin: 6px 3px;
     background-color: rgb(255, 255, 255);
     border: solid 2px rgb(0, 0, 0);
@@ -235,6 +237,9 @@ body {
     border: black solid 2px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
+    height: 1.2vw;
+    font-size: 1.3vw;
+    font-weight: 600;
 }
 
 .folded {
@@ -260,30 +265,35 @@ body {
 .step_layer {
     position: relative;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 20px;
+    font-size: 1.2vw;
     padding: 10px;
     margin-top: 5px;
     max-width: 400px;
     border: rgb(219, 200, 26) solid 2px;
-    /* background-color: rgba(245, 241, 198, 0.678); */
-    mix-blend-mode: difference;
+    min-width: 22vw;
+    width: auto;
 }
 
+#fontfamily_menu {
+    font-size: 1.2vw;
+}
 
+datalist {
+    font-size: 1.2vw;
+}
 
 .step_layer>p {
     font-family: 'Domine', serif;
-    font-size: 12px;
+    font-size: .9vw;
 }
 
 .step_layer>.step_infos {
     font-family: garamond;
-    font-size: 18px;
+    font-size: 1.3vw;
 }
 
-
 .step_layer>div {
-    font-size: 18px;
+    font-size: 1.2vw;
 }
 
 .step_layer+.step_layer {
@@ -347,7 +357,7 @@ h2 {
 
 .tab_button {
     border: black solid 1px;
-    font-size: 20px;
+    font-size: 1.5vw;
     padding: 7px 12px;
     background-color: white;
     text-transform: uppercase;
@@ -390,7 +400,9 @@ h2 {
 }
 
 .input_number {
-    width: 3em;
+    height: 1.8vw;
+    width: 2.6vw;
+    font-size: 1.8vw;
 }
 
 #fieldset_wrapper {
@@ -534,13 +546,18 @@ input {
     flex-direction: column;
     height: fit-content;
     padding: 0 8px;
-    width: 270px;
+    width: 17vw;
     transition: marginTop 2s;
     background-color: #ffffff;
     max-height: 100vh;
     overflow-y: scroll;
     min-height: 35px;
     border: none;
+    font-size: 1.2vw;
+}
+
+#interface > label {
+    font-size: 1.2vw;
 }
 
 #btnHide {
@@ -565,13 +582,13 @@ input {
     align-items: center;
     margin-top: 5px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 16px;
+    font-size: 1.3vw;
     font-weight: 400;
 }
 
 .titleItem {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px;
+    font-size: 2.1vw;
     /* font-weight: 600; */
     margin: 0;
     text-transform: uppercase;
@@ -588,8 +605,8 @@ input {
 
 .spriteItem {
     display: inline-block;
-    height: 25px;
-    width: 25px;
+    height: 2.1vw;
+    width: 2.1vw;
     border: solid 1px black;
     margin: 2px 4px;
     padding: 2px;
@@ -599,10 +616,8 @@ input {
 
 .activeSprite {
     border: solid 2px orangered;
-    box-sizing: border-box;
-    height: 32px;
-    width: 32px;
-    box-shadow: 0px 0px 4px 0 orangered;
+    /* box-sizing: border-box; */
+    box-shadow: 0px 0px 4px 4px orangered;
 }
 
 #ballFill {
@@ -640,8 +655,14 @@ input[type="radio" i] {
     margin: 3px 8px 0px 5px;
     padding: initial;
     border: initial;
+    height: 1.5vw;
+    width: 1.5vw;
 }
 
+input[type="checkbox"]{
+    height: 1.5vw;
+    width: 1.5vw;
+}
 
 .handle {
     cursor: grab;
@@ -676,11 +697,11 @@ input[type="radio" i] {
     /* top: 10vh; */
     justify-content: center;
     align-items: center;
-    border: black solid 1px;
+    font-size: 1.8vw;
 }
 
 .txt_ry_warning {
-    max-width: 200px;
+    max-width: 30vw;
 }
 
 #p5canvas_loadingScreen {
@@ -740,6 +761,17 @@ input[type="radio" i] {
 
 .tool_windows {
     display: none;
+    font-size: 1.3vw;
+    min-width: 10vw;
+}
+
+.p5c-options > select {
+    width: 5vw;
+    font-size: 1.2vw;
+}
+
+.p5c-options > input {
+    font-size: 1.2vw;
 }
 
 /* font-family: 'Domine', serif; */
@@ -939,4 +971,8 @@ input[type=range]:focus::-ms-fill-upper {
 .labels_render {
     white-space: nowrap;
     margin-right: 6px;
+}
+
+@media screen and (min-width: 1921px) {
+    
 }
