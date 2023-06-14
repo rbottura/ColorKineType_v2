@@ -604,8 +604,8 @@ input {
 
 .spriteItem {
     display: inline-block;
-    height: 2.1vw;
-    width: 2.1vw;
+    height: 1.9vw;
+    width: 1.9vw;
     border: solid 1px black;
     margin: 2px 4px;
     padding: 2px;
