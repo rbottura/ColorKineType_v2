@@ -273,7 +273,13 @@ function addP5render() {
             p.clear()
             dots = []
             for (let i = 0; i < letterSet[0].length; i++) {
-                let dot = new Dot(letterSet[0][i].position.x, letterSet[0][i].position.y, globalSprite, gScale)
+                let size = 0 
+                if(isScaling){
+                    size = gScale
+                } else {
+                    size = globalSize
+                }
+                let dot = new Dot(letterSet[0][i].position.x, letterSet[0][i].position.y, globalSprite, size)
                 dots.push(dot)
             }
         }

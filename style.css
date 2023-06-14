@@ -135,13 +135,13 @@ body {
     z-index: 50;
     height: 32vw;
     left: calc(50vw - 6vw);
-    top: -17.8vw;
+    top: -17.6vw;
     color: black;
     /* background-color: rgb(228, 183, 183); */
 }
 
 .nav_bar_displayed {
-    margin-top: 15vw;
+    margin-top: 17vw;
 }
 
 #nav_bar_wrapper {
@@ -484,7 +484,6 @@ input {
     flex-direction: column;
     position: absolute;
     left: 80vw;
-    min-width: 150px;
     z-index: 5555;
     left: 292px;
     top: 188px;
@@ -546,7 +545,7 @@ input {
     flex-direction: column;
     height: fit-content;
     padding: 0 8px;
-    width: 17vw;
+    width: 18.5vw;
     transition: marginTop 2s;
     background-color: #ffffff;
     max-height: 100vh;
@@ -762,7 +761,7 @@ input[type="checkbox"]{
 .tool_windows {
     display: none;
     font-size: 1.3vw;
-    min-width: 10vw;
+    min-width: 12vw;
 }
 
 .p5c-options > select {
