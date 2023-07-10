@@ -459,10 +459,15 @@ document.querySelector('#nav_bar_handle').addEventListener('click', (e) => {
     let dir = e.target.innerHTML
     let handle = e.target
     let nav_bar = document.querySelector('#nav_bar_wrapper')
+    let nav_bar_slider = document.querySelector('#nav_bar_slider')
+    let nav_bar_handle_wrapper = document.querySelector('#nav_bar_handle_wrapper')
     if (dir == '↓') {
+        nav_bar_slider.style.pointerEvents = 'auto'
         nav_bar.classList.add('nav_bar_displayed')
         handle.innerHTML = '↑'
     } else if (dir == '↑') {
+        nav_bar_slider.style.pointerEvents = 'none'
+        nav_bar_handle_wrapper.style.pointerEvents = 'auto'
         nav_bar.classList.remove('nav_bar_displayed')
         handle.innerHTML = '↓'
     }

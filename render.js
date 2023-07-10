@@ -62,6 +62,9 @@ function loadDataSets() {
 
 // i0 : { name : "A", points : { pt1 : [20, 50] }}
 
+// new Formating for datasets, giving a local 
+// offset for each index on function boudingBox()
+
 const sets = {}
 function gen(dataset, name) {
     const obj = {};
@@ -122,6 +125,9 @@ function boundingBox(dataset) {
     console.log(sets)
 }
 
+
+// loading plugin for matter js
+
 Matter.use(MatterAttractors);
 let Engine = Matter.Engine,
     Render = Matter.Render,
@@ -155,12 +161,8 @@ let render = Render.create({
     }
 });
 
+// !! Uncomment the line after for render matter canvas for debugging
 // Render.run(render);
-
-const dotProfil = {
-    'img': sprites[9],
-    'scale': 1,
-}
 
 let showSprite = true
 
@@ -211,6 +213,7 @@ function addP5render() {
         }
 
         let canvas;
+        let video;
         p.setup = function () {
             canvas = p.createCanvas(WiW, WiH)
             p.angleMode(p.DEGREES)
@@ -218,6 +221,11 @@ function addP5render() {
             p.imageMode(p.CENTER)
             p.pixelDensity(1)
             p.rectMode(p.CENTER)
+
+            // code for webcam înput 
+            // video = p.createCapture(p.VIDEO)
+            // video.size(WiW*16/9, WiH)
+            // video.hide()
 
             globalSprite = sprites[8];
             for (let i = 0; i < letterSet[0].length; i++) {
@@ -231,6 +239,11 @@ function addP5render() {
             gScale = Math.cos(p.millis()/(scaleSpeed * 1000)) * .85
             if(clearBck){
                 p.clear()
+                p.push();
+                p.translate(p.width,0);
+                p.scale(-1, 1);
+                // p.image(video, WiW/2, WiH/2, WiW, WiH)
+                p.pop()
             }
             p.push()
             p.translate(WiW / 2, WiH / 2)
@@ -308,6 +321,8 @@ function radioInputEvent() {
 let speed1 = 0.2;
 engine.gravity.y = 0;
 
+// create a particle for attracting all others
+
 var attractiveBody = Bodies.circle(
     render.options.width / 2,
     render.options.height / 2,
@@ -367,6 +382,10 @@ Runner.run(runner, engine);
 
 document.addEventListener("keydown", showLetter);
 
+
+// function to compute wich index in wich dataset to render,
+// and adding up and down arrow event to change index 
+
 function showLetter(e) {
 
     if (e == 'start') {
@@ -398,6 +417,8 @@ function showLetter(e) {
 }
 
 var index_cnt = 0;
+
+// creating particles in matter composition 
 
 function creaParticules2(caracter) {
     globalCaracter = caracter
@@ -491,6 +512,8 @@ document.querySelectorAll("#input_zoom_range, #op_zoom_val").forEach(elem => {
 })
 
 // fit the render viewport to the scene
+// for the matter renderer only
+
 let zoomVP = 1.0, offZoom = 0;
 let backgroundWall = Bodies.rectangle(WiW * zoomVP / 2, WiH * zoomVP / 2, WiW * zoomVP, WiH * zoomVP, {
     render: {
@@ -663,6 +686,11 @@ function fullReload() {
     constrainLength()
 }
 
+
+
+
+// DARK MODE 
+
 let itemInterfaces = document.getElementsByClassName("itemInterface");
 let animation_window = document.querySelector("#animation_window")
 let styling_window = document.querySelector("#styling_window")
@@ -706,9 +734,9 @@ function fireInterfaceDisplay() {
 
 
 
-
-
-
+// DRAG FUNCTIONS
+// DRAG FUNCTIONS
+// DRAG FUNCTIONS
 
 let globalGrabStat = true;
 let globalDragTarget;
@@ -746,6 +774,10 @@ document.onmousemove = (event) => {
     }
 }
 
+
+// ANIMATION MODES
+// ANIMATION MODES
+// ANIMATION MODES
 
 
 let animMode = 1;
@@ -899,6 +931,10 @@ for (const elem of inputs_anim_btns) {
         animMode = e.target.value 
     })
 }
+
+// CAPTURE FUNCTIONS
+// CAPTURE FUNCTIONS
+// CAPTURE FUNCTIONS
 
 deleteOneCapture()
 function deleteOneCapture() {
