@@ -92,8 +92,9 @@
             <div class="sprite_anim_select">
                 <input type="radio" class="sprites_anim_btns" id="" name="anim_mod_sprite" value="0">
                 <label for="anim_mod">Wave scale /w speed</label>
-                <input type="number" class="sprites_anim_btns_num" id="sprite_anim_btns_num" name="anim_mod_rot" value="2" step="0.1">
-                
+                <input type="number" class="sprites_anim_btns_num" id="sprite_anim_btns_num" name="anim_mod_rot"
+                    value="2" step="0.1">
+
                 <input type="radio" class="sprites_anim_btns" id="" name="anim_mod_sprite" value="1">
                 <label for="anim_mod">Stop scale</label>
             </div>
@@ -101,7 +102,8 @@
             <div class="rot_anim_select">
                 <input type="radio" class="rot_anim_btns" id="" name="anim_mod_rot" value="0">
                 <label for="anim_mod">w/ speed</label>
-                <input type="number" class="rot_anim_btns_num" id="rot_anim_btns_num" name="anim_mod_rot" value="2" step="0.1">
+                <input type="number" class="rot_anim_btns_num" id="rot_anim_btns_num" name="anim_mod_rot" value="2"
+                    step="0.1">
 
                 <input type="radio" class="rot_anim_btns" id="" name="anim_mod_rot" value="1">
                 <label for="anim_mod">w/ attractor</label>
@@ -132,19 +134,19 @@
                 </div>
             </div>
             <div class="itemInterface">
-                <label for="">Dark mode  </label>
+                <label for="">Dark mode </label>
                 <input type="checkbox" id="checkLight" onclick="setLightMode()">
             </div>
             <div class="itemInterface">
                 <div class="subItem">
-                    <label for="">Background clearing  </label>
+                    <label for="">Background clearing </label>
                     <input type="checkbox" id="bck_clear_btn" checked>
                 </div>
             </div>
 
             <div class="itemInterface">
                 <label for="zoom_range">Zoom : out/in</label>
-                <input class="input_number" id="op_zoom_val" type="number">
+                <input class="input_number" id="op_zoom_val" type="number" step=".05">
                 <input id="input_zoom_range" type="range" min=".01" max="2" step=".01">
             </div>
             <div id="list_datasets" class="itemInterface">
@@ -274,11 +276,6 @@
                         </div>
                     </div>
 
-                    <div id="spriteSize" class="subItem">
-                        <label class="labels_render" for="particleSize">Sprite size : </label>
-                        <input type="range" id="particleSize" name="particleSize" min="0.01" max="2" step="0.01"
-                            onmouseup="scaleParticle()">
-                    </div>
                     <!-- Use colors > <input type="checkbox" id="checkFill" onclick="particleFill()">
                     <br>
                     <div id="ballColor">
@@ -286,6 +283,12 @@
                         <input type="color" id="particlesColor" name="particlesColor" value="#e66465"
                             onclick="loadColor()">
                     </div> -->
+                </div>
+
+                <div id="spriteSize" class="subItem">
+                    <label class="labels_render" for="particleSize">Sprite size : </label>
+                    <input type="range" id="particleSize" name="particleSize" min="0.01" max="2" step="0.01"
+                        onmouseup="scaleParticle()">
                 </div>
 
                 <div id="ballFriction" class="subItem">
@@ -364,8 +367,9 @@
                     <div name="tab1_grid_input" id="text_tab_btn" class="tab_button activ_tab_p5">text input</div>
                     <div name="tab2_grid_input" id="datasetGen_tab_btn" class="tab_button">dataset generator
                     </div>
-                    <div name="tab3_grid_input" id="imgInput_tab_btn" class="tab_button">image input (not available)</div>
+                    <div name="tab3_grid_input" id="imgInput_tab_btn" class="tab_button">image input</div>
                 </div>
+
                 <div class="tabs_input_window activ_input_window" id="tab1_grid_input">
 
                     <div class="inputs_layers_wrapper">
@@ -486,15 +490,18 @@
                                 the custom dataset</p>
                             <div id="interface_opencv_input" class="interfaces">
                                 <div id="btn_count_dots" class="formItem" onclick="onOpenCvReady()">
-                                    ! Click here to count dots !
+                                    ! Click here to process changes !
                                 </div>
                                 <div id="preview_dotted_image" class="formItem"></div>
+                                <span id="processImageWarning">if you see your input image in the box above, it means
+                                    you can add it to render with buttons below</span>
                                 <div class="formItem">
                                     output infos : <span id="op_nbr_dots"> ? </span> dots
                                 </div>
-                                <div class="formItem btn_opencv" onclick="createNewDotCharacter()">add w/out preview
+                                <div class="formItem btn_opencv" onclick="createNewDotCharacter()">Add to render (w/out
+                                    preview)
                                 </div>
-                                <div class="formItem btn_opencv" onclick="showCstSet()">add w/ preview</div>
+                                <div class="formItem btn_opencv" onclick="showCstSet()">Add to render (w/ preview)</div>
                             </div>
                         </div>
                     </div>
@@ -599,7 +606,38 @@
                 </div>
 
                 <div class="tabs_input_window" id="tab3_grid_input">
+                    <div class="inputs_layers_wrapper">
+                        <div class="step_layer" id="layerImageInput">
+                            <p class="step_index">Step 1.</p>
+                            <h2>Image parameters</h2>
+                            <p class="step_infos">Load an image, apply modifications</p>
+                            <div class="formItem">
+                                <label for="avatar">Choose an image</label>
+                                <input type="file" id="image_input" name="image_input" accept="image/png, image/jpeg">
+                            </div>
 
+                            <div class="formItem">
+                                <label for="">Size</label>
+                                <input id="range_image_size" type="range" name="" value="1" step="0.01" min="0.01" max="5">
+                                <input id="op_image_size" class="input_number" type="number" value="1" step="0.01">
+                            </div>
+                            <div class="formItem">
+                                <label for="">translate X</label>
+                                <input id="range_image_x" type="range" name="" step="2" value="250" min="-1500" max="1920">
+                                <input id="op_image_x" class="input_number" type="number" step="1">
+                            </div>
+                            <div class="formItem">
+                                <label for="">translate Y</label>
+                                <input id="range_image_y" type="range" name="" step="2" value="250" min="-100" max="600">
+                                <input id="op_image_y" class="input_number" type="number" step="1">
+                            </div>
+                            <div class="formItem">
+                                <label for="">Rotate</label>
+                                <input id="range_image_rot" type="range" name="" step="1" min="0" max="360">
+                                <input id="op_image_rot" class="input_number" type="number" step="1">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

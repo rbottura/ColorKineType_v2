@@ -257,6 +257,9 @@ body {
     /* transition: flex-grow .5s; */
 }
 
+#layerP5Grid {
+    /* max-width: 260px; */
+}
 
 #p5_paramWindow_wrapper > * {
     mix-blend-mode: darken;
@@ -288,7 +291,7 @@ datalist {
 }
 
 .step_layer>.step_infos {
-    font-family: garamond;
+    font-family: 'Domine', serif;
     font-size: 1.3vw;
 }
 
@@ -401,8 +404,9 @@ h2 {
 
 .input_number {
     height: 1.8vw;
-    width: 2.6vw;
+    width: 2.4em;
     font-size: 1.8vw;
+    margin: 0 0 0 15px;
 }
 
 #fieldset_wrapper {
@@ -411,8 +415,9 @@ h2 {
 
 #fieldset_elem {
     display: flex;
-    width: 100%;
-    padding: 10px 15px 10px 5px;
+    padding: 0px;
+    font-size: .9em;
+    margin-bottom: 10px;
 }
 
 #fieldset_elem>.ft_style_btn {
@@ -438,6 +443,21 @@ h2 {
     cursor: pointer;
     background-color: #ffffff;
     /* box-shadow: 0px 0px 10px -5px rgb(0, 0, 0); */
+
+    transition: color .2s, background-color .2s;
+}
+
+#processImageWarning {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.823);
+    margin: 2px;
+    padding: 4px;
+
+}
+
+#btn_count_dots:hover{
+    background-color: black;
+    color: white;
 }
 
 #render_matter {
@@ -447,6 +467,7 @@ h2 {
     z-index: 1;
     /* border: black solid 1px; */
     /* opacity: .5; */
+    pointer-events: none;
     mix-blend-mode: darken;
 }
 
@@ -465,6 +486,13 @@ h2 {
 
 .btn_opencv {
     cursor: pointer;
+
+    /* transition: background-color .2s, color .2s; */
+}
+
+.btn_opencv:hover {
+    background-color: #000000;
+    color: rgb(219, 200, 26);
 }
 
 input {
@@ -845,13 +873,9 @@ input[type="checkbox"]{
     word-wrap: break-word;
 }
 
-
-.formItem>*:not(:first-child) {
-    margin: 0 20px;
-}
-
 .formItem>input[type=range] {
     width: 35%;
+    margin: 0 20px;
 }
 
 input[type=range] {

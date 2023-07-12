@@ -4,10 +4,6 @@ const WiW = window.innerWidth, WiH = window.innerHeight;
 
 const canvasWidth = WiW, canvasHeight = WiH;
 
-// | datasets | physiques et aspect des particules et liens + bck | viewPort zoom and move | animation attractor | canvas filtering |
-
-// passage du text en input et calcul des tailles pour p5
-
 let input_text = document.querySelector("#input_text")
 let output_text = document.querySelector("#output_infos")
 
@@ -110,6 +106,7 @@ document.querySelectorAll("#rot_range, #op_val_rot").forEach(elem => {
 // Use of P5 instanced mode to be abale to target a specific canvas container
 let showGrid = true, showWordText = true;
 let indexGenText = 0;
+let myImage;
 
 const s = p => {
 
@@ -118,11 +115,14 @@ const s = p => {
 
     let textStyle = [p.NORMAL, p.ITALIC, p.BOLD, p.BOLDITALIC]
 
+
     p.setup = function () {
         p.createCanvas(canvasWidth, canvasHeight);
         p.pixelDensity(1);
         p.angleMode(p.DEGREES)
+        p.imageMode(p.CENTER)
         let offsetGrid = 450;
+        myImage = p.loadImage('./img/testImage.png')
 
         class dotGrid {
             constructor(sizeX, spaceX, sizeY, spaceY, colorX, colorY) {
@@ -201,19 +201,27 @@ const s = p => {
         p.textWrap(p.CHAR)
         p.textAlign(p.CENTER);
 
-        if (showGenContent) {
-            // let gen_fs = 250, gen_mt = 100, gen_style = 0, gen_ft_family = 'Garamond',  gen_last_ft_family = "Garamond";
-            
-            p.textFont(gen_ft_family)
-            p.textSize(gen_fs)
-            p.textStyle(textStyle[gen_style])
-            p.text(arrTextDataset[indexGenText], canvasWidth / 2, gen_fs - (gen_fs / 4) + gen_mt)
-        } else if (showWordText) {
+        if (contentType == 'WORD') {
+
             p.textFont(ft_family);
             p.textLeading(lh)
             p.textSize(fs)
             p.textStyle(textStyle[indexTxtStyle])
             p.text(p5text, canvasWidth / 2, fs - (fs / 4) + mt)
+        } else if (contentType == 'DATASET') {
+
+            p.textFont(gen_ft_family)
+            p.textSize(gen_fs)
+            p.textStyle(textStyle[gen_style])
+            p.text(arrTextDataset[indexGenText], canvasWidth / 2, gen_fs - (gen_fs / 4) + gen_mt)
+        } else if (contentType == 'IMAGE') {
+            // imageSizeVal = 1, imageXVal = 250, imageYVal = 250, imageRotVal = 90
+            p.push()
+            p.scale(imageSizeVal)
+            p.translate(imageXVal, imageYVal)
+            p.rotate(imageRotVal)
+            p.image(myImage, 0, 0)
+            p.pop()
         }
 
         if (showGrid) {
@@ -225,11 +233,31 @@ const s = p => {
             p.pop()
         }
 
-    };
+    }
+
+    document.querySelector('#image_input').addEventListener('change', handleImageUpload)
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+
+            reader.addEventListener('load', function () {
+                const img = document.createElement('img');
+                img.src = reader.result;
+                listImg.push(img)
+                // imageContainer.appendChild(img);
+                myImage = p.loadImage(listImg[listImg.length - 1].src)
+            });
+
+            reader.readAsDataURL(file);
+        }
+
+    }
 };
 
 document.addEventListener('click', e => {
-    console.log('x : '+e.clientX + ' & y : '+e.clientY)
+    console.log('x : ' + e.clientX + ' & y : ' + e.clientY)
 })
 
 new p5(s, P5_container); // invoke p5
@@ -382,6 +410,10 @@ let test_dataSet = {
     }
 }
 
+// Functions for tab2 , DATASET GENERATOR
+// Functions for tab2 , DATASET GENERATOR
+// Functions for tab2 , DATASET GENERATOR
+
 let first_val, last_val, dataset_string = '', arrTextDataset = []
 document.querySelector('#first_char_code').addEventListener('change', (e) => {
     let val = e.target.value;
@@ -425,9 +457,12 @@ document.querySelectorAll('.tab_button').forEach(elem => {
 })
 
 let showGenContent = false;
+let showImageContent = false;
 function changeInputTab(e) {
     let btn = e.target
     let p5GridNode = document.querySelector('#layerP5Grid')
+    let openCV_processTab = document.querySelector('#layerOpenCV')
+
     let currentWindow = document.querySelector('#' + btn.getAttribute('name'))
     console.log(currentWindow.children[0])
     if (!btn.classList.contains('activ_tab_p5')) {
@@ -443,17 +478,27 @@ function changeInputTab(e) {
         currentWindow.style.display = 'block';
         // move p5 grid window to the interface
         currentWindow.children[0].children[0].after(p5GridNode)
-        if (btn.id == 'datasetGen_tab_btn') {
-            showGenContent = true
-            showWordText = false
-        } else {
-            showGenContent = false
-            showWordText = true
+        if (currentWindow.id == 'tab3_grid_input' || currentWindow.id == 'tab1_grid_input') {
+            console.log(currentWindow.children[0].children)
+            currentWindow.children[0].children[1].after(openCV_processTab)
         }
+        checkContentType(currentWindow.id)
     }
 }
 
-
+let ctArr = ['WORD', 'DATASET', 'IMAGE']
+let contentType = ctArr[0]
+function checkContentType(content) {
+    if (content == 'tab1_grid_input') {
+        contentType = ctArr[0]
+    }
+    if (content == 'tab2_grid_input') {
+        contentType = ctArr[1]
+    }
+    if (content == 'tab3_grid_input') {
+        contentType = ctArr[2]
+    }
+}
 
 document.querySelector('#nav_bar_handle').addEventListener('click', (e) => {
     let dir = e.target.innerHTML
@@ -474,11 +519,11 @@ document.querySelector('#nav_bar_handle').addEventListener('click', (e) => {
 })
 
 
-let gen_fs = 250, gen_mt = 100, gen_style = 0, gen_ft_family = 'Garamond',  gen_last_ft_family = "Garamond";
+let gen_fs = 250, gen_mt = 100, gen_style = 0, gen_ft_family = 'Garamond', gen_last_ft_family = "Garamond";
 
 document.querySelectorAll('#gen_fs_range, #gen_op_val_fs').forEach(elem => {
     elem.addEventListener('change', (e) => {
-        gen_fs = parseInt(e.target.value) ;
+        gen_fs = parseInt(e.target.value);
         document.querySelector('#gen_op_val_fs').value = gen_fs
     })
 })
@@ -505,7 +550,7 @@ document.querySelector('#indexGenTextInput').addEventListener('change', (e) => {
     indexGenText = parseInt(e.target.value)
 })
 
-function generateDataset(){
+function generateDataset() {
     onOpenCvReady('', true)
 }
 
@@ -515,9 +560,9 @@ document.querySelectorAll('.tools_window_btn').forEach(elem => {
     })
 })
 
-function showToolWindows(btn, id){
-    let wd = document.querySelector('#'+id+'_window')
-    if(btn.classList.contains('displayed_tools_window')){
+function showToolWindows(btn, id) {
+    let wd = document.querySelector('#' + id + '_window')
+    if (btn.classList.contains('displayed_tools_window')) {
         btn.classList.remove('displayed_tools_window')
         wd.style.display = 'none'
     } else {
@@ -525,3 +570,40 @@ function showToolWindows(btn, id){
         wd.style.display = 'flex'
     }
 }
+
+
+
+// Image input fonctions
+
+let listImg = []
+
+let imageSizeVal = 1, imageXVal = 250, imageYVal = 250, imageRotVal = 90
+document.querySelectorAll("#range_image_size, #op_image_size").forEach(elem => {
+    elem.addEventListener("change", (e) => {
+        imageSizeVal = parseFloat(e.target.value)
+        document.querySelector("#op_image_size").value = e.target.value;
+    })
+})
+
+document.querySelectorAll("#range_image_x, #op_image_x").forEach(elem => {
+    elem.addEventListener("change", (e) => {
+        imageXVal = parseInt(e.target.value)
+        document.querySelector("#op_image_x").value = e.target.value;
+    })
+})
+
+document.querySelectorAll("#range_image_y, #op_image_y").forEach(elem => {
+    elem.addEventListener("change", (e) => {
+        imageYVal = parseInt(e.target.value)
+        document.querySelector("#op_image_y").value = e.target.value;
+    })
+})
+
+document.querySelectorAll("#range_image_rot, #op_image_rot").forEach(elem => {
+    elem.addEventListener("change", (e) => {
+        imageRotVal = parseInt(e.target.value)
+        document.querySelector("#op_image_rot").value = e.target.value;
+    })
+})
+
+document.querySelector('#imgInput_tab_btn').click()

@@ -185,7 +185,7 @@ function addP5render() {
                 p.translate(this.x - WiW / 2, this.y - WiH / 2)
                 p.rotate(this.rotation)
                 p.scale(this.scale)
-                if(showSprite){
+                if (showSprite) {
                     p.image(this.img, 0, 0)
                 }
                 p.pop()
@@ -194,7 +194,7 @@ function addP5render() {
                 this.x = x;
                 this.y = y;
             }
-            upscale(){ 
+            upscale() {
                 this.scale = gScale
             }
             rot(r) {
@@ -236,15 +236,16 @@ function addP5render() {
 
         let x = 0;
         p.draw = function () {
-            gScale = Math.cos(p.millis()/(scaleSpeed * 1000)) * .85
-            if(clearBck){
+            gScale = Math.cos(p.millis() / (scaleSpeed * 1000)) * .85
+            if (clearBck) {
                 p.clear()
                 p.push();
-                p.translate(p.width,0);
+                p.translate(p.width, 0);
                 p.scale(-1, 1);
                 // p.image(video, WiW/2, WiH/2, WiW, WiH)
                 p.pop()
             }
+
             p.push()
             p.translate(WiW / 2, WiH / 2)
             p.scale(document.querySelector('#input_zoom_range').value)
@@ -256,7 +257,7 @@ function addP5render() {
                 // console.log(offsetValX)
                 for (let i = 0; i < dots.length; i++) {
                     dots[i].update(letterSet[0][i].position.x, letterSet[0][i].position.y)
-                    if(isScaling){
+                    if (isScaling) {
                         dots[i].upscale()
                     }
                 }
@@ -286,8 +287,8 @@ function addP5render() {
             p.clear()
             dots = []
             for (let i = 0; i < letterSet[0].length; i++) {
-                let size = 0 
-                if(isScaling){
+                let size = 0
+                if (isScaling) {
                     size = gScale
                 } else {
                     size = globalSize
@@ -850,7 +851,10 @@ function animateMode() {
         fastSquare()
     }
     if (animMode == 4) {
+        document.querySelector('#render_matter').style.pointerEvents = 'all'
         mouseCtrl()
+    } else {
+        document.querySelector('#render_matter').style.pointerEvents = 'none'
     }
     if (animMode == 5) {
         stopRotAnim()
@@ -859,13 +863,13 @@ function animateMode() {
     animReq = requestAnimationFrame(animateMode)
 }
 
-function stopRotAnim(){
+function stopRotAnim() {
     cancelAnimationFrame(animReq)
 }
 
 document.querySelectorAll('.rot_anim_btns').forEach(elem => {
     elem.addEventListener('change', (e) => {
-        if(!isRotating){
+        if (!isRotating) {
             updateRotation()
         }
         rotateMod = e.target.value
@@ -876,7 +880,7 @@ let gRot = 0, rotateMod = 0, isRotating = true;
 function updateRotation() {
     let rotSpeed = parseFloat(document.querySelector('#rot_anim_btns_num').value)
     gRot += rotSpeed
-    
+
     for (let i = 0; i < letterSet[0].length; i++) {
         let AX = (letterSet[0][i].position.x / posBalls + 0);
         let AY = (letterSet[0][i].position.y / posBalls + 0);
@@ -884,15 +888,15 @@ function updateRotation() {
         letterSet[0][i].angle = angleRadian + Math.PI * 0.9;
 
         if (dots.length != 0 && i <= dots.length - 1) {
-            if(rotateMod == 0){
+            if (rotateMod == 0) {
                 dots[i].rot(gRot)
             }
-            if(rotateMod == 1){
-                dots[i].rot((angleRadian + Math.PI * 0.9)*180/Math.PI)
+            if (rotateMod == 1) {
+                dots[i].rot((angleRadian + Math.PI * 0.9) * 180 / Math.PI)
             }
         }
     }
-    if(rotateMod == 2){
+    if (rotateMod == 2) {
         cancelAnimationFrame(updateRotation)
         isRotating = false
     }
@@ -908,10 +912,10 @@ document.querySelector('#sprite_anim_btns_num').addEventListener('change', (e) =
 document.querySelectorAll('.sprites_anim_btns').forEach(elem => {
     elem.addEventListener('change', e => {
         scaleMod = e.target.value
-        if(scaleMod == 0){
+        if (scaleMod == 0) {
             isScaling = true;
         }
-        if(scaleMod == 1){
+        if (scaleMod == 1) {
             isScaling = false;
         }
     })
@@ -924,11 +928,11 @@ function easeIn(from, to, ease) {
 let inputs_anim_btns = document.querySelectorAll(".inputs_anim_btns")
 for (const elem of inputs_anim_btns) {
     elem.addEventListener("click", (e) => {
-        if(!animRotStat){
+        if (!animRotStat) {
             animateMode()
             animRotStat = true
-        } 
-        animMode = e.target.value 
+        }
+        animMode = e.target.value
     })
 }
 
@@ -970,10 +974,11 @@ function reshapeCapture() {
             reshapeCapture()
         }, 300)
     }
+
 }
 
 document.querySelector('#bck_clear_btn').addEventListener('change', e => {
-    if(e.target.checked){
+    if (e.target.checked) {
         clearBck = true;
     } else {
         clearBck = false;
