@@ -606,4 +606,4 @@ document.querySelectorAll("#range_image_rot, #op_image_rot").forEach(elem => {
     })
 })
 
-document.querySelector('#imgInput_tab_btn').click()
+// document.querySelector('#imgInput_tab_btn').click()

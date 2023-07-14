@@ -169,6 +169,7 @@ let showSprite = true
 function addP5render() {
     const canvasP5 = p => {
         let gScale;
+
         class Dot {
             constructor(x, y, img, scale) {
                 this.x = x;
@@ -214,6 +215,7 @@ function addP5render() {
 
         let canvas;
         let video;
+        let prev, next;
         p.setup = function () {
             canvas = p.createCanvas(WiW, WiH)
             p.angleMode(p.DEGREES)
@@ -221,6 +223,9 @@ function addP5render() {
             p.imageMode(p.CENTER)
             p.pixelDensity(1)
             p.rectMode(p.CENTER)
+
+            prev = p.createGraphics(WiW, WiH)
+            next = p.createGraphics(WiW, WiH)
 
             // code for webcam înput 
             // video = p.createCapture(p.VIDEO)
@@ -236,6 +241,18 @@ function addP5render() {
 
         let x = 0;
         p.draw = function () {
+
+            [prev, next] = [next, prev]
+
+            // next.begin();
+            // p.clear()
+
+            p.push()
+            p.rotate(0.01)
+            p.scale(1.01)
+            p.image(prev, 0, 0)
+            p.pop()
+
             gScale = Math.cos(p.millis() / (scaleSpeed * 1000)) * .85
             if (clearBck) {
                 p.clear()
@@ -265,6 +282,11 @@ function addP5render() {
                 genDots()
             }
             p.pop()
+
+            // next.end()
+            // p.background(255)
+            p.image(next, 0, 0)
+
         }
 
         p.keyPressed = function (e) {

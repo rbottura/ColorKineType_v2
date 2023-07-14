@@ -1,6 +1,6 @@
 // Fonction p5 pour passer la grille, creer l'image, passer l'image dans opencv
 
-let cstSet = [[[0]]];
+let cstSet = [[[]]];
 let jsonCstSet = new DataSet("custom", cstSet, 0, 0);
 
 let images = [], previewImage;
@@ -153,8 +153,13 @@ function newDataset() {
     radioInputEvent()
 }
 
+let firstPush = true
 function createNewDotCharacter() {
-    if (jsondata.length != 0) {
+    if (firstPush) {
+        ListDataSets[9].jsondata[0] = jsondata[0]
+        jsondata = [];
+        firstPush = false
+    } else if (!firstPush && jsondata.length != 0) {
         cstSet.push(jsondata[0]);
         jsondata = [];
         jsonCstSet.jsondata = cstSet;
