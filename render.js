@@ -994,7 +994,7 @@ function reshapeCapture() {
     } else {
         setTimeout(() => {
             reshapeCapture()
-        }, 300)
+        }, 1000)
     }
 
 }
