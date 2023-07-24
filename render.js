@@ -962,24 +962,38 @@ for (const elem of inputs_anim_btns) {
 // CAPTURE FUNCTIONS
 // CAPTURE FUNCTIONS
 
-deleteOneCapture()
-function deleteOneCapture() {
-    let capture = document.querySelectorAll('.p5c-container')[0]
+watchCaptureWindow()
+function watchCaptureWindow(){
+    let capture = document.querySelectorAll('.p5c-container')
     console.log(capture)
-    capture.remove();
+    if(capture.length == 2) {
+        console.log(' 2 ')
+        deleteOneCapture()
+    } else {
+        setTimeout(() => { watchCaptureWindow() }, 1000);
+    }
+
+}
+
+// deleteOneCapture()
+function deleteOneCapture() {
+    let capture1 = document.querySelectorAll('.p5c-container')[0]
+    console.log(capture1)
+    capture1.remove();
     reshapeCapture()
 }
 
 function reshapeCapture() {
     let lc = document.body.lastChild
+    let capture2 = document.querySelectorAll('.p5c-container')[0]
     console.log(lc.tagName)
     let sibNode = document.querySelector('#capture_window').lastChild
     let capWindow = document.querySelector('#capture_window')
-    if (lc.tagName == "DIV") {
-        console.log(lc.classList)
-        if (lc.classList.contains('p5c-container')) {
-            lc.classList.remove('p5c-container')
-            sibNode.after(lc)
+    if (capture2.tagName == "DIV") {
+        console.log(capture2.classList)
+        if (capture2.classList.contains('p5c-container')) {
+            capture2.classList.remove('p5c-container')
+            sibNode.after(capture2)
             let recBtn = document.querySelectorAll(".p5c-btn")[0]
             recBtn.style.display = 'none'
 
@@ -991,12 +1005,7 @@ function reshapeCapture() {
             })
             capWindow.appendChild(newRecBtn)
         }
-    } else {
-        setTimeout(() => {
-            reshapeCapture()
-        }, 1000)
     }
-
 }
 
 document.querySelector('#bck_clear_btn').addEventListener('change', e => {
