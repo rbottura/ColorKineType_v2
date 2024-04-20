@@ -199,15 +199,20 @@ const s = p => {
 
         p.background(255);
         p.textWrap(p.CHAR)
+        // p.textAlign(p.LEFT);
         p.textAlign(p.CENTER);
 
-        if (contentType == 'WORD') {
+        if (contentType == 'WORD') { 
 
             p.textFont(ft_family);
             p.textLeading(lh)
             p.textSize(fs)
             p.textStyle(textStyle[indexTxtStyle])
+            // Line for text CENTERED
             p.text(p5text, canvasWidth / 2, fs - (fs / 4) + mt)
+
+            // Line for text on LEFT
+            // p.text(p5text, 0, fs - (fs / 4) + mt)
         } else if (contentType == 'DATASET') {
 
             p.textFont(gen_ft_family)

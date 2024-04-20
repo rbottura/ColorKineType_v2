@@ -1,7 +1,7 @@
 // Fonction p5 pour passer la grille, creer l'image, passer l'image dans opencv
 
 let cstSet = [[[]]];
-let jsonCstSet = new DataSet("custom", cstSet, 0, 0);
+let jsonCstSet = new DataSet("custom", cstSet);
 
 let images = [], previewImage;
 

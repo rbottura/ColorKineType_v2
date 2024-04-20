@@ -214,8 +214,6 @@ function addP5render() {
         }
 
         let canvas;
-        let video;
-        let prev, next;
         p.setup = function () {
             canvas = p.createCanvas(WiW, WiH)
             p.angleMode(p.DEGREES)
@@ -223,9 +221,6 @@ function addP5render() {
             p.imageMode(p.CENTER)
             p.pixelDensity(1)
             p.rectMode(p.CENTER)
-
-            prev = p.createGraphics(WiW, WiH)
-            next = p.createGraphics(WiW, WiH)
 
             // code for webcam înput 
             // video = p.createCapture(p.VIDEO)
@@ -242,18 +237,7 @@ function addP5render() {
         let x = 0;
         p.draw = function () {
 
-            [prev, next] = [next, prev]
-
-            // next.begin();
-            // p.clear()
-
-            p.push()
-            p.rotate(0.01)
-            p.scale(1.01)
-            p.image(prev, 0, 0)
-            p.pop()
-
-            gScale = Math.cos(p.millis() / (scaleSpeed * 1000)) * .85
+            gScale = Math.cos(p.millis() / (scaleSpeed * 1000)) * 0.32
             if (clearBck) {
                 p.clear()
                 p.push();
@@ -282,10 +266,6 @@ function addP5render() {
                 genDots()
             }
             p.pop()
-
-            // next.end()
-            // p.background(255)
-            p.image(next, 0, 0)
 
         }
 
@@ -901,6 +881,8 @@ document.querySelectorAll('.rot_anim_btns').forEach(elem => {
 let gRot = 0, rotateMod = 0, isRotating = true;
 function updateRotation() {
     let rotSpeed = parseFloat(document.querySelector('#rot_anim_btns_num').value)
+    // console.log(rotSpeed)
+    // gRot = 0
     gRot += rotSpeed
 
     for (let i = 0; i < letterSet[0].length; i++) {
@@ -1015,3 +997,16 @@ document.querySelector('#bck_clear_btn').addEventListener('change', e => {
         clearBck = false;
     }
 })
+
+
+function expoMontage(){
+    // Sequence description
+    // 
+    // idée 1 :
+    // Alterner entre un bonjour et un nom / prénom des exposantes
+    //
+    // idéé 2 :
+    // 
+    //
+
+}

@@ -13,6 +13,21 @@
     src: url(./assets/Underodd.ttf);
 }
 
+@font-face {
+    font-family: EgyptienneLarge-Regular;
+    src: url(./assets/EgyptienneLarge-Regular.otf);
+}
+
+@font-face {
+    font-family: iAWriterDuospace-Bold;
+    src: url(./assets/iAWriterDuospace-Bold.ttf);
+}
+
+@font-face {
+    font-family: Yarndings20-Regular;
+    src: url(./assets/Yarndings20-Regular.ttf);
+}
+
 body {
     margin: 0;
     overflow: hidden;
