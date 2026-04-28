@@ -210,10 +210,6 @@ body {
     opacity: 1;
 }
 
-#matter_disp_btn {
-    box-shadow: 0px 0px 2px 2px rgb(10, 198, 98) inset;
-}
-
 .nav_bar_item {
     display: flex;
     flex-direction: column;
@@ -231,14 +227,18 @@ body {
     line-height: auto;
     margin: 6px 3px;
     background-color: rgb(255, 255, 255);
-    border: solid 2px rgb(0, 0, 0);
+    border: solid 1px rgb(0, 0, 0);
     border-radius: 5px;
     
     padding: .9rem;
 }
 
 .activ_display {
-    box-shadow: 0px 0px 2px 3px rgb(219, 200, 26) inset;
+    background-color: rgb(219, 200, 26);
+    color: rgb(0, 0, 0);
+    /* font-weight: 600; */
+    transition: all 0.2s ease-out;
+    box-shadow: 0px 2px 8px rgba(219, 200, 26, 0.4);
 }
 
 .activ_parameters {
@@ -253,7 +253,7 @@ body {
     align-items: center;
     justify-content: center;
     margin: 6px 3px;
-    border: black solid 2px;
+    border: black solid 1px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     height: 1.2vw;
@@ -618,7 +618,7 @@ input {
     padding: 0 8px;
     width: clamp(250px, 18.5vw, 90vw);
     max-width: 90vw;
-    transition: marginTop 2s;
+    transition: marginTop 2s, transform 0.3s ease-out;
     background-color: #ffffff;
     max-height: 100vh;
     overflow-y: auto;
@@ -630,9 +630,57 @@ input {
     overflow-wrap: break-word;
 }
 
+
 #interface > label {
     font-size: clamp(0.9rem, 1.2vw, 1.2rem);
     word-wrap: break-word;
+}
+
+#interface_handle_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    position: fixed;
+    z-index: 9;
+    left: clamp(250px, 18.5vw, 90vw);
+    top: 0;
+    opacity: 0;
+    transition: opacity .3s ease-out;
+    pointer-events: none;
+}
+
+#interface_handle_wrapper.interface_handle_visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#interface_handle {
+    display: flex;
+    cursor: pointer;
+    border: solid rgb(0, 0, 0) 2px;
+    box-sizing: content-box;
+    color: black;
+    padding: 6px;
+    width: auto;
+    text-align: center;
+    justify-content: center;
+    border-radius: 0 10px 10px 0;
+    font-weight: 600;
+    font-size: clamp(1rem, 1.3vw, 1.4rem);
+    background-color: white;
+    opacity: 1;
+    white-space: nowrap;
+    transition: transform .3s ease-out;
+}
+
+#interface_handle:hover {
+    transform: scale(1.1);
+}
+
+#interface.interface_collapsed #interface_handle {
+    transform: rotateZ(180deg);
 }
 
 #btnHide {

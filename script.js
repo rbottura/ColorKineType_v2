@@ -4,6 +4,53 @@ const WiW = window.innerWidth, WiH = window.innerHeight;
 
 const canvasWidth = WiW, canvasHeight = WiH;
 
+// Interface handle toggle functionality
+let interfaceCollapsed = false;
+const interfaceElement = document.querySelector('#interface');
+const interfaceHandle = document.querySelector('#interface_handle');
+const interfaceHandleWrapper = document.querySelector('#interface_handle_wrapper');
+
+function toggleInterface() {
+    interfaceCollapsed = !interfaceCollapsed;
+    
+    if (interfaceCollapsed) {
+        // Hide interface - translate it to the left
+        const width = interfaceElement.offsetWidth;
+        interfaceElement.style.transform = `translateX(-${width}px)`;
+        interfaceElement.classList.add('interface_collapsed');
+        interfaceHandleWrapper.classList.add('interface_handle_visible');
+    } else {
+        // Show interface - translate it back
+        interfaceElement.style.transform = 'translateX(0)';
+        interfaceElement.classList.remove('interface_collapsed');
+        interfaceHandleWrapper.classList.remove('interface_handle_visible');
+    }
+}
+
+interfaceHandle.addEventListener('click', toggleInterface);
+
+// Hide handle when interface is shown, show on hover
+interfaceElement.addEventListener('mouseenter', () => {
+    if (!interfaceCollapsed) {
+        interfaceHandleWrapper.classList.remove('interface_handle_visible');
+    }
+});
+
+interfaceHandleWrapper.addEventListener('mouseleave', () => {
+    if (!interfaceCollapsed) {
+        interfaceHandleWrapper.classList.remove('interface_handle_visible');
+    }
+});
+
+// Show handle on hover when interface is hidden
+document.addEventListener('mousemove', (e) => {
+    if (interfaceCollapsed && e.clientX < 50) {
+        interfaceHandleWrapper.classList.add('interface_handle_visible');
+    } else if (interfaceCollapsed && e.clientX > 100) {
+        interfaceHandleWrapper.classList.remove('interface_handle_visible');
+    }
+});
+
 let input_text = document.querySelector("#input_text")
 let output_text = document.querySelector("#output_infos")
 
@@ -290,6 +337,8 @@ function waitCanvas(load) {
 //
 
 let ui_overlay = document.querySelectorAll(".ui_overlay");
+let currentDisplay = "MT"; // Track current active display globally
+
 ui_overlay.forEach((e) => {
     e.addEventListener("click", (e) => {
         displayLayer(e.target)
@@ -298,57 +347,41 @@ ui_overlay.forEach((e) => {
 
 function displayLayer(node, loop) {
     const layerP5 = document.querySelector("#p5_setup_wrapper");
-    const layerMt = document.querySelector("#render_matter");
-    const layerRy = document.querySelector("#rythme_setup_wrapper");
-    let currentDisp;
+    
     if (loop == "p5") {
-        if (currentDisp == "P5") {
+        if (currentDisplay == "P5") {
             cancelAnimationFrame(animReq)
             return true
-        } else if (currentDisp == "MT" || currentDisp == "RY") {
+        } else if (currentDisplay == "MT") {
             animateMode()
             return false
         }
     } else {
-        console.log(node.classList[2])
         if (node.id == "p5_disp_btn") {
             if (node.classList.contains("activ_display")) {
                 node.classList.remove("activ_display");
                 layerP5.style.display = "none";
-                currentDisp = "MT";
+                currentDisplay = "MT";
             } else {
-                if (ui_overlay[2].classList.contains("activ_display")) {
-                    ui_overlay[2].classList.remove("activ_display");
-                    layerRy.style.display = "none";
-                }
+                // Deactivate other display buttons
+                ui_overlay.forEach((btn) => {
+                    if (btn.classList.contains("activ_display") && btn.id !== "p5_disp_btn") {
+                        btn.classList.remove("activ_display");
+                    }
+                });
                 node.classList.add("activ_display");
                 layerP5.style.display = "block";
-                currentDisp = "P5";
-            }
-        } else if (node.id == "ry_disp_btn") {
-            if (node.classList.contains("activ_display")) {
-                node.classList.remove("activ_display");
-                layerRy.style.display = "none";
-                currentDisp = "MT"
-            } else {
-                if (ui_overlay[0].classList.contains("activ_display")) {
-                    ui_overlay[0].classList.remove("activ_display");
-                    layerP5.style.display = "none";
-                }
-                node.classList.add("activ_display");
-                layerRy.style.display = "block";
-                currentDisp = "RY"
+                currentDisplay = "P5";
             }
         } else if (node.id == "matter_disp_btn") {
-            ui_overlay.forEach((e) => {
-                // console.log(e)
-                if (e.classList.contains("activ_display")) {
-                    e.classList.remove("activ_display")
-                    layerP5.style.display = "none";
-                    layerRy.style.display = "none";
-                    currentDisp = "MT"
+            ui_overlay.forEach((btn) => {
+                if (btn.classList.contains("activ_display")) {
+                    btn.classList.remove("activ_display");
                 }
-            })
+            });
+            node.classList.add("activ_display");
+            layerP5.style.display = "none";
+            currentDisplay = "MT";
         }
     }
 }
