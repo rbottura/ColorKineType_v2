@@ -165,7 +165,7 @@ body {
     position: relative;
     z-index: 3;
     padding: 5px;
-    border: solid black 2px;
+    border: solid black 1px;
     box-sizing: content-box;
     border-collapse: collapse;
     transition: margin-top .2s;
@@ -188,7 +188,7 @@ body {
 #nav_bar_handle {
     display: flex;
     cursor: pointer;
-    border: solid rgb(0, 0, 0) 2px;
+    border: solid rgb(0, 0, 0) 1px;
     border-top: none;
     box-sizing: content-box;
     color: black;
@@ -234,7 +234,7 @@ body {
 }
 
 .activ_display {
-    background-color: rgb(219, 200, 26);
+    background-color: rgb(26, 197, 219);
     color: rgb(0, 0, 0);
     /* font-weight: 600; */
     transition: all 0.2s ease-out;
@@ -243,7 +243,7 @@ body {
 
 .activ_parameters {
     color: rgb(0, 0, 0);
-    box-shadow: 0px 0px 2px 2px rgb(219, 200, 26) inset;
+    box-shadow: 0px 0px 2px 2px rgb(26, 197, 219) inset;
     background-color: black;
 }
 
