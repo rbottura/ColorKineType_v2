@@ -10,6 +10,20 @@ const interfaceElement = document.querySelector('#interface');
 const interfaceHandle = document.querySelector('#interface_handle');
 const interfaceHandleWrapper = document.querySelector('#interface_handle_wrapper');
 
+// Output tooltip element
+const outputTooltip = document.querySelector('#output_tooltip');
+
+function setOutputTooltip(visible) {
+    if (!outputTooltip) return;
+    if (visible) {
+        outputTooltip.classList.remove('hidden');
+        outputTooltip.classList.add('visible');
+    } else {
+        outputTooltip.classList.remove('visible');
+        outputTooltip.classList.add('hidden');
+    }
+}
+
 function toggleInterface() {
     interfaceCollapsed = !interfaceCollapsed;
     
@@ -382,6 +396,8 @@ function displayLayer(node, loop) {
             node.classList.add("activ_display");
             layerP5.style.display = "none";
             currentDisplay = "MT";
+            // show tooltip only for Output layer
+            setOutputTooltip(true);
         }
     }
 }
@@ -398,6 +414,7 @@ function showParameters(node) {
     const matterParam = parametersNodes[0];
     const p5Param = parametersNodes[1];
     const rythmeParam = parametersNodes[2];
+    let tootltip = document.querySelector("#output_tooltip");
     if (node.id == "p5_param") {
         if (node.classList.contains("activ_parameters")) {
             node.classList.remove("activ_parameters");
@@ -410,9 +427,11 @@ function showParameters(node) {
         if (node.classList.contains("activ_parameters")) {
             node.classList.remove("activ_parameters");
             matterParam.style.display = "none";
+            output_tooltip.style.display = "none";
         } else {
             node.classList.add("activ_parameters");
             matterParam.style.display = "flex";
+            output_tooltip.style.display = "block";
         }
     } else if (node.id == "rythme_param") {
 
