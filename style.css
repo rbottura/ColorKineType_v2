@@ -200,9 +200,10 @@ body {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     font-weight: 600;
-    font-size: 1.3vw;
+    font-size: clamp(1rem, 1.3vw, 1.4rem);
     background-color: white;
     opacity: 1;
+    white-space: nowrap;
 }
 
 #nav_bar_handle_wrapper:hover {
@@ -224,13 +225,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3vw;
-    height: 3vw;
-    font-size: 1.2vw;
+    /* width: 3vw; */
+    /* height: 3vw; */
+    font-size: 1.7rem;
+    line-height: auto;
     margin: 6px 3px;
     background-color: rgb(255, 255, 255);
     border: solid 2px rgb(0, 0, 0);
     border-radius: 5px;
+    
+    padding: .9rem;
 }
 
 .activ_display {
@@ -253,8 +257,13 @@ body {
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     height: 1.2vw;
-    font-size: 1.3vw;
-    font-weight: 600;
+    font-size: clamp(0.7rem, 0.8rem, 1rem);
+    padding: .3rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .folded {
@@ -270,48 +279,52 @@ body {
     background-color: rgba(255, 255, 255, 0.648);
     box-shadow: 0px 0px 35px -22px black;
     /* transition: flex-grow .5s; */
-}
-
-#layerP5Grid {
-    /* max-width: 260px; */
+    max-width: 42vw;
+    overflow-y: auto;
+    max-height: 85vh;
 }
 
 #p5_paramWindow_wrapper > * {
     mix-blend-mode: darken;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .step_layer {
     position: relative;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.2vw;
+    font-size: clamp(0.9rem, 1.2vw, 1.5rem);
     padding: 10px;
     margin-top: 5px;
-    max-width: 400px;
+    max-width: 90vw;
     border: rgb(219, 200, 26) solid 2px;
-    min-width: 22vw;
+    min-width: min(90vw, 300px);
     width: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 #fontfamily_menu {
-    font-size: 1.2vw;
+    font-size: clamp(0.9rem, 1.2vw, 1.3rem);
 }
 
 datalist {
-    font-size: 1.2vw;
+    font-size: clamp(0.9rem, 1.2vw, 1.3rem);
 }
 
 .step_layer>p {
     font-family: 'Domine', serif;
-    font-size: .9vw;
+    font-size: clamp(0.75rem, 0.9vw, 1rem);
 }
 
 .step_layer>.step_infos {
     font-family: 'Domine', serif;
-    font-size: 1.3vw;
+    font-size: clamp(0.9rem, 1.3vw, 1.4rem);
+    word-wrap: break-word;
 }
 
 .step_layer>div {
-    font-size: 1.2vw;
+    font-size: clamp(0.9rem, 1.2vw, 1.3rem);
 }
 
 .step_layer+.step_layer {
@@ -320,10 +333,14 @@ datalist {
 
 p {
     margin: 2px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 h2 {
     margin: 5px;
+    font-size: clamp(1rem, 1.5vw, 1.4rem);
+    word-wrap: break-word;
 }
 
 .preview_image {
@@ -338,13 +355,15 @@ h2 {
 }
 
 #input_text {
-    max-width: 80vw;
+    max-width: 90vw;
     max-height: 94vh;
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
     text-align: center;
-    font-size: 30px;
+    font-size: clamp(1rem, 2vw, 2.5rem);
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 #p5_setup_wrapper {
@@ -375,12 +394,15 @@ h2 {
 
 .tab_button {
     border: black solid 1px;
-    font-size: 1.5vw;
+    font-size: clamp(0.85rem, 1.5vw, 1.4rem);
     padding: 7px 12px;
     background-color: white;
     text-transform: uppercase;
     cursor: pointer;
     font-family: 'Space Grotesk', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tab_button:hover {
@@ -400,7 +422,9 @@ h2 {
     flex-direction: row;
     align-items: flex-start;
     z-index: 15;
-    overflow: hidden;
+    overflow: auto;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .formItem {
@@ -415,13 +439,17 @@ h2 {
     flex-wrap: wrap;
     /* align-self:flex-start; */
     /* width: 90%; */
+    gap: 5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .input_number {
-    height: 1.8vw;
+    height: clamp(1.2rem, 1.8vw, 1.5rem);
     width: 2.4em;
-    font-size: 1.8vw;
+    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
     margin: 0 0 0 15px;
+    min-width: 50px;
 }
 
 #fieldset_wrapper {
@@ -588,18 +616,23 @@ input {
     flex-direction: column;
     height: fit-content;
     padding: 0 8px;
-    width: 18.5vw;
+    width: clamp(250px, 18.5vw, 90vw);
+    max-width: 90vw;
     transition: marginTop 2s;
     background-color: #ffffff;
     max-height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     min-height: 35px;
     border: none;
-    font-size: 1.2vw;
+    font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 #interface > label {
-    font-size: 1.2vw;
+    font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+    word-wrap: break-word;
 }
 
 #btnHide {
@@ -616,6 +649,10 @@ input {
     padding: 5px;
     border: solid 1px black;
     margin: 4px 2px;
+    min-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .subItem {
@@ -624,19 +661,23 @@ input {
     align-items: center;
     margin-top: 5px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.3vw;
+    font-size: clamp(0.85rem, 1.3vw, 1.2rem);
     font-weight: 400;
+    flex-wrap: wrap;
+    gap: 5px;
+    word-wrap: break-word;
 }
 
 .titleItem {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 2.1vw;
+    font-size: clamp(1rem, 2.1vw, 1.5rem);
     /* font-weight: 600; */
     margin: 0;
     text-transform: uppercase;
     margin-bottom: 5px;
     padding: 3px;
     border-bottom: solid black 1px;
+    word-wrap: break-word;
 }
 
 #spritesLib {
@@ -647,13 +688,14 @@ input {
 
 .spriteItem {
     display: inline-block;
-    height: 1.9vw;
-    width: 1.9vw;
+    height: clamp(20px, 1.9vw, 40px);
+    width: clamp(20px, 1.9vw, 40px);
     border: solid 1px black;
     margin: 2px 4px;
     padding: 2px;
     cursor: pointer;
     background-color: white;
+    flex-shrink: 0;
 }
 
 .activeSprite {
@@ -697,13 +739,15 @@ input[type="radio" i] {
     margin: 3px 8px 0px 5px;
     padding: initial;
     border: initial;
-    height: 1.5vw;
-    width: 1.5vw;
+    height: clamp(12px, 1.5vw, 20px);
+    width: clamp(12px, 1.5vw, 20px);
+    flex-shrink: 0;
 }
 
 input[type="checkbox"]{
-    height: 1.5vw;
-    width: 1.5vw;
+    height: clamp(12px, 1.5vw, 20px);
+    width: clamp(12px, 1.5vw, 20px);
+    flex-shrink: 0;
 }
 
 .handle {
@@ -742,8 +786,10 @@ input[type="checkbox"]{
     font-size: 1.8vw;
 }
 
-.txt_ry_warning {
-    max-width: 30vw;
+#txt_ry_warning {
+    max-width: clamp(250px, 30vw, 100vw);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 #p5canvas_loadingScreen {
@@ -774,6 +820,8 @@ input[type="checkbox"]{
 .step_index {
     font-family: garamond;
     border-bottom: solid 1px black;
+    font-size: clamp(0.9rem, 1vw, 1.1rem);
+    margin: 0;
 }
 
 .tools_window_btn {
@@ -787,7 +835,9 @@ input[type="checkbox"]{
     text-align: center;
     justify-content: center;
     transition: color .8s;
-
+    font-size: clamp(0.85rem, 1vw, 1rem);
+    white-space: nowrap;
+    word-wrap: break-word;
 }
 
 .tools_window_btn:hover {
@@ -803,17 +853,18 @@ input[type="checkbox"]{
 
 .tool_windows {
     display: none;
-    font-size: 1.3vw;
-    min-width: 12vw;
+    font-size: clamp(1rem, 1.3vw, 1.4rem);
+    min-width: min(90vw, 200px);
+    word-wrap: break-word;
 }
 
 .p5c-options > select {
-    width: 5vw;
-    font-size: 1.2vw;
+    width: clamp(80px, 5vw, 200px);
+    font-size: clamp(0.9rem, 1.2vw, 1.2rem);
 }
 
 .p5c-options > input {
-    font-size: 1.2vw;
+    font-size: clamp(0.9rem, 1.2vw, 1.2rem);
 }
 
 /* font-family: 'Domine', serif; */
@@ -828,6 +879,8 @@ input[type="checkbox"]{
     padding-bottom: 5px;
     /* padding: 3px; */
     border-top: solid black 1px;
+    font-size: clamp(0.95rem, 1.1vw, 1.2rem);
+    word-wrap: break-word;
 }
 
 #capture_window {
@@ -883,11 +936,6 @@ input[type="checkbox"]{
     display: block;
 }
 
-#output_all_letters {
-    width: 100%;
-    word-wrap: break-word;
-}
-
 .formItem>input[type=range] {
     width: 35%;
     margin: 0 20px;
@@ -897,6 +945,7 @@ input[type=range] {
     background-color: transparent;
     height: 29px;
     -webkit-appearance: none;
+    appearance: none;
     margin: 4px 0;
     width: 100%;
 }
@@ -909,7 +958,7 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 10px;
     cursor: pointer;
-    animate: 0.2s;
+    transition: 0.2s;
     /* box-shadow: 0px 0px 5px #1f1f1f inset; */
     background: rgb(63, 63, 63);
     border-radius: 25px;
@@ -936,7 +985,7 @@ input[type=range]::-moz-range-track {
     width: 100%;
     height: 13px;
     cursor: pointer;
-    animate: 0.2s;
+    transition: 0.2s;
     box-shadow: 3px 3px 5px #FF42F2;
     background: #A1A1A1;
     border-radius: 25px;
@@ -957,7 +1006,7 @@ input[type=range]::-ms-track {
     width: 100%;
     height: 13px;
     cursor: pointer;
-    animate: 0.2s;
+    transition: 0.2s;
     background: transparent;
     border-color: transparent;
     color: transparent;
@@ -1000,6 +1049,10 @@ input[type=range]:focus::-ms-fill-upper {
 #output_all_letters {
     border: solid black 1px;
     width: calc(100% - 40px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
 #gen_dataset_btn {
@@ -1007,10 +1060,176 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .labels_render {
-    white-space: nowrap;
+    white-space: normal;
     margin-right: 6px;
+    font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+    word-wrap: break-word;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 1024px) {
+    #interface {
+        width: clamp(200px, 22vw, 90vw);
+        font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+    }
+    
+    .step_layer {
+        min-width: min(90vw, 280px);
+        font-size: clamp(0.85rem, 1.1vw, 1.2rem);
+    }
+    
+    .titleItem {
+        font-size: clamp(0.95rem, 1.8vw, 1.4rem);
+    }
+    
+    .subItem {
+        font-size: clamp(0.8rem, 1.1vw, 1rem);
+    }
+    
+    .spriteItem {
+        height: clamp(24px, 2.5vw, 32px);
+        width: clamp(24px, 2.5vw, 32px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #interface {
+        width: 100%;
+        max-width: 100%;
+        float: none;
+        font-size: 1rem;
+        padding: 0 6px;
+        max-height: 50vh;
+    }
+    
+    #interface > label {
+        font-size: 1rem;
+    }
+    
+    .step_layer {
+        min-width: 100%;
+        max-width: 100%;
+        font-size: 1rem;
+        margin-left: 0 !important;
+    }
+    
+    .inputs_layers_wrapper {
+        flex-direction: column;
+        overflow: visible;
+    }
+    
+    .step_layer + .step_layer {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .titleItem {
+        font-size: 1.1rem;
+    }
+    
+    .subItem {
+        font-size: 0.95rem;
+    }
+    
+    .formItem {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 6px;
+    }
+    
+    .input_number {
+        margin: 8px 0 0 0;
+        width: 100%;
+    }
+    
+    .formItem > input[type=range] {
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    .spriteItem {
+        height: 28px;
+        width: 28px;
+    }
+    
+    #spritesLib {
+        gap: 4px;
+    }
+    
+    .tab_button {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+        flex: 1;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #interface {
+        font-size: 0.95rem;
+        max-height: 40vh;
+        padding: 0 4px;
+    }
+    
+    .step_layer {
+        font-size: 0.95rem;
+        padding: 8px;
+        border-width: 1px;
+    }
+    
+    .titleItem {
+        font-size: 1rem;
+        margin-bottom: 3px;
+    }
+    
+    .subItem {
+        font-size: 0.9rem;
+    }
+    
+    .formItem {
+        padding: 4px;
+        margin: 2px 0;
+    }
+    
+    .input_number {
+        font-size: 0.9rem;
+        height: 1.8rem;
+    }
+    
+    .spriteItem {
+        height: 24px;
+        width: 24px;
+        margin: 2px 2px;
+    }
+    
+    .tab_button {
+        font-size: 0.8rem;
+        padding: 5px 8px;
+    }
+    
+    h2 {
+        font-size: 1rem;
+        margin: 3px;
+    }
+    
+    p {
+        margin: 1px;
+    }
 }
 
 @media screen and (min-width: 1921px) {
+    /* Large screen optimizations */
+    #interface {
+        width: 20vw;
+        font-size: 1.1rem;
+    }
     
+    .step_layer {
+        min-width: 380px;
+        font-size: 1.3rem;
+    }
+}
+
+.nav_bar_item:nth-of-type(3) {
+    display: none;
 }
