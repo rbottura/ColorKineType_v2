@@ -1,700 +1,1288 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>C.K.T.</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="image/x-icon" href="./img/icon_ckt.png">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" type="image/x-icon" href="./img/icon_ckt.png" />
     <script src="./node_modules/howler/dist/howler.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Domine&family=Montserrat:wght@300&family=Raleway+Dots&family=Space+Grotesk:wght@400;500&display=swap"
-        rel="stylesheet">
-</head>
+      href="https://fonts.googleapis.com/css2?family=Domine&family=Montserrat:wght@300&family=Raleway+Dots&family=Space+Grotesk:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
+    <div id="loading-screen">
+      <img id="loading-gif" src="./img/" alt="Loading…" />
+      <div id="progress-bar-track">
+        <div id="progress-bar-fill"></div>
+      </div>
+      <p id="loading-label">Loading… 0%</p>
+    </div>
     <div id="p5canvas_loadingScreen">Loading ...</div>
     <!-- <span id="forkongithub"><a target="_blank" href="https://github.com/rbottura/ColorKineType_v2">GitHub Repo</a></span> -->
 
-
-    <div id="output_json">
-
-    </div>
+    <div id="output_json"></div>
     <div id="nav_bar_slider">
-        <div id="nav_bar_wrapper" class="nav_bar_displayed">
-            <div class="nav_bar_item">
-                <div class="nav_item_display ui_overlay activ_display" id="p5_disp_btn">Input</div>
-                <div class="toggle_parameters activ_parameters" id="p5_param">settings</div>
-            </div>
-            <div class="nav_bar_item">
-                <div class="nav_item_display ui_overlay" id="matter_disp_btn">Output</div>
-                <div class="toggle_parameters activ_parameters" id="matter_param">settings</div>
-            </div>
-            <div class="nav_bar_item">
-                <div class="nav_item_display ui_overlay" id="ry_disp_btn">Ry</div>
-                <div class="toggle_parameters" id="rythme_param">+</div>
-            </div>
+      <div id="nav_bar_wrapper" class="nav_bar_displayed">
+        <div class="nav_bar_item">
+          <div
+            class="nav_item_display ui_overlay activ_display"
+            id="p5_disp_btn"
+          >
+            Input
+          </div>
+          <div class="toggle_parameters activ_parameters" id="p5_param">
+            settings
+          </div>
         </div>
-        <div id="nav_bar_handle_wrapper">
-            <div id="nav_bar_handle">↑</div>
+        <div class="nav_bar_item">
+          <div class="nav_item_display ui_overlay" id="matter_disp_btn">
+            Output
+          </div>
+          <div class="toggle_parameters activ_parameters" id="matter_param">
+            settings
+          </div>
         </div>
+        <div class="nav_bar_item">
+          <div class="nav_item_display ui_overlay" id="ry_disp_btn">Ry</div>
+          <div class="toggle_parameters" id="rythme_param">+</div>
+        </div>
+      </div>
+      <div id="nav_bar_handle_wrapper">
+        <div id="nav_bar_handle">↑</div>
+      </div>
     </div>
 
     <canvas id="render_matter"></canvas>
     <div id="render_p5_container"></div>
 
-    <div id="output_tooltip" class="hidden">Use Up/Down arrows to navigate datasets (default + custom)</div>
+    <div id="output_tooltip" class="hidden">
+      Use Up/Down arrows to navigate datasets (default + custom)
+    </div>
 
     <div class="parameters" id="render_matter_interface">
+      <div id="styling_window" class="drag tool_windows">
+        <div id="css-box-handle" class="handle"></div>
+        <h3 class="tools_window_name">Styling</h3>
+        <style id="styleHtml" contenteditable style="display: block">
+          #defaultCanvas1 {
+            filter: blur(0px) saturate(1) contrast(1) hue-rotate(0deg);
+          }
+        </style>
+      </div>
 
-        <div id="styling_window" class="drag tool_windows">
-            <div id="css-box-handle" class="handle"></div>
-            <h3 class="tools_window_name">Styling</h3>
-            <style id="styleHtml" contenteditable style="display: block;">
-                #defaultCanvas1 {
-                    filter: blur(0px) saturate(1) contrast(1) hue-rotate(0deg);
-                }
-            </style>
+      <div id="animation_window" class="drag tool_windows">
+        <div id="css-box-handle" class="handle"></div>
+        <h3 class="tools_window_name">Animation Attractor</h3>
+        <div class="input_anim_select">
+          <input
+            type="radio"
+            class="inputs_anim_btns"
+            id=""
+            name="anim_mod"
+            value="1"
+            checked
+          />
+          <label for="anim_mod">Circle</label>
         </div>
-
-        <div id="animation_window" class="drag tool_windows">
-            <div id="css-box-handle" class="handle"></div>
-            <h3 class="tools_window_name">Animation Attractor</h3>
-            <div class="input_anim_select">
-                <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="1" checked>
-                <label for="anim_mod">Circle</label>
-            </div>
-            <div class="input_anim_select">
-                <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="2">
-                <label for="anim_mod">Sin wave</label>
-            </div>
-            <div class="input_anim_select">
-                <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="3">
-                <label for="anim_mod">Rectangle</label>
-            </div>
-            <div class="input_anim_select">
-                <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="4">
-                <label for="anim_mod">Cursor</label>
-            </div>
-            <div class="input_anim_select">
-                <input type="radio" class="inputs_anim_btns" id="" name="anim_mod" value="5">
-                <label for="anim_mod">Stop</label>
-            </div>
-            <h3 class="tools_window_name">Animation Sprite</h3>
-            <div class="sprite_anim_select">
-                <input type="radio" class="sprites_anim_btns" id="" name="anim_mod_sprite" value="0">
-                <label for="anim_mod">Wave scale /w speed</label>
-                <input type="number" class="sprites_anim_btns_num" id="sprite_anim_btns_num" name="anim_mod_rot"
-                    value="2" step="0.1">
-
-                <input type="radio" class="sprites_anim_btns" id="" name="anim_mod_sprite" value="1">
-                <label for="anim_mod">Stop scale</label>
-            </div>
-            <h3 class="tools_window_name">Animation Rotation</h3>
-            <div class="rot_anim_select">
-                <input type="radio" class="rot_anim_btns" id="" name="anim_mod_rot" value="0">
-                <label for="anim_mod">w/ speed</label>
-                <input type="number" class="rot_anim_btns_num" id="rot_anim_btns_num" name="anim_mod_rot" value="2"
-                    step="0.1">
-
-                <input type="radio" class="rot_anim_btns" id="" name="anim_mod_rot" value="1">
-                <label for="anim_mod">w/ attractor</label>
-                <br>
-                <input type="radio" class="rot_anim_btns" id="" name="anim_mod_rot" value="2">
-                <label for="anim_mod">Stop rotate</label>
-            </div>
+        <div class="input_anim_select">
+          <input
+            type="radio"
+            class="inputs_anim_btns"
+            id=""
+            name="anim_mod"
+            value="2"
+          />
+          <label for="anim_mod">Sin wave</label>
         </div>
-
-        <div id="capture_window" class="drag tool_windows">
-            <div class="handle"></div>
-            <h3 class="tools_window_name">Capture</h3>
+        <div class="input_anim_select">
+          <input
+            type="radio"
+            class="inputs_anim_btns"
+            id=""
+            name="anim_mod"
+            value="3"
+          />
+          <label for="anim_mod">Rectangle</label>
         </div>
-
-        <div id="interface_handle_wrapper">
-            <div id="interface_handle">◀</div>
+        <div class="input_anim_select">
+          <input
+            type="radio"
+            class="inputs_anim_btns"
+            id=""
+            name="anim_mod"
+            value="4"
+          />
+          <label for="anim_mod">Cursor</label>
         </div>
+        <div class="input_anim_select">
+          <input
+            type="radio"
+            class="inputs_anim_btns"
+            id=""
+            name="anim_mod"
+            value="5"
+          />
+          <label for="anim_mod">Stop</label>
+        </div>
+        <h3 class="tools_window_name">Animation Sprite</h3>
+        <div class="sprite_anim_select">
+          <input
+            type="radio"
+            class="sprites_anim_btns"
+            id=""
+            name="anim_mod_sprite"
+            value="0"
+          />
+          <label for="anim_mod">Wave scale /w speed</label>
+          <input
+            type="number"
+            class="sprites_anim_btns_num"
+            id="sprite_anim_btns_num"
+            name="anim_mod_rot"
+            value="2"
+            step="0.1"
+          />
 
-        <div id="interface" class="drag">
-            <!-- <div class="itemInterface firstItem">
+          <input
+            type="radio"
+            class="sprites_anim_btns"
+            id=""
+            name="anim_mod_sprite"
+            value="1"
+          />
+          <label for="anim_mod">Stop scale</label>
+        </div>
+        <h3 class="tools_window_name">Animation Rotation</h3>
+        <div class="rot_anim_select">
+          <input
+            type="radio"
+            class="rot_anim_btns"
+            id=""
+            name="anim_mod_rot"
+            value="0"
+          />
+          <label for="anim_mod">w/ speed</label>
+          <input
+            type="number"
+            class="rot_anim_btns_num"
+            id="rot_anim_btns_num"
+            name="anim_mod_rot"
+            value="2"
+            step="0.1"
+          />
+
+          <input
+            type="radio"
+            class="rot_anim_btns"
+            id=""
+            name="anim_mod_rot"
+            value="1"
+          />
+          <label for="anim_mod">w/ attractor</label>
+          <br />
+          <input
+            type="radio"
+            class="rot_anim_btns"
+            id=""
+            name="anim_mod_rot"
+            value="2"
+          />
+          <label for="anim_mod">Stop rotate</label>
+        </div>
+      </div>
+
+      <div id="capture_window" class="drag tool_windows">
+        <div class="handle"></div>
+        <h3 class="tools_window_name">Capture</h3>
+      </div>
+
+      <div id="interface_handle_wrapper">
+        <div id="interface_handle">◀</div>
+      </div>
+
+      <div id="interface" class="drag">
+        <!-- <div class="itemInterface firstItem">
                 <button id="btnHide" onclick="hideInterface()">Toggle Display Interface</button>
             </div> -->
-            <div class="itemInterface">
-                <div class="tools_window_btn" id="capture">capture</div>
-                <div class="tools_window_btn" id="styling">styling</div>
-                <div class="tools_window_btn" id="animation">animation</div>
-            </div>
-            <div style="display: none;" class="itemInterface">
-                <div id="lightModeDiv" class="subItem">
-                    & Reload auto : <input type="checkbox" id="checkReload" checked>
-                </div>
-            </div>
-            <div class="itemInterface">
-                <label for="">Dark mode </label>
-                <input type="checkbox" id="checkLight" onclick="setLightMode()">
-            </div>
-            <div class="itemInterface">
-                <div class="subItem">
-                    <label for="">Background clearing </label>
-                    <input type="checkbox" id="bck_clear_btn" checked>
-                </div>
+        <div class="itemInterface">
+          <div class="tools_window_btn" id="capture">capture</div>
+          <div class="tools_window_btn" id="styling">styling</div>
+          <div class="tools_window_btn" id="animation">animation</div>
+        </div>
+        <div style="display: none" class="itemInterface">
+          <div id="lightModeDiv" class="subItem">
+            & Reload auto : <input type="checkbox" id="checkReload" checked />
+          </div>
+        </div>
+        <div class="itemInterface">
+          <label for="">Dark mode </label>
+          <input type="checkbox" id="checkLight" onclick="setLightMode()" />
+        </div>
+        <div class="itemInterface">
+          <div class="subItem">
+            <label for="">Background clearing </label>
+            <input type="checkbox" id="bck_clear_btn" checked />
+          </div>
+        </div>
+
+        <div class="itemInterface">
+          <label for="zoom_range">Zoom : out/in</label>
+          <input
+            class="input_number"
+            id="op_zoom_val"
+            type="number"
+            step=".05"
+          />
+          <input
+            id="input_zoom_range"
+            type="range"
+            min=".01"
+            max="2"
+            step=".01"
+          />
+        </div>
+        <div id="list_datasets" class="itemInterface">
+          <p class="titleItem">Datasets :</p>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set1"
+              name="sets"
+              value="0"
+              checked
+            />
+            <label for="set1"> 1 (Alphabet)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set2"
+              name="sets"
+              value="1"
+            />
+            <label for="set2"> 2 (Raleway dots)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set4"
+              name="sets"
+              value="2"
+            />
+            <label for="set4"> 3 (egyptienne Large)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set5"
+              name="sets"
+              value="3"
+            />
+            <label for="set5"> 4 (Garamond Italic)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set6"
+              name="sets"
+              value="4"
+            />
+            <label for="set5"> 5 (PeaceSans)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set7"
+              name="sets"
+              value="5"
+            />
+            <label for="set5"> 6 (Pilow)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set9"
+              name="sets"
+              value="6"
+            />
+            <label for="set5"> 7 (Mainz)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set12"
+              name="sets"
+              value="7"
+            />
+            <label for="sets"> 8 (destra)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set13"
+              name="sets"
+              value="8"
+            />
+            <label for="sets"> 9 (Minipax)</label>
+          </div>
+          <div class="subItem">
+            <input
+              class="radioSets"
+              type="radio"
+              id="set14"
+              name="sets"
+              value="9"
+            />
+            <label for="sets">CUSTOM</label>
+          </div>
+        </div>
+        <div class="itemInterface">
+          <p class="titleItem">Particles :</p>
+          <div id="showBalls" class="subItem">
+            Show sprite :
+            <input
+              type="checkbox"
+              id="checkParticles"
+              onclick="showBalls()"
+              checked
+            />
+          </div>
+          <div id="ballFill" class="subItem">
+            <div id="ballTexture">
+              <span id="textureSelection">Sprite selection : </span><br />
+              <div id="spritesLib">
+                <img src="./sprites/sprite(1).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(2).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(3).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(4).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(5).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(6).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(7).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(8).png" alt="" class="spriteItem" />
+                <img
+                  src="./sprites/sprite(9).png"
+                  alt=""
+                  class="spriteItem activeSprite"
+                />
+                <img src="./sprites/sprite(10).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(11).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(12).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(13).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(14).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(15).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(16).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(17).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(18).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(19).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(20).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(21).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(22).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(23).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(24).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(25).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(26).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(27).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(28).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(29).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(30).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(31).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(32).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(33).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(34).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(35).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(36).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(37).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(38).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(39).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(40).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(41).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(42).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(43).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(44).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(45).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(46).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(47).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(48).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(49).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(50).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(51).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(52).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(53).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(54).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(55).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(56).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(57).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(58).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(59).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(60).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(61).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(62).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(63).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(64).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(65).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(66).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(67).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(68).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(69).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(70).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(71).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(72).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(73).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(74).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(75).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(76).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(77).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(78).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(79).png" alt="" class="spriteItem" />
+                <img src="./sprites/sprite(80).png" alt="" class="spriteItem" />
+              </div>
             </div>
 
-            <div class="itemInterface">
-                <label for="zoom_range">Zoom : out/in</label>
-                <input class="input_number" id="op_zoom_val" type="number" step=".05">
-                <input id="input_zoom_range" type="range" min=".01" max="2" step=".01">
-            </div>
-            <div id="list_datasets" class="itemInterface">
-                <p class="titleItem">Datasets : </p>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set1" name="sets" value="0" checked>
-                    <label for="set1"> 1 (Alphabet)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set2" name="sets" value="1">
-                    <label for="set2"> 2 (Raleway dots)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set4" name="sets" value="2">
-                    <label for="set4"> 3 (egyptienne Large)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set5" name="sets" value="3">
-                    <label for="set5"> 4 (Garamond Italic)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set6" name="sets" value="4">
-                    <label for="set5"> 5 (PeaceSans)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set7" name="sets" value="5">
-                    <label for="set5"> 6 (Pilow)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set9" name="sets" value="6">
-                    <label for="set5"> 7 (Mainz)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set12" name="sets" value="7">
-                    <label for="sets"> 8 (destra)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set13" name="sets" value="8">
-                    <label for="sets"> 9 (Minipax)</label>
-                </div>
-                <div class="subItem">
-                    <input class="radioSets" type="radio" id="set14" name="sets" value="9">
-                    <label for="sets">CUSTOM</label>
-                </div>
-            </div>
-            <div class="itemInterface">
-                <p class="titleItem">Particles : </p>
-                <div id="showBalls" class="subItem">
-                    Show sprite : <input type="checkbox" id="checkParticles" onclick="showBalls()" checked>
-                </div>
-                <div id="ballFill" class="subItem">
-                    <div id="ballTexture">
-                        <span id="textureSelection">Sprite selection : </span><br>
-                        <div id="spritesLib">
-                            <img src="./sprites/sprite(1).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(2).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(3).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(4).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(5).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(6).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(7).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(8).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(9).png" alt="" class="spriteItem activeSprite">
-                            <img src="./sprites/sprite(10).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(11).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(12).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(13).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(14).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(15).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(16).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(17).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(18).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(19).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(20).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(21).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(22).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(23).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(24).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(25).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(26).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(27).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(28).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(29).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(30).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(31).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(32).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(33).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(34).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(35).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(36).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(37).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(38).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(39).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(40).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(41).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(42).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(43).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(44).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(45).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(46).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(47).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(48).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(49).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(50).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(51).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(52).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(53).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(54).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(55).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(56).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(57).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(58).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(59).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(60).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(61).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(62).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(63).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(64).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(65).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(66).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(67).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(68).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(69).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(70).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(71).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(72).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(73).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(74).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(75).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(76).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(77).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(78).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(79).png" alt="" class="spriteItem">
-                            <img src="./sprites/sprite(80).png" alt="" class="spriteItem">
-                        </div>
-                    </div>
-
-                    <!-- Use colors > <input type="checkbox" id="checkFill" onclick="particleFill()">
+            <!-- Use colors > <input type="checkbox" id="checkFill" onclick="particleFill()">
                     <br>
                     <div id="ballColor">
                         <label for="particlesColor"> - Particle color > </label>
                         <input type="color" id="particlesColor" name="particlesColor" value="#e66465"
                             onclick="loadColor()">
                     </div> -->
-                </div>
+          </div>
 
-                <div id="spriteSize" class="subItem">
-                    <label class="labels_render" for="particleSize">Sprite size : </label>
-                    <input type="range" id="particleSize" name="particleSize" min="0.01" max="2" step="0.01"
-                        onmouseup="scaleParticle()">
-                </div>
+          <div id="spriteSize" class="subItem">
+            <label class="labels_render" for="particleSize"
+              >Sprite size :
+            </label>
+            <input
+              type="range"
+              id="particleSize"
+              name="particleSize"
+              min="0.01"
+              max="2"
+              step="0.01"
+              onmouseup="scaleParticle()"
+            />
+          </div>
 
-                <div id="ballFriction" class="subItem">
-                    <label class="labels_render" for="airFric">air friction : </label>
-                    <input type="range" id="airFric" name="airFric" min="0.01" max="1" step="0.02"
-                        onmouseup="changeAirFriction()">
-                </div>
+          <div id="ballFriction" class="subItem">
+            <label class="labels_render" for="airFric">air friction : </label>
+            <input
+              type="range"
+              id="airFric"
+              name="airFric"
+              min="0.01"
+              max="1"
+              step="0.02"
+              onmouseup="changeAirFriction()"
+            />
+          </div>
 
-                <!-- <div id="ballMasse" class="subItem">
+          <!-- <div id="ballMasse" class="subItem">
                     <label for="circRadius">Particle radius : </label>
                     <input type="range" id="circRadius" name="circRadius" min="1" max="30" step="0.1"
                         onmouseup="changeRadius()">
                 </div> -->
 
-                <div id="ballDensity" class="subItem">
-                    <label class="labels_render" for="density">particule density : </label>
-                    <input type="range" id="density" name="density" min="0.005" max="0.2" step="0.005"
-                        onmouseup="changeDensity()">
-                </div>
-            </div>
-            <div class="itemInterface">
-                <p class="titleItem">Constraints : </p>
+          <div id="ballDensity" class="subItem">
+            <label class="labels_render" for="density"
+              >particule density :
+            </label>
+            <input
+              type="range"
+              id="density"
+              name="density"
+              min="0.005"
+              max="0.2"
+              step="0.005"
+              onmouseup="changeDensity()"
+            />
+          </div>
+        </div>
+        <div class="itemInterface">
+          <p class="titleItem">Constraints :</p>
 
-                <!-- <div class="subItem" id="showConst">
+          <!-- <div class="subItem" id="showConst">
                     voir le lien : <input type="checkbox" id="checkConstrains" onclick="showConstrains()" checked>
                 </div> -->
 
-                <!-- <div class="subItem" id="strokeStyle">
+          <!-- <div class="subItem" id="strokeStyle">
                     <label for="constrainStyle">Couleur du lien : </label>
                     <input type="color" id="constrainStyle" name="constrainStyle" value="#e66465"
                         onclick="constrainStyle()">
                 </div> -->
 
-                <div style="display: none;" class="subItem" id="strokeWidth">
-                    <label class="labels_render" for="constStrokeWidth">Line width : </label>
-                    <input type="range" id="constStrokeWidth" name="constStrokeWidth" min="0.1" max="5" step="0.1"
-                        onmouseup="constrainStyle()">
-                </div>
-                <div class="subItem" id="constLengthItem">
-                    <label class="labels_render" for="constLength">length : </label>
-                    <input type="range" id="constLength" name="constLength" min="1" max="200" step="4"
-                        onmouseup="constrainLength()">
-                </div>
-                <div class="subItem" id="stiffness">
-                    <label class="labels_render" for="constStifness">Elasticity : </label>
-                    <input type="range" id="constStifness" name="constStifness" min="0.005" max="1" step="0.005"
-                        onmouseup="changeStiffness()">
-                </div>
-                <!-- <div class="subItem" id="anchors">
+          <div style="display: none" class="subItem" id="strokeWidth">
+            <label class="labels_render" for="constStrokeWidth"
+              >Line width :
+            </label>
+            <input
+              type="range"
+              id="constStrokeWidth"
+              name="constStrokeWidth"
+              min="0.1"
+              max="5"
+              step="0.1"
+              onmouseup="constrainStyle()"
+            />
+          </div>
+          <div class="subItem" id="constLengthItem">
+            <label class="labels_render" for="constLength">length : </label>
+            <input
+              type="range"
+              id="constLength"
+              name="constLength"
+              min="1"
+              max="200"
+              step="4"
+              onmouseup="constrainLength()"
+            />
+          </div>
+          <div class="subItem" id="stiffness">
+            <label class="labels_render" for="constStifness"
+              >Elasticity :
+            </label>
+            <input
+              type="range"
+              id="constStifness"
+              name="constStifness"
+              min="0.005"
+              max="1"
+              step="0.005"
+              onmouseup="changeStiffness()"
+            />
+          </div>
+          <!-- <div class="subItem" id="anchors">
                     Show anchors : <input type="checkbox" id="checkAnchors" onclick="showAnchors()">
                 </div> -->
-            </div>
+        </div>
 
-            <!-- <div class="itemInterface">
+        <!-- <div class="itemInterface">
                 <p class="titleItem">Reload settings</p>
                 <div class="subItem">
                     Your settings made for the past letter have disappeared ? Reload them !
                     <button id="btnReload" onclick="fullReload()">RELOAD</button>
                 </div>
             </div> -->
-
-        </div>
+      </div>
     </div>
 
     <div id="p5_setup_wrapper">
-        <div style="display: none;" class="book_size" id="book_access">
-            <div id="book_btn"> 2. </div>
-            <iframe id="pdf_iframe" src="./assets/doc_reprog.pdf" frameborder="0"></iframe>
-        </div>
-        <div id="P5_container"></div>
+      <div style="display: none" class="book_size" id="book_access">
+        <div id="book_btn">2.</div>
+        <iframe
+          id="pdf_iframe"
+          src="./assets/doc_reprog.pdf"
+          frameborder="0"
+        ></iframe>
+      </div>
+      <div id="P5_container"></div>
 
-        <div id="p5_param_wrapper_center">
-            <div class="parameters" id="p5_paramWindow_wrapper">
-
-                <div id="tabs_selection">
-                    <div name="tab1_grid_input" id="text_tab_btn" class="tab_button activ_tab_p5">text input</div>
-                    <div name="tab2_grid_input" id="datasetGen_tab_btn" class="tab_button">dataset generator
-                    </div>
-                    <div name="tab3_grid_input" id="imgInput_tab_btn" class="tab_button">image input</div>
-                </div>
-
-                <div class="tabs_input_window activ_input_window" id="tab1_grid_input">
-
-                    <div class="inputs_layers_wrapper">
-
-                        <div class="step_layer" id="layerTextInput">
-                            <p class="step_index">Step 1.</p>
-                            <h2>Text parameters</h2>
-                            <p class="step_infos">Type your text here, give it a size, a font family, etc</p>
-                            <div id="interface_text_input" class="interfaces">
-
-                                <div id="input_text_wrapper" class="formItem">
-                                    <textarea placeholder="Custom txt" id="input_text" name="story" rows="3"
-                                        cols="40"></textarea>
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="fs_range">Fontsize : </label>
-                                    <input id="fs_range" class="text_prop" name="fs_range" type="range" min="20"
-                                        max="750" value="100">
-                                    <input class="input_number" id="op_val_fs" type="number">
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="lh_range">Lineheight : </label>
-                                    <input id="lh_range" class="text_prop" name="lh_range" type="range" min="20"
-                                        max="650" value="100">
-                                    <input class="input_number" id="op_val_lh" type="number">
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="mt_range">Margin top : </label>
-                                    <input id="mt_range" class="text_prop" name="mt_range" type="range" min="0"
-                                        max="500" value="100">
-                                    <input class="input_number" id="op_val_mt" type="number">
-                                </div>
-
-                                <div class="formItem" id="fieldset_wrapper">
-                                    <fieldset id="fieldset_elem">
-                                        <legend>Text Styles</legend>
-
-                                        <input class="ft_style_btn" type="radio" id="" name="ft_style" value="0">
-                                        <label for="">Normal</label><br>
-
-                                        <input class="ft_style_btn" type="radio" id="" name="ft_style" value="1">
-                                        <label for="">Italic</label><br>
-
-                                        <input class="ft_style_btn" type="radio" id="" name="ft_style" value="2" />
-                                        <label for="">Bold</label>
-
-                                        <input class="ft_style_btn" type="radio" id="" name="ft_style" value="3" />
-                                        <label for="">Bold Italic</label>
-                                    </fieldset>
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="fontfamily">Chose font family : </label>
-                                    <input list="fontFamilies" name="fontfamily" id="fontfamily_menu">
-                                    <datalist id="fontFamilies">
-                                        <option value="Garamond">Garamond</option>
-                                        <option value="Tahoma">Tahoma</option>
-                                        <option value="Times New Roman">Times New Roman</option>
-                                        <option value="Arial">Arial</option>
-                                        <option value="Courier">Courier</option>
-                                        <option value="Gill Sans">Gill Sans</option>
-                                        <option value="Impact">Impact</option>
-                                        <option value="Trebuchet MS">Trebuchet MS</option>
-                                        <option value="Brush Script MT">Brush Script MT</option>
-                                        <option value="Georgia">Georgia</option>
-                                        <option value="bpdots">bpdots</option>
-                                        <option value="r2">r2</option>
-                                        <option value="Underodd">Underodd</option>
-                                        <option value="EgyptienneLarge-Regular">EgyptienneLarge-Regular</option>
-                                        <option value="iAWriterDuospace-Bold">iAWriterDuospace-Bold</option>
-                                        <option value="Yarndings20-Regular">Yarndings20-Regular</option>
-                                    </datalist>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="step_layer" id="layerP5Grid">
-                            <p class="step_index">Step 2.</p>
-                            <h2>Grid parameters</h2>
-                            <p class="step_infos">Play with the white grid, therefore change the numbers of dots, their
-                                layout, etc.</p>
-                            <div id="interface_grid_input" class="interfaces">
-
-                                <div class="formItem">
-                                    <label for="lineThick">show grid : </label>
-                                    <input class="" id="showgrid_chkbox" type="checkbox" checked>
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="lineThick">Lines : </label>
-                                    <input id="lt_range" class="grid_prop" name="lineThick" type="range" min="1"
-                                        max="20" value="4" step="1">
-                                    <input class="output_values input_number" id="op_val_lt" type="number" min="1" max="30">
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="spaceThick">Spaces : </label>
-                                    <input id="st_range" class="grid_prop" name="spaceThick" type="range" min="1"
-                                        max="20" value="4" step="1">
-                                    <input class="output_values input_number" id="op_val_st" type="number" min="1" max="30">
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="rot_grid">Rotation : </label>
-                                    <input id="rot_range" class="grid_prop" name="rot_grid" type="range" min="0"
-                                        max="180" value="45" step="1">
-                                    <input class="output_values input_number" id="op_val_rot" type="number">
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="step_layer" id="layerOpenCV">
-                            <p class="step_index">Step 3.</p>
-                            <h2>OpenCV parameters</h2>
-                            <p class="step_infos">Process your input to generate data, and add it to the renderer, in
-                                the custom dataset</p>
-                            <div id="interface_opencv_input" class="interfaces">
-                                <div id="btn_count_dots" class="formItem" onclick="onOpenCvReady()">
-                                    ! Click here to process changes !
-                                </div>
-                                <div id="preview_dotted_image" class="formItem"></div>
-                                <span id="processImageWarning">if you see your input image in the box above, it means
-                                    you can add it to render with buttons below</span>
-                                <div class="formItem">
-                                    output infos : <span id="op_nbr_dots"> ? </span> dots
-                                </div>
-                                <div class="formItem btn_opencv" onclick="createNewDotCharacter()">Add to render (w/out
-                                    preview)
-                                </div>
-                                <div class="formItem btn_opencv" onclick="showCstSet()">Add to render (w/ preview)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tabs_input_window" id="tab2_grid_input">
-
-                    <div class="inputs_layers_wrapper">
-
-                        <div class="step_layer">
-                            <p class="step_index">Step 1.</p>
-                            <h2>Text parameters</h2>
-                            <p class="step_infos">Select which font and glyphs will be present in this new dataset, give
-                                it a size, a font family, etc</p>
-                            <div class="interfaces">
-
-                                <div class="formItem">
-                                    <label for="fontfamily">Chose font family : </label>
-                                    <input list="fontFamilies" name="fontfamily" id="gen_fontfamily_menu">
-                                    <datalist id="gen_fontFamilies">
-                                        <option value="Garamond">Garamond</option>
-                                        <option value="Tahoma">Tahoma</option>
-                                        <option value="Times New Roman">Times New Roman</option>
-                                        <option value="Arial">Arial</option>
-                                        <option value="Courier">Courier</option>
-                                        <option value="Gill Sans">Gill Sans</option>
-                                        <option value="Impact">Impact</option>
-                                        <option value="Trebuchet MS">Trebuchet MS</option>
-                                        <option value="Brush Script MT">Brush Script MT</option>
-                                        <option value="Georgia">Georgia</option>
-                                        <option value="bpdots">bpdots</option>
-                                        <option value="r2">r2</option>
-                                        <option value="Underodd">Underodd</option>
-                                    </datalist>
-                                </div>
-                                <div class="formItem">
-                                    <div class="char_select_wrapper">
-                                        <label for="">first char :</label>
-                                        <input type="number" id="first_char_code" value="50">
-                                        <span id="output_first_letter"></span>
-                                    </div>
-                                    <div class="char_select_wrapper">
-                                        <label for="">last char : </label>
-                                        <input type="number" id="last_char_code" value="60">
-                                        <span id="output_last_letter"></span>
-                                    </div>
-                                    <br>
-                                    <label for="">list of all the characters selected</label>
-                                    <p id="output_all_letters">...</p>
-                                    <label for="indexGenTextInput">Index of previewed character : </label>
-                                    <input type="number" name="indexGenTextInput" id="indexGenTextInput" value="0">
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="gen_fs_range">Fontsize : </label>
-                                    <input id="gen_fs_range" class="text_prop" name="gen_fs_range" type="range" min="20"
-                                        max="750" value="100">
-                                    <input class="input_number" id="gen_op_val_fs" type="number">
-                                </div>
-
-                                <div class="formItem">
-                                    <label for="gen_mt_range">Margin top : </label>
-                                    <input id="gen_mt_range" class="text_prop" name="gen_mt_range" type="range" min="0"
-                                        max="500" value="100">
-                                    <input class="input_number" id="gen_op_val_mt" type="number">
-                                </div>
-
-                                <div class="formItem" id="fieldset_wrapper">
-                                    <fieldset id="fieldset_elem">
-                                        <legend>Text Styles</legend>
-
-                                        <input class="gen_ft_style_btn" type="radio" id="" name="gen_style" value="0">
-                                        <label for="">Normal</label><br>
-
-                                        <input class="gen_ft_style_btn" type="radio" id="" name="gen_style" value="1">
-                                        <label for="">Italic</label><br>
-
-                                        <input class="gen_ft_style_btn" type="radio" id="" name="gen_style" value="2" />
-                                        <label for="">Bold</label>
-
-                                        <input class="gen_ft_style_btn" type="radio" id="" name="gen_style" value="3" />
-                                        <label for="">Bold Italic</label>
-                                    </fieldset>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="step_layer">
-                            <p class="step_index">Step 3.</p>
-                            <h2>Generate dataset</h2>
-                            <p class="step_infos">Create a new data set to render with the content on step 1,
-                                automaticly or manually</p>
-                            <div class="interfaces">
-                                <div id="gen_dataset_btn" class="formItem" onclick="generateDataset()">
-                                    ! Click here to generate !
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="tabs_input_window" id="tab3_grid_input">
-                    <div class="inputs_layers_wrapper">
-                        <div class="step_layer" id="layerImageInput">
-                            <p class="step_index">Step 1.</p>
-                            <h2>Image parameters</h2>
-                            <p class="step_infos">Load an image, apply modifications</p>
-                            <div class="formItem">
-                                <label for="avatar">Choose an image</label>
-                                <input type="file" id="image_input" name="image_input" accept="image/png, image/jpeg">
-                            </div>
-
-                            <div class="formItem">
-                                <label for="">Size</label>
-                                <input id="range_image_size" type="range" name="" value="1" step="0.01" min="0.01" max="5">
-                                <input id="op_image_size" class="input_number" type="number" value="1" step="0.01">
-                            </div>
-                            <div class="formItem">
-                                <label for="">translate X</label>
-                                <input id="range_image_x" type="range" name="" step="2" value="250" min="-1500" max="1920">
-                                <input id="op_image_x" class="input_number" type="number" step="1">
-                            </div>
-                            <div class="formItem">
-                                <label for="">translate Y</label>
-                                <input id="range_image_y" type="range" name="" step="2" value="250" min="-100" max="600">
-                                <input id="op_image_y" class="input_number" type="number" step="1">
-                            </div>
-                            <div class="formItem">
-                                <label for="">Rotate</label>
-                                <input id="range_image_rot" type="range" name="" step="1" min="0" max="360">
-                                <input id="op_image_rot" class="input_number" type="number" step="1">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+      <div id="p5_param_wrapper_center">
+        <div class="parameters" id="p5_paramWindow_wrapper">
+          <div id="tabs_selection">
+            <div
+              name="tab1_grid_input"
+              id="text_tab_btn"
+              class="tab_button activ_tab_p5"
+            >
+              text input
             </div>
+            <div
+              name="tab2_grid_input"
+              id="datasetGen_tab_btn"
+              class="tab_button"
+            >
+              dataset generator
+            </div>
+            <div
+              name="tab3_grid_input"
+              id="imgInput_tab_btn"
+              class="tab_button"
+            >
+              image input
+            </div>
+          </div>
 
+          <div
+            class="tabs_input_window activ_input_window"
+            id="tab1_grid_input"
+          >
+            <div class="inputs_layers_wrapper">
+              <div class="step_layer" id="layerTextInput">
+                <p class="step_index">Step 1.</p>
+                <h2>Text parameters</h2>
+                <p class="step_infos">
+                  Type your text here, give it a size, a font family, etc
+                </p>
+                <div id="interface_text_input" class="interfaces">
+                  <div id="input_text_wrapper" class="formItem">
+                    <textarea
+                      placeholder="Custom txt"
+                      id="input_text"
+                      name="story"
+                      rows="3"
+                      cols="40"
+                    ></textarea>
+                  </div>
+
+                  <div class="formItem">
+                    <label for="fs_range">Fontsize : </label>
+                    <input
+                      id="fs_range"
+                      class="text_prop"
+                      name="fs_range"
+                      type="range"
+                      min="20"
+                      max="750"
+                      value="100"
+                    />
+                    <input class="input_number" id="op_val_fs" type="number" />
+                  </div>
+
+                  <div class="formItem">
+                    <label for="lh_range">Lineheight : </label>
+                    <input
+                      id="lh_range"
+                      class="text_prop"
+                      name="lh_range"
+                      type="range"
+                      min="20"
+                      max="650"
+                      value="100"
+                    />
+                    <input class="input_number" id="op_val_lh" type="number" />
+                  </div>
+
+                  <div class="formItem">
+                    <label for="mt_range">Margin top : </label>
+                    <input
+                      id="mt_range"
+                      class="text_prop"
+                      name="mt_range"
+                      type="range"
+                      min="0"
+                      max="500"
+                      value="100"
+                    />
+                    <input class="input_number" id="op_val_mt" type="number" />
+                  </div>
+
+                  <div class="formItem" id="fieldset_wrapper">
+                    <fieldset id="fieldset_elem">
+                      <legend>Text Styles</legend>
+
+                      <input
+                        class="ft_style_btn"
+                        type="radio"
+                        id=""
+                        name="ft_style"
+                        value="0"
+                      />
+                      <label for="">Normal</label><br />
+
+                      <input
+                        class="ft_style_btn"
+                        type="radio"
+                        id=""
+                        name="ft_style"
+                        value="1"
+                      />
+                      <label for="">Italic</label><br />
+
+                      <input
+                        class="ft_style_btn"
+                        type="radio"
+                        id=""
+                        name="ft_style"
+                        value="2"
+                      />
+                      <label for="">Bold</label>
+
+                      <input
+                        class="ft_style_btn"
+                        type="radio"
+                        id=""
+                        name="ft_style"
+                        value="3"
+                      />
+                      <label for="">Bold Italic</label>
+                    </fieldset>
+                  </div>
+
+                  <div class="formItem">
+                    <label for="fontfamily">Chose font family : </label>
+                    <input
+                      list="fontFamilies"
+                      name="fontfamily"
+                      id="fontfamily_menu"
+                    />
+                    <datalist id="fontFamilies">
+                      <option value="Garamond">Garamond</option>
+                      <option value="Tahoma">Tahoma</option>
+                      <option value="Times New Roman">Times New Roman</option>
+                      <option value="Arial">Arial</option>
+                      <option value="Courier">Courier</option>
+                      <option value="Gill Sans">Gill Sans</option>
+                      <option value="Impact">Impact</option>
+                      <option value="Trebuchet MS">Trebuchet MS</option>
+                      <option value="Brush Script MT">Brush Script MT</option>
+                      <option value="Georgia">Georgia</option>
+                      <option value="bpdots">bpdots</option>
+                      <option value="r2">r2</option>
+                      <option value="Underodd">Underodd</option>
+                      <option value="EgyptienneLarge-Regular">
+                        EgyptienneLarge-Regular
+                      </option>
+                      <option value="iAWriterDuospace-Bold">
+                        iAWriterDuospace-Bold
+                      </option>
+                      <option value="Yarndings20-Regular">
+                        Yarndings20-Regular
+                      </option>
+                    </datalist>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step_layer" id="layerP5Grid">
+                <p class="step_index">Step 2.</p>
+                <h2>Grid parameters</h2>
+                <p class="step_infos">
+                  Play with the white grid, therefore change the numbers of
+                  dots, their layout, etc.
+                </p>
+                <div id="interface_grid_input" class="interfaces">
+                  <div class="formItem">
+                    <label for="lineThick">show grid : </label>
+                    <input
+                      class=""
+                      id="showgrid_chkbox"
+                      type="checkbox"
+                      checked
+                    />
+                  </div>
+
+                  <div class="formItem">
+                    <label for="lineThick">Lines : </label>
+                    <input
+                      id="lt_range"
+                      class="grid_prop"
+                      name="lineThick"
+                      type="range"
+                      min="1"
+                      max="20"
+                      value="4"
+                      step="1"
+                    />
+                    <input
+                      class="output_values input_number"
+                      id="op_val_lt"
+                      type="number"
+                      min="1"
+                      max="30"
+                    />
+                  </div>
+
+                  <div class="formItem">
+                    <label for="spaceThick">Spaces : </label>
+                    <input
+                      id="st_range"
+                      class="grid_prop"
+                      name="spaceThick"
+                      type="range"
+                      min="1"
+                      max="20"
+                      value="4"
+                      step="1"
+                    />
+                    <input
+                      class="output_values input_number"
+                      id="op_val_st"
+                      type="number"
+                      min="1"
+                      max="30"
+                    />
+                  </div>
+
+                  <div class="formItem">
+                    <label for="rot_grid">Rotation : </label>
+                    <input
+                      id="rot_range"
+                      class="grid_prop"
+                      name="rot_grid"
+                      type="range"
+                      min="0"
+                      max="180"
+                      value="45"
+                      step="1"
+                    />
+                    <input
+                      class="output_values input_number"
+                      id="op_val_rot"
+                      type="number"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="step_layer" id="layerOpenCV">
+                <p class="step_index">Step 3.</p>
+                <h2>OpenCV parameters</h2>
+                <p class="step_infos">
+                  Process your input to generate data, and add it to the
+                  renderer, in the custom dataset
+                </p>
+                <div id="interface_opencv_input" class="interfaces">
+                  <div
+                    id="btn_count_dots"
+                    class="formItem"
+                    onclick="onOpenCvReady()"
+                  >
+                    ! Click here to process changes !
+                  </div>
+                  <div id="preview_dotted_image" class="formItem"></div>
+                  <span id="processImageWarning"
+                    >if you see your input image in the box above, it means you
+                    can add it to render with buttons below</span
+                  >
+                  <div class="formItem">
+                    output infos : <span id="op_nbr_dots"> ? </span> dots
+                  </div>
+                  <div
+                    class="formItem btn_opencv"
+                    onclick="createNewDotCharacter()"
+                  >
+                    Add to render (w/out preview)
+                  </div>
+                  <div class="formItem btn_opencv" onclick="showCstSet()">
+                    Add to render (w/ preview)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabs_input_window" id="tab2_grid_input">
+            <div class="inputs_layers_wrapper">
+              <div class="step_layer">
+                <p class="step_index">Step 1.</p>
+                <h2>Text parameters</h2>
+                <p class="step_infos">
+                  Select which font and glyphs will be present in this new
+                  dataset, give it a size, a font family, etc
+                </p>
+                <div class="interfaces">
+                  <div class="formItem">
+                    <label for="fontfamily">Chose font family : </label>
+                    <input
+                      list="fontFamilies"
+                      name="fontfamily"
+                      id="gen_fontfamily_menu"
+                    />
+                    <datalist id="gen_fontFamilies">
+                      <option value="Garamond">Garamond</option>
+                      <option value="Tahoma">Tahoma</option>
+                      <option value="Times New Roman">Times New Roman</option>
+                      <option value="Arial">Arial</option>
+                      <option value="Courier">Courier</option>
+                      <option value="Gill Sans">Gill Sans</option>
+                      <option value="Impact">Impact</option>
+                      <option value="Trebuchet MS">Trebuchet MS</option>
+                      <option value="Brush Script MT">Brush Script MT</option>
+                      <option value="Georgia">Georgia</option>
+                      <option value="bpdots">bpdots</option>
+                      <option value="r2">r2</option>
+                      <option value="Underodd">Underodd</option>
+                    </datalist>
+                  </div>
+                  <div class="formItem">
+                    <div class="char_select_wrapper">
+                      <label for="">first char :</label>
+                      <input type="number" id="first_char_code" value="50" />
+                      <span id="output_first_letter"></span>
+                    </div>
+                    <div class="char_select_wrapper">
+                      <label for="">last char : </label>
+                      <input type="number" id="last_char_code" value="60" />
+                      <span id="output_last_letter"></span>
+                    </div>
+                    <br />
+                    <label for="">list of all the characters selected</label>
+                    <p id="output_all_letters">...</p>
+                    <label for="indexGenTextInput"
+                      >Index of previewed character :
+                    </label>
+                    <input
+                      type="number"
+                      name="indexGenTextInput"
+                      id="indexGenTextInput"
+                      value="0"
+                    />
+                  </div>
+
+                  <div class="formItem">
+                    <label for="gen_fs_range">Fontsize : </label>
+                    <input
+                      id="gen_fs_range"
+                      class="text_prop"
+                      name="gen_fs_range"
+                      type="range"
+                      min="20"
+                      max="750"
+                      value="100"
+                    />
+                    <input
+                      class="input_number"
+                      id="gen_op_val_fs"
+                      type="number"
+                    />
+                  </div>
+
+                  <div class="formItem">
+                    <label for="gen_mt_range">Margin top : </label>
+                    <input
+                      id="gen_mt_range"
+                      class="text_prop"
+                      name="gen_mt_range"
+                      type="range"
+                      min="0"
+                      max="500"
+                      value="100"
+                    />
+                    <input
+                      class="input_number"
+                      id="gen_op_val_mt"
+                      type="number"
+                    />
+                  </div>
+
+                  <div class="formItem" id="fieldset_wrapper">
+                    <fieldset id="fieldset_elem">
+                      <legend>Text Styles</legend>
+
+                      <input
+                        class="gen_ft_style_btn"
+                        type="radio"
+                        id=""
+                        name="gen_style"
+                        value="0"
+                      />
+                      <label for="">Normal</label><br />
+
+                      <input
+                        class="gen_ft_style_btn"
+                        type="radio"
+                        id=""
+                        name="gen_style"
+                        value="1"
+                      />
+                      <label for="">Italic</label><br />
+
+                      <input
+                        class="gen_ft_style_btn"
+                        type="radio"
+                        id=""
+                        name="gen_style"
+                        value="2"
+                      />
+                      <label for="">Bold</label>
+
+                      <input
+                        class="gen_ft_style_btn"
+                        type="radio"
+                        id=""
+                        name="gen_style"
+                        value="3"
+                      />
+                      <label for="">Bold Italic</label>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step_layer">
+                <p class="step_index">Step 3.</p>
+                <h2>Generate dataset</h2>
+                <p class="step_infos">
+                  Create a new data set to render with the content on step 1,
+                  automaticly or manually
+                </p>
+                <div class="interfaces">
+                  <div
+                    id="gen_dataset_btn"
+                    class="formItem"
+                    onclick="generateDataset()"
+                  >
+                    ! Click here to generate !
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabs_input_window" id="tab3_grid_input">
+            <div class="inputs_layers_wrapper">
+              <div class="step_layer" id="layerImageInput">
+                <p class="step_index">Step 1.</p>
+                <h2>Image parameters</h2>
+                <p class="step_infos">Load an image, apply modifications</p>
+                <div class="formItem">
+                  <label for="avatar">Choose an image</label>
+                  <input
+                    type="file"
+                    id="image_input"
+                    name="image_input"
+                    accept="image/png, image/jpeg"
+                  />
+                </div>
+
+                <div class="formItem">
+                  <label for="">Size</label>
+                  <input
+                    id="range_image_size"
+                    type="range"
+                    name=""
+                    value="1"
+                    step="0.01"
+                    min="0.01"
+                    max="5"
+                  />
+                  <input
+                    id="op_image_size"
+                    class="input_number"
+                    type="number"
+                    value="1"
+                    step="0.01"
+                  />
+                </div>
+                <div class="formItem">
+                  <label for="">translate X</label>
+                  <input
+                    id="range_image_x"
+                    type="range"
+                    name=""
+                    step="2"
+                    value="250"
+                    min="-1500"
+                    max="1920"
+                  />
+                  <input
+                    id="op_image_x"
+                    class="input_number"
+                    type="number"
+                    step="1"
+                  />
+                </div>
+                <div class="formItem">
+                  <label for="">translate Y</label>
+                  <input
+                    id="range_image_y"
+                    type="range"
+                    name=""
+                    step="2"
+                    value="250"
+                    min="-100"
+                    max="600"
+                  />
+                  <input
+                    id="op_image_y"
+                    class="input_number"
+                    type="number"
+                    step="1"
+                  />
+                </div>
+                <div class="formItem">
+                  <label for="">Rotate</label>
+                  <input
+                    id="range_image_rot"
+                    type="range"
+                    name=""
+                    step="1"
+                    min="0"
+                    max="360"
+                  />
+                  <input
+                    id="op_image_rot"
+                    class="input_number"
+                    type="number"
+                    step="1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-
+      </div>
     </div>
 
     <div id="rythme_setup_wrapper">
-        <div style="display: none" class="inputs_layers_wrapper_class">
-            <div id="play_lyrics_wrapper" class="drag">
-                <div id="css-box-handle" class="handle">move</div>
+      <div style="display: none" class="inputs_layers_wrapper_class">
+        <div id="play_lyrics_wrapper" class="drag">
+          <div id="css-box-handle" class="handle">move</div>
 
-                <p><span id="seconds">00</span></p>
-                <button id="button-start">Start</button>
-                <button id="button-stop">Stop</button>
-                <button id="button-reset">Reset</button>
-            </div>
+          <p><span id="seconds">00</span></p>
+          <button id="button-start">Start</button>
+          <button id="button-stop">Stop</button>
+          <button id="button-reset">Reset</button>
         </div>
-        <div id="warning_ry_panel" class="">
-            <p> Rien ici pour l'instant. <br> Nothing here for now.</p> <br>
-            <p class="txt_ry_warning">Prochainement, une interface utilisant theatre.js pour animer (en musique ?) les
-                paramètres disponibles.</p> <br>
-            <p class="txt_ry_warning">Soon, an interface using theatre.js to (musically ?) animate the available
-                parameters.</p>
-        </div>
-        <div class="parameters">
-        </div>
+      </div>
+      <div id="warning_ry_panel" class="">
+        <p>
+          Rien ici pour l'instant. <br />
+          Nothing here for now.
+        </p>
+        <br />
+        <p class="txt_ry_warning">
+          Prochainement, une interface utilisant theatre.js pour animer (en
+          musique ?) les paramètres disponibles.
+        </p>
+        <br />
+        <p class="txt_ry_warning">
+          Soon, an interface using theatre.js to (musically ?) animate the
+          available parameters.
+        </p>
+      </div>
+      <div class="parameters"></div>
     </div>
 
-
-    <script src="https://docs.opencv.org/master/opencv.js"></script>
+    <!-- <script src="https://docs.opencv.org/master/opencv.js"></script>
     <script src="./libraries/p5.min.js"></script>
-    <script id="captureScript" src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js"></script>
+    <script
+      id="captureScript"
+      src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js"
+    ></script>
     <script src="./libraries/matter.min.js"></script>
     <script src="./libraries/matter-attractors.min.js"></script>
     <script src="./script.js"></script>
     <script src="./render.js"></script>
     <script src="./p5_opencv.js"></script>
-    <script src="./lrc-parser/script.js"></script>
+    <script src="./lrc-parser/script.js"></script> -->
 
-</body>
+    <script>
+      // ─── Loading screen helpers ───────────────────────────────────────
+      function setProgress(pct) {
+        const fill = document.getElementById("progress-bar-fill");
+        const label = document.getElementById("loading-label");
+        const p = Math.min(100, Math.round(pct * 100));
+        if (fill) fill.style.width = p + "%";
+        if (label) label.textContent = `Loading… ${p}%`;
+      }
 
+      function hideLoadingScreen() {
+        const screen = document.getElementById("loading-screen");
+        if (!screen) return;
+        screen.classList.add("hidden");
+        screen.addEventListener("transitionend", () => screen.remove(), {
+          once: true,
+        });
+      }
+
+      // ─── Script manifest ──────────────────────────────────────────────
+      // Order matters: dependencies must load before dependents.
+      // opencv is flagged separately because we XHR it for byte progress.
+      const OPENCV_URL = './libraries/opencv.js'; // ← local, XHR works fine
+
+      const SCRIPTS = [
+        "./libraries/p5.min.js",
+        // "https://cdn.jsdelivr.net/npm/p5.capture@1.4.1/dist/p5.capture.umd.min.js",
+        "./libraries/p5capture.min.js",
+        "./libraries/matter.min.js",
+        "./libraries/matter-attractors.min.js",
+        "./script.js",
+        "./render.js",
+        "./p5_opencv.js",
+      ];
+
+      // Weight split:
+      //   opencv download  = 0 → 70%  (XHR byte-level, it's ~8MB)
+      //   remaining 7 scripts = 70% → 100% (evenly split, they're all small)
+      const OPENCV_WEIGHT = 0.7;
+      const SCRIPTS_WEIGHT = 1 - OPENCV_WEIGHT;
+
+      // ─── Inject a <script> tag and resolve when loaded ────────────────
+      function injectScript(src) {
+        return new Promise((resolve, reject) => {
+          const s = document.createElement("script");
+          s.src = src;
+          s.onload = resolve;
+          s.onerror = () => reject(new Error("Failed to load: " + src));
+          document.head.appendChild(s);
+        });
+      }
+
+      // ─── XHR opencv with byte progress, then inject as blob URL ──────
+      function loadOpenCV() {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("GET", OPENCV_URL, true);
+          xhr.responseType = "blob";
+
+          xhr.onprogress = (e) => {
+            if (e.lengthComputable) {
+              setProgress((e.loaded / e.total) * OPENCV_WEIGHT);
+            }
+          };
+
+          xhr.onload = () => {
+            setProgress(OPENCV_WEIGHT); // snap to 70% when download is done
+            const blobURL = URL.createObjectURL(xhr.response);
+            injectScript(blobURL)
+              .then(() => {
+                URL.revokeObjectURL(blobURL);
+                resolve();
+              })
+              .catch(reject);
+          };
+
+          xhr.onerror = () => reject(new Error("opencv.js download failed"));
+          xhr.send();
+        });
+      }
+
+      // ─── Load all remaining scripts sequentially, nudging bar ────────
+      async function loadRemainingScripts() {
+        const step = SCRIPTS_WEIGHT / SCRIPTS.length;
+        for (let i = 0; i < SCRIPTS.length; i++) {
+          await injectScript(SCRIPTS[i]);
+          setProgress(OPENCV_WEIGHT + (i + 1) * step);
+        }
+      }
+
+      // ─── Boot sequence ────────────────────────────────────────────────
+      async function boot() {
+        try {
+          await loadOpenCV(); // 0% → 70% (byte-level)
+          await loadRemainingScripts(); // 70% → 100% (per-script)
+          setProgress(1);
+          setTimeout(() => hideLoadingScreen(), 300);
+        } catch (err) {
+          console.error("Boot failed:", err);
+          const label = document.getElementById("loading-label");
+          if (label) label.textContent = "Load error — check console";
+        }
+      }
+
+      // Start as soon as the DOM is ready
+      document.addEventListener("DOMContentLoaded", boot);
+    </script>
+  </body>
 </html>
