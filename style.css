@@ -1329,7 +1329,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 #loading-gif {
-  width: 120px;
+  width: auto;
 }
 
 #progress-bar-track {
